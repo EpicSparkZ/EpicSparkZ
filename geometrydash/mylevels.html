@@ -91,17 +91,6 @@
       box-sizing: border-box;
     }
 
-    #searchBox {
-      width: 100%;
-      padding: 12px;
-      font-size: 1rem;
-      margin: 20px 0;
-      border-radius: 5px;
-      border: 1px solid #444;
-      background-color: #2a2a2a;
-      color: white;
-    }
-
     .dropdown {
       background-color: #2a2a2a;
       border: 1px solid #444;
@@ -156,6 +145,23 @@
       border-radius: 5px;
       margin-bottom: 10px;
     }
+
+    .search-bar {
+      margin: 20px 0;
+      width: 100%;
+      text-align: center;
+    }
+
+    .search-bar input {
+      padding: 10px 15px;
+      border-radius: 5px;
+      border: none;
+      font-size: 1rem;
+      width: 80%;
+      max-width: 400px;
+      background-color: #333;
+      color: white;
+    }
   </style>
 </head>
 <body>
@@ -176,8 +182,10 @@
       <h1>My Levels</h1>
       <p>This page contains all of my uploaded levels with a description and image of each.</p>
 
-      <!-- Search Box -->
-      <input type="text" id="searchBox" placeholder="Search levels...">
+      <!-- Search Bar -->
+      <div class="search-bar">
+        <input type="text" id="searchBox" placeholder="Search for a level...">
+      </div>
 
       <!-- Dropdowns -->
       <div class="dropdown">
@@ -189,7 +197,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="dropdown">
         <button onclick="toggleDropdown(this)">C H I L L</button>
         <div class="dropdown-content">
@@ -199,7 +207,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="dropdown">
         <button onclick="toggleDropdown(this)">EpicSparkZ Challenge</button>
         <div class="dropdown-content">
@@ -209,7 +217,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="dropdown">
         <button onclick="toggleDropdown(this)">Glitch Hop</button>
         <div class="dropdown-content">
@@ -229,7 +237,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="dropdown">
         <button onclick="toggleDropdown(this)">Tears of Joy</button>
         <div class="dropdown-content">
@@ -239,7 +247,6 @@
           </div>
         </div>
       </div>
-
     </div>
   </div>
 
@@ -267,7 +274,7 @@
       }
     }
 
-    // Load sidebar from root-level sidebar.html
+    // Load sidebar from root
     fetch('/sidebar.html')
       .then(response => {
         if (!response.ok) {
@@ -283,13 +290,13 @@
         document.getElementById("sidebar").innerHTML = "Failed to load sidebar.";
       });
 
-    // 🔍 Search filter for dropdowns
+    // Search bar functionality (ignores spaces)
     document.getElementById("searchBox").addEventListener("input", function () {
-      const query = this.value.toLowerCase();
+      const query = this.value.toLowerCase().replace(/\s+/g, '');
       const dropdowns = document.querySelectorAll(".dropdown");
 
       dropdowns.forEach(dropdown => {
-        const title = dropdown.querySelector("button").textContent.toLowerCase();
+        const title = dropdown.querySelector("button").textContent.toLowerCase().replace(/\s+/g, '');
         dropdown.style.display = title.includes(query) ? "block" : "none";
       });
     });
