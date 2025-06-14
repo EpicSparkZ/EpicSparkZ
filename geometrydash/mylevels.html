@@ -89,7 +89,6 @@
       max-width: 800px;
       margin: 0 auto;
       box-sizing: border-box;
-      text-align: center;
     }
 
     .dropdown {
@@ -149,37 +148,30 @@
 
     #searchBar {
       width: 100%;
-      padding: 12px;
+      box-sizing: border-box;
+      padding: 10px;
       font-size: 16px;
-      background-color: #2a2a2a;
-      color: white;
-      border: 1px solid #444;
-      border-radius: 5px;
-      margin-top: 20px;
+      margin: 20px 0;
     }
   </style>
 </head>
 <body>
 
-  <!-- Hamburger Button -->
   <div class="hamburger" onclick="toggleSidebar()">
     <div></div>
     <div></div>
     <div></div>
   </div>
 
-  <!-- Sidebar -->
   <div class="sidebar" id="sidebar">Loading sidebar...</div>
 
-  <!-- Wrapper for shifting content -->
   <div class="wrapper" id="wrapper">
     <div class="main-content">
-      <h1>My Levels</h1>
-      <p>This page contains all of my uploaded levels with a description and image of each.</p>
+      <h1 style="text-align:center;">My Levels</h1>
+      <p style="text-align:center;">This page contains all of my uploaded levels with a description and image of each.</p>
+      
+      <input type="text" id="searchBar" placeholder="Search levels..." oninput="filterDropdowns()">
 
-      <input type="text" id="searchBar" oninput="filterDropdowns()" placeholder="Search levels...">
-
-      <!-- DROPDOWNS BELOW -->
       <div class="dropdown">
         <button onclick="toggleDropdown(this)">0a1 Bonk</button>
         <div class="dropdown-content">
@@ -239,7 +231,6 @@
           </div>
         </div>
       </div>
-
     </div>
   </div>
 
@@ -268,18 +259,22 @@
     }
 
     function filterDropdowns() {
-      const input = document.getElementById("searchBar").value.toLowerCase().replace(/\s+/g, '');
+      const query = document.getElementById("searchBar").value.toLowerCase().replace(/\s+/g, '');
       const dropdowns = document.querySelectorAll(".dropdown");
 
       dropdowns.forEach(dropdown => {
-        const title = dropdown.querySelector("button").textContent.toLowerCase().replace(/\s+/g, '');
-        dropdown.style.display = title.includes(input) ? "block" : "none";
+        const title = dropdown.querySelector("button").innerText.toLowerCase().replace(/\s+/g, '');
+        if (title.includes(query)) {
+          dropdown.style.display = "";
+        } else {
+          dropdown.style.display = "none";
+        }
       });
     }
 
     fetch('/sidebar.html')
       .then(response => {
-        if (!response.ok) throw new Error("Failed to load sidebar");
+        if (!response.ok) throw new Error("Failed to load sidebar: " + response.status);
         return response.text();
       })
       .then(data => {
