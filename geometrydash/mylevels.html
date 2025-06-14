@@ -4,8 +4,7 @@
   <meta charset="UTF-8" />
   <title>My Levels</title>
   <style>
-    body, html {
-      height: 100%;
+    body {
       margin: 0;
       font-family: Arial, sans-serif;
       background-color: #1e1e1e;
@@ -75,7 +74,6 @@
     }
 
     .wrapper {
-      min-height: 100%;
       transition: margin-left 0.3s ease;
     }
 
@@ -84,53 +82,55 @@
     }
 
     .main-content {
-      padding-top: 40px;
-      max-width: 700px;
+      padding: 40px;
+      max-width: 800px;
       margin: 0 auto;
-      text-align: center;
     }
 
-    /* Dropdown Styles */
-    .dropdown {
-      margin: 30px auto 10px; /* space above and below */
-      max-width: 700px;
-      text-align: left;
+    .dropdown-section {
+      margin-top: 40px;
     }
 
     .dropdown-header {
-      background-color: #2a2a2a;
+      background-color: #2e2e2e;
       padding: 15px 20px;
       cursor: pointer;
-      font-weight: 600;
+      font-weight: bold;
       border-radius: 5px;
-      user-select: none;
-      color: #ccc;
       border: 1px solid #444;
+      transition: background-color 0.2s;
+    }
+
+    .dropdown-header:hover {
+      background-color: #3a3a3a;
     }
 
     .dropdown-content {
-      overflow: hidden;
-      max-height: 0;
+      transform: scaleY(0);
+      transform-origin: top;
       opacity: 0;
-      transition: max-height 0.5s ease, opacity 0.5s ease;
+      transition: transform 0.35s ease, opacity 0.35s ease;
       background-color: #333;
       border-radius: 0 0 5px 5px;
       border: 1px solid #444;
       border-top: none;
-      padding: 0 20px;
       color: #ddd;
+      display: none;
+      padding: 0 20px;
     }
 
     .dropdown-content.open {
-      max-height: 500px; /* large enough for content */
+      display: block;
+      transform: scaleY(1);
       opacity: 1;
       padding: 20px;
     }
 
     .dropdown-content img {
-      display: block;
       max-width: 100%;
-      margin-bottom: 15px;
+      height: auto;
+      display: block;
+      margin-bottom: 10px;
       border-radius: 5px;
     }
   </style>
@@ -145,9 +145,7 @@
   </div>
 
   <!-- Sidebar -->
-  <div class="sidebar" id="sidebar">
-    <!-- Sidebar links will load here -->
-  </div>
+  <div class="sidebar" id="sidebar"></div>
 
   <!-- Wrapper for shifting content -->
   <div class="wrapper" id="wrapper">
@@ -155,26 +153,20 @@
       <h1>My Levels</h1>
       <p>This page contains all of my uploaded levels with a description and image of each.</p>
 
-      <div class="dropdown">
-        <div class="dropdown-header" onclick="toggleDropdown(this)">
-          Level 1 - Haunted Forest
-        </div>
+      <!-- Dropdowns -->
+      <div class="dropdown-section">
+        <div class="dropdown-header" onclick="toggleDropdown(this)">Level 1: Haunted</div>
         <div class="dropdown-content">
-          <img src="https://via.placeholder.com/600x300?text=Haunted+Forest" alt="Haunted Forest level preview" />
-          <p>A spooky level with challenging jumps and eerie music.</p>
+          <img src="https://via.placeholder.com/600x300?text=Haunted+Level" alt="Haunted Level Image">
+          <p>Haunted is a dark, atmospheric level with intense sync and storytelling elements.</p>
+        </div>
+
+        <div class="dropdown-header" onclick="toggleDropdown(this)">Level 2: Flight Deck</div>
+        <div class="dropdown-content">
+          <img src="https://via.placeholder.com/600x300?text=Flight+Deck" alt="Flight Deck Image">
+          <p>Flight Deck is a high-speed level designed with dynamic transitions and aerial themes.</p>
         </div>
       </div>
-
-      <div class="dropdown">
-        <div class="dropdown-header" onclick="toggleDropdown(this)">
-          Level 2 - Crystal Caves
-        </div>
-        <div class="dropdown-content">
-          <img src="https://via.placeholder.com/600x300?text=Crystal+Caves" alt="Crystal Caves level preview" />
-          <p>A shiny cave-themed level full of tricky maneuvers and glittering gems.</p>
-        </div>
-      </div>
-
     </div>
   </div>
 
@@ -196,10 +188,22 @@
         console.error("Failed to load sidebar:", error);
       });
 
-    // Dropdown toggle function
     function toggleDropdown(header) {
       const content = header.nextElementSibling;
-      content.classList.toggle("open");
+      if (content.classList.contains("open")) {
+        content.style.display = "block";
+        requestAnimationFrame(() => {
+          content.classList.remove("open");
+        });
+        setTimeout(() => {
+          content.style.display = "none";
+        }, 350);
+      } else {
+        content.style.display = "block";
+        requestAnimationFrame(() => {
+          content.classList.add("open");
+        });
+      }
     }
   </script>
 
