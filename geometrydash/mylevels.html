@@ -75,6 +75,12 @@
 
     .wrapper {
       transition: margin-left 0.3s ease;
+      display: flex;
+      justify-content: center; /* center horizontally */
+      align-items: flex-start; /* align to top */
+      min-height: 100vh;
+      padding: 40px;
+      box-sizing: border-box;
     }
 
     .wrapper.shifted {
@@ -82,7 +88,10 @@
     }
 
     .main-content {
-      padding: 40px;
+      max-width: 700px;
+      width: 100%;
+      text-align: center; /* center all text */
+      color: white;
     }
 
     /* Dropdown styles */
@@ -102,6 +111,7 @@
       display: none;
       margin-bottom: 30px;
       color: #ddd;
+      text-align: center; /* center dropdown text */
     }
 
     .dropdown-content img {
@@ -110,6 +120,9 @@
       margin-bottom: 10px;
       border-radius: 6px;
       box-shadow: 0 0 10px rgba(255 255 255 / 0.1);
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
     }
   </style>
 </head>
@@ -146,8 +159,6 @@
         <img src="https://via.placeholder.com/400x200" alt="Level 2 Image" />
         <p>Description and details about Level 2 go here.</p>
       </div>
-
-      <!-- Add more dropdown sections by copying the two elements above -->
     </div>
   </div>
 
