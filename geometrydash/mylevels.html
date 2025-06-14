@@ -4,12 +4,16 @@
   <meta charset="UTF-8" />
   <title>My Levels</title>
   <style>
+    html {
+      overflow-y: scroll; /* Always show vertical scrollbar space */
+    }
+
     body {
       margin: 0;
       font-family: Arial, sans-serif;
       background-color: #1e1e1e;
       color: white;
-      overflow-x: hidden; /* prevents horizontal scroll */
+      overflow-x: hidden; /* prevent horizontal scroll */
     }
 
     .sidebar {
@@ -75,8 +79,6 @@
 
     .wrapper {
       transition: margin-left 0.3s ease;
-      max-width: 100vw; /* prevent overflow when sidebar is open */
-      overflow-x: hidden; /* prevent horizontal scrolling */
     }
 
     .wrapper.shifted {
@@ -87,7 +89,6 @@
       padding: 40px;
       max-width: 800px;
       margin: 0 auto;
-      box-sizing: border-box;
     }
 
     .dropdown {
@@ -97,19 +98,16 @@
       margin: 30px 0;
       overflow: hidden;
       transition: all 0.5s ease;
-      max-width: 100%;
-      box-sizing: border-box;
     }
 
     .dropdown button {
       background: none;
       border: none;
       color: white;
-      text-align: center; /* Centered title */
-      padding: 20px; /* a bit more padding for bigger button */
+      text-align: left;
+      padding: 15px;
       width: 100%;
-      font-size: 1.4rem; /* bigger font */
-      font-weight: bold;
+      font-size: 1.1rem;
       cursor: pointer;
     }
 
@@ -117,29 +115,19 @@
       max-height: 0;
       opacity: 0;
       overflow: hidden;
-      padding: 0;
+      padding: 0 15px;
       transition: max-height 0.5s ease, opacity 0.5s ease, padding 0.3s ease;
       pointer-events: none;
     }
 
     .dropdown.open .dropdown-content {
       opacity: 1;
-      max-height: 1000px; /* big enough for content */
-      padding: 15px 0;
+      padding: 15px;
       pointer-events: auto;
-    }
-
-    .dropdown-inner {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      max-width: 100%;
     }
 
     .dropdown-content img {
       max-width: 100%;
-      height: auto;
       border-radius: 5px;
       margin-bottom: 10px;
     }
@@ -167,10 +155,8 @@
       <div class="dropdown">
         <button onclick="toggleDropdown(this)">HAUNTED</button>
         <div class="dropdown-content">
-          <div class="dropdown-inner">
-            <img src="https://levelthumbs.prevter.me/thumbnail/115308697/small" alt="HAUNTED">
-            <p>UNDER CONSTRUCTION</p>
-          </div>
+          <img src="https://levelthumbs.prevter.me/thumbnail/115308697/small" alt="HAUNTED">
+          <p>UNDER CONSTRUCTION</p>
         </div>
       </div>
 
@@ -178,10 +164,8 @@
       <div class="dropdown">
         <button onclick="toggleDropdown(this)">C H I L L</button>
         <div class="dropdown-content">
-          <div class="dropdown-inner">
-            <img src="https://levelthumbs.prevter.me/thumbnail/84539175/small" alt="C H I L L">
-            <p>UNDER CONSTRUCTION</p>
-          </div>
+          <img src="https://levelthumbs.prevter.me/thumbnail/84539175/small" alt="C H I L L">
+          <p>UNDER CONSTRUCTION</p>
         </div>
       </div>
 
