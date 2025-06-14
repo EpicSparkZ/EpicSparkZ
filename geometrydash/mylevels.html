@@ -12,25 +12,47 @@
       overflow-x: hidden;
     }
 
-    .sidebar-container {
+    .sidebar {
       position: fixed;
       top: 0;
       left: -250px;
       width: 250px;
       height: 100%;
+      background-color: #2a2a2a;
+      padding-top: 60px;
       transition: left 0.3s ease;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
       z-index: 1000;
     }
 
-    .sidebar-container.open {
+    .sidebar.open {
       left: 0;
     }
 
-    .sidebar-iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-      background-color: #2a2a2a;
+    .sidebar a {
+      display: block;
+      color: #ccc;
+      padding: 12px 20px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .sidebar a:hover {
+      background-color: #444;
+      color: #fff;
+    }
+
+    .sidebar-separator {
+      padding: 8px 20px;
+      font-weight: 600;
+      color: #bbb;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 1.5px;
+      border-top: 1px solid #444;
+      border-bottom: 1px solid #444;
+      margin: 20px 0;
+      user-select: none;
     }
 
     .hamburger {
@@ -116,12 +138,10 @@
     <div></div>
   </div>
 
-  <!-- Sidebar Iframe Container -->
-  <div id="sidebarContainer" class="sidebar-container">
-    <iframe src="sidebar.html" class="sidebar-iframe" frameborder="0"></iframe>
-  </div>
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">Loading sidebar...</div>
 
-  <!-- Wrapper for content -->
+  <!-- Wrapper for shifting content -->
   <div class="wrapper" id="wrapper">
     <div class="main-content">
       <h1>My Levels</h1>
@@ -150,16 +170,10 @@
 
   <script>
     function toggleSidebar() {
-      const sidebar = document.getElementById("sidebarContainer");
+      const sidebar = document.getElementById("sidebar");
       const wrapper = document.getElementById("wrapper");
-
-      if (sidebar.classList.contains("open")) {
-        sidebar.classList.remove("open");
-        wrapper.classList.remove("shifted");
-      } else {
-        sidebar.classList.add("open");
-        wrapper.classList.add("shifted");
-      }
+      sidebar.classList.toggle("open");
+      wrapper.classList.toggle("shifted");
     }
 
     function toggleDropdown(button) {
@@ -177,6 +191,22 @@
         content.style.maxHeight = content.scrollHeight + "px";
       }
     }
+
+    // Load sidebar from root-level sidebar.html
+    fetch('/sidebar.html')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Failed to load sidebar: " + response.status);
+        }
+        return response.text();
+      })
+      .then(data => {
+        document.getElementById("sidebar").innerHTML = data;
+      })
+      .catch(error => {
+        console.error(error);
+        document.getElementById("sidebar").innerHTML = "Failed to load sidebar.";
+      });
   </script>
 
 </body>
