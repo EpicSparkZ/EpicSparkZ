@@ -22,6 +22,7 @@
       padding-top: 60px;
       transition: left 0.3s ease;
       box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+      z-index: 1000;
     }
 
     .sidebar.open {
@@ -76,10 +77,22 @@
       margin-left: 0;
       padding: 40px;
       transition: margin-left 0.3s ease;
+      max-width: 800px;
+      box-sizing: border-box;
     }
 
     .sidebar.open ~ .main-content {
       margin-left: 250px;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    p {
+      line-height: 1.6;
+      margin-bottom: 20px;
     }
   </style>
 </head>
@@ -99,8 +112,14 @@
 
   <!-- Main Content -->
   <div class="main-content">
-    <h1>My Creating Policy:</h1>
-    <p>UNDER CONSTRUCTION</p>
+    <h1>Level Creation Policy</h1>
+    <p>This page outlines the policies for uploading levels to the EpicSparkZ site.</p>
+
+    <p>All levels must meet quality, originality, and fair play standards. Content involving inappropriate language, stolen assets, or abusive gameplay will be removed without warning.</p>
+
+    <p>Level creators are encouraged to credit song authors and provide descriptions. Levels flagged for review may take up to 48 hours to be evaluated.</p>
+
+    <p>These policies are subject to change. Make sure to review this page periodically for updates.</p>
   </div>
 
   <script>
