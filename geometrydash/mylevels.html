@@ -83,6 +83,7 @@
 
     .main-content {
       padding: 40px;
+      text-align: center;
     }
   </style>
 </head>
@@ -97,7 +98,8 @@
 
   <!-- Sidebar -->
   <div class="sidebar" id="sidebar">
-    <!-- Sidebar links will load here -->
+    <!-- Fallback message if sidebar fails -->
+    <p style="padding: 20px; color: #999;">Loading sidebar...</p>
   </div>
 
   <!-- Wrapper for shifting content -->
@@ -118,12 +120,19 @@
 
     // Load sidebar links from sidebar.html
     fetch('sidebar.html')
-      .then(response => response.text())
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Sidebar file not found");
+        }
+        return response.text();
+      })
       .then(data => {
         document.getElementById('sidebar').innerHTML = data;
       })
       .catch(error => {
-        console.error("Failed to load sidebar:", error);
+        document.getElementById('sidebar').innerHTML =
+          '<p style="padding: 20px; color: #f88;">Failed to load sidebar.</p>';
+        console.error("Sidebar loading error:", error);
       });
   </script>
 
