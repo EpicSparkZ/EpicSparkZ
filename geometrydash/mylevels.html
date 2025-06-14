@@ -83,7 +83,7 @@
 
     .main-content {
       padding: 40px;
-      text-align: center;
+      text-align: left; /* Align text to the left */
     }
   </style>
 </head>
@@ -98,7 +98,6 @@
 
   <!-- Sidebar -->
   <div class="sidebar" id="sidebar">
-    <!-- Fallback message if sidebar fails -->
     <p style="padding: 20px; color: #999;">Loading sidebar...</p>
   </div>
 
@@ -118,7 +117,8 @@
       wrapper.classList.toggle("shifted");
     }
 
-    // Load sidebar links from sidebar.html
+    // Adjust this path if sidebar.html is not in the same folder:
+    // e.g., fetch('../sidebar.html') or fetch('./sidebar.html')
     fetch('sidebar.html')
       .then(response => {
         if (!response.ok) {
@@ -131,7 +131,7 @@
       })
       .catch(error => {
         document.getElementById('sidebar').innerHTML =
-          '<p style="padding: 20px; color: #f88;">Failed to load sidebar.</p>';
+          `<p style="padding: 20px; color: #f88;">Failed to load sidebar.<br>${error.message}</p>`;
         console.error("Sidebar loading error:", error);
       });
   </script>
