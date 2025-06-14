@@ -173,8 +173,12 @@
 
     /* Wrap text inside dropdown paragraphs */
     .dropdown-inner p {
-      word-wrap: break-word;
-      white-space: normal;
+      white-space: normal !important;
+      word-break: break-word;
+      overflow-wrap: break-word;
+      hyphens: auto;
+      text-align: left;
+      margin: 0 15px 10px;
     }
   </style>
 </head>
