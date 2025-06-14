@@ -4,11 +4,6 @@
   <meta charset="UTF-8" />
   <title>My Levels</title>
   <style>
-    /* Always reserve scrollbar space to avoid shifting */
-    html {
-      overflow-y: scroll;
-    }
-
     body {
       margin: 0;
       font-family: Arial, sans-serif;
@@ -69,7 +64,7 @@
       margin: 0 auto;
     }
 
-    /* Dropdown fixes */
+    /* Dropdown fixes only */
     .dropdown {
       background-color: #2a2a2a;
       border: 1px solid #444;
@@ -87,7 +82,7 @@
       text-align: left;
       padding: 15px;
       width: 100%;
-      font-size: 1.2rem; /* slightly bigger */
+      font-size: 1.2rem;
       cursor: pointer;
     }
 
@@ -99,7 +94,7 @@
       transition: max-height 0.5s ease, opacity 0.5s ease, padding 0.3s ease;
       pointer-events: none;
 
-      /* Fix: make image and text appear in a row, aligned at top */
+      /* Align image and text side-by-side, top aligned */
       display: flex;
       align-items: flex-start;
       gap: 15px;
@@ -110,7 +105,7 @@
       opacity: 1;
       padding: 15px;
       pointer-events: auto;
-      max-height: 1000px; /* enough for content */
+      max-height: 1000px;
     }
 
     .dropdown-content img {
@@ -187,7 +182,6 @@
       }
     }
 
-    // Sidebar fetch code unchanged
     fetch('/sidebar.html')
       .then(response => {
         if (!response.ok) throw new Error("Failed to load sidebar: " + response.status);
