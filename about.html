@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title></title> <!-- Title unchanged -->
+  <title></title> <!-- Title left unchanged as requested -->
   <style>
     body {
       margin: 0;
@@ -26,6 +26,19 @@
 
     .sidebar.open {
       left: 0;
+    }
+
+    .sidebar a {
+      display: block;
+      color: #ccc;
+      padding: 12px 20px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .sidebar a:hover {
+      background-color: #444;
+      color: #fff;
     }
 
     .hamburger {
@@ -74,7 +87,7 @@
   <!-- Main Content -->
   <div class="main-content">
     <h1>About Me</h1>
-    <p>IN PRORGESS</p>
+    <p>IN PROGRESS</p>
   </div>
 
   <script>
@@ -86,7 +99,7 @@
     fetch('sidebar.html')
       .then(response => response.text())
       .then(data => {
-        document.getElementById('sidebar').innerHTML += data;
+        document.getElementById('sidebar').innerHTML = data;
       })
       .catch(error => {
         console.error("Failed to load sidebar:", error);
