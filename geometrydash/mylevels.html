@@ -101,6 +101,7 @@
       color: #ccc;
       margin-bottom: 10px;
       font-size: 1.25rem;
+      transition: color 0.2s ease;
     }
 
     .dropdown-header:hover {
@@ -108,10 +109,19 @@
     }
 
     .dropdown-content {
-      display: none;
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease, opacity 0.5s ease;
       margin-bottom: 30px;
       color: #ddd;
       text-align: center; /* center dropdown text */
+    }
+
+    .dropdown-content.open {
+      max-height: 1000px; /* big enough to show content */
+      opacity: 1;
+      transition: max-height 0.5s ease, opacity 0.5s ease;
     }
 
     .dropdown-content img {
@@ -180,7 +190,7 @@
         console.error("Failed to load sidebar:", error);
       });
 
-    // Dropdown toggle for multiple dropdowns
+    // Dropdown toggle for multiple dropdowns with animation
     document.addEventListener('DOMContentLoaded', () => {
       const dropdownHeaders = document.querySelectorAll('.dropdown-header');
 
@@ -189,11 +199,11 @@
           const content = header.nextElementSibling;
           if (!content) return;
 
-          if (content.style.display === 'block') {
-            content.style.display = 'none';
+          if (content.classList.contains('open')) {
+            content.classList.remove('open');
             header.textContent = header.textContent.replace('▲', '▼');
           } else {
-            content.style.display = 'block';
+            content.classList.add('open');
             header.textContent = header.textContent.replace('▼', '▲');
           }
         });
