@@ -2,14 +2,106 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Homepage</title>
+  <title>Collapsible Sidebar</title>
   <style>
     body {
       margin: 0;
-      background-color: #1e1e1e; /* Dark grey */
+      font-family: Arial, sans-serif;
+      background-color: #1e1e1e;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      width: 250px;
+      height: 100%;
+      background-color: #2a2a2a;
+      padding-top: 60px;
+      transition: left 0.3s ease;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+    }
+
+    .sidebar a {
+      display: block;
+      color: #ccc;
+      padding: 12px 20px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .sidebar a:hover {
+      background-color: #444;
+      color: #fff;
+    }
+
+    /* Hamburger button */
+    .hamburger {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      width: 30px;
+      height: 24px;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    .hamburger div {
+      width: 100%;
+      height: 4px;
+      background-color: white;
+      margin: 4px 0;
+      transition: all 0.3s ease;
+    }
+
+    /* Open sidebar class */
+    .sidebar.open {
+      left: 0;
+    }
+
+    /* Content */
+    .main-content {
+      margin-left: 0;
+      padding: 40px;
+      transition: margin-left 0.3s ease;
+    }
+
+    .sidebar.open ~ .main-content {
+      margin-left: 250px;
     }
   </style>
 </head>
 <body>
+
+  <!-- Hamburger Icon -->
+  <div class="hamburger" onclick="toggleSidebar()">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <a href="#">Home</a>
+    <a href="#">About</a>
+    <a href="#">Projects</a>
+    <a href="#">Contact</a>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <h1>Welcome</h1>
+    <p>This is your homepage with a collapsible sidebar menu.</p>
+  </div>
+
+  <script>
+    function toggleSidebar() {
+      document.getElementById("sidebar").classList.toggle("open");
+    }
+  </script>
+
 </body>
 </html>
