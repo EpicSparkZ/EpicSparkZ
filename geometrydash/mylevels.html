@@ -12,21 +12,51 @@
       overflow-x: hidden;
     }
 
-    .sidebar-iframe {
+    .sidebar-container {
       position: fixed;
       top: 0;
-      left: 0;
+      left: -250px;
       width: 250px;
       height: 100%;
-      background-color: #2a2a2a;
-      border: none;
+      transition: left 0.3s ease;
       z-index: 1000;
-      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+    }
+
+    .sidebar-container.open {
+      left: 0;
+    }
+
+    .sidebar-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background-color: #2a2a2a;
+    }
+
+    .hamburger {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      width: 30px;
+      height: 24px;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    .hamburger div {
+      width: 100%;
+      height: 4px;
+      background-color: white;
+      margin: 4px 0;
+      transition: all 0.3s ease;
     }
 
     .wrapper {
       transition: margin-left 0.3s ease;
-      margin-left: 250px; /* shift content since sidebar is always visible */
+    }
+
+    .wrapper.shifted {
+      margin-left: 250px;
     }
 
     .main-content {
@@ -79,8 +109,17 @@
 </head>
 <body>
 
-  <!-- Sidebar as iframe -->
-  <iframe src="sidebar.html" class="sidebar-iframe" frameborder="0"></iframe>
+  <!-- Hamburger Button -->
+  <div class="hamburger" onclick="toggleSidebar()">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+
+  <!-- Sidebar Iframe Container -->
+  <div id="sidebarContainer" class="sidebar-container">
+    <iframe src="sidebar.html" class="sidebar-iframe" frameborder="0"></iframe>
+  </div>
 
   <!-- Wrapper for content -->
   <div class="wrapper" id="wrapper">
@@ -110,6 +149,19 @@
   </div>
 
   <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById("sidebarContainer");
+      const wrapper = document.getElementById("wrapper");
+
+      if (sidebar.classList.contains("open")) {
+        sidebar.classList.remove("open");
+        wrapper.classList.remove("shifted");
+      } else {
+        sidebar.classList.add("open");
+        wrapper.classList.add("shifted");
+      }
+    }
+
     function toggleDropdown(button) {
       const dropdown = button.parentElement;
       const content = dropdown.querySelector(".dropdown-content");
