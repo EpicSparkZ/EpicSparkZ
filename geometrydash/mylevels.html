@@ -91,6 +91,31 @@
       box-sizing: border-box;
     }
 
+    /* Center the two texts above the search bar */
+    .main-content h1,
+    .main-content p {
+      text-align: center;
+    }
+
+    /* Search container */
+    #search-container {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    /* Search input styling (original style restored) */
+    #search-input {
+      padding: 12px 16px;
+      font-size: 1.1rem;
+      border: 1px solid #444;
+      border-radius: 6px;
+      background-color: #2a2a2a;
+      color: white;
+      max-width: 300px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
     .dropdown {
       background-color: #2a2a2a;
       border: 1px solid #444;
@@ -146,7 +171,7 @@
       margin-bottom: 10px;
     }
 
-    /* ADDED ONLY: Allow text wrapping inside dropdown paragraphs */
+    /* Wrap text inside dropdown paragraphs */
     .dropdown-inner p {
       word-wrap: break-word;
       white-space: normal;
@@ -171,7 +196,12 @@
       <h1>My Levels</h1>
       <p>This page contains all of my uploaded levels with a description and image of each.</p>
 
-        <!-- Dropdowns -->
+      <!-- Search container -->
+      <div id="search-container">
+        <input type="text" id="search-input" placeholder="Search levels..." oninput="filterDropdowns()" />
+      </div>
+
+      <!-- Dropdowns -->
       <div class="dropdown">
         <button onclick="toggleDropdown(this)">0a1 Bonk</button>
         <div class="dropdown-content">
@@ -231,6 +261,8 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
 
   <script>
     function toggleSidebar() {
@@ -254,6 +286,22 @@
         dropdown.classList.add("open");
         content.style.maxHeight = content.scrollHeight + "px";
       }
+    }
+
+    function filterDropdowns() {
+      const input = document.getElementById("search-input");
+      const filter = input.value.toLowerCase().replace(/\s+/g, '');
+      const dropdowns = document.querySelectorAll(".dropdown");
+      
+      dropdowns.forEach(dropdown => {
+        const button = dropdown.querySelector("button");
+        const text = button.textContent.toLowerCase().replace(/\s+/g, '');
+        if (text.includes(filter)) {
+          dropdown.style.display = "";
+        } else {
+          dropdown.style.display = "none";
+        }
+      });
     }
 
     // Load sidebar from root-level sidebar.html
