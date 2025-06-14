@@ -91,7 +91,9 @@
       background-color: #2a2a2a;
       border: 1px solid #444;
       border-radius: 5px;
-      margin: 20px 0;
+      margin: 30px 0;
+      overflow: hidden;
+      transition: all 0.5s ease;
     }
 
     .dropdown button {
@@ -115,7 +117,6 @@
     }
 
     .dropdown.open .dropdown-content {
-      max-height: 1000px;
       opacity: 1;
       padding: 15px;
       pointer-events: auto;
@@ -146,7 +147,7 @@
       <h1>My Levels</h1>
       <p>This page contains all of my uploaded levels with a description and image of each.</p>
 
-      <!-- Dropdown Example 1 -->
+      <!-- Dropdown 1 -->
       <div class="dropdown">
         <button onclick="toggleDropdown(this)">Level 1: Haunted</button>
         <div class="dropdown-content">
@@ -155,7 +156,7 @@
         </div>
       </div>
 
-      <!-- Dropdown Example 2 -->
+      <!-- Dropdown 2 -->
       <div class="dropdown">
         <button onclick="toggleDropdown(this)">Level 2: Eternal Flames</button>
         <div class="dropdown-content">
@@ -177,20 +178,23 @@
 
     function toggleDropdown(button) {
       const dropdown = button.parentElement;
-      const content = dropdown.querySelector('.dropdown-content');
+      const content = dropdown.querySelector(".dropdown-content");
 
-      if (dropdown.classList.contains('open')) {
-        content.style.maxHeight = content.scrollHeight + "px"; // set before collapse
+      if (dropdown.classList.contains("open")) {
+        // Closing
+        content.style.maxHeight = content.scrollHeight + "px";
         requestAnimationFrame(() => {
+          content.style.maxHeight = "0px";
           dropdown.classList.remove("open");
         });
       } else {
+        // Opening
         dropdown.classList.add("open");
         content.style.maxHeight = content.scrollHeight + "px";
       }
     }
 
-    // Load sidebar links from sidebar.html
+    // Load sidebar
     fetch('sidebar.html')
       .then(response => response.text())
       .then(data => {
