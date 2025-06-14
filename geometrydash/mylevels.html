@@ -10,6 +10,7 @@
       background-color: #1e1e1e;
       color: white;
       overflow-x: hidden;
+      text-align: center; /* center text */
     }
 
     .sidebar {
@@ -23,6 +24,7 @@
       transition: left 0.3s ease;
       box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
       z-index: 1000;
+      text-align: left; /* sidebar text left aligned */
     }
 
     .sidebar.open {
@@ -75,15 +77,12 @@
 
     .wrapper {
       transition: margin-left 0.3s ease;
+      padding: 40px;
+      /* text centered already on body */
     }
 
     .wrapper.shifted {
       margin-left: 250px;
-    }
-
-    .main-content {
-      padding: 40px;
-      text-align: left; /* Align text to the left */
     }
   </style>
 </head>
@@ -98,15 +97,13 @@
 
   <!-- Sidebar -->
   <div class="sidebar" id="sidebar">
-    <p style="padding: 20px; color: #999;">Loading sidebar...</p>
+    <!-- Sidebar links will load here -->
   </div>
 
   <!-- Wrapper for shifting content -->
   <div class="wrapper" id="wrapper">
-    <div class="main-content">
-      <h1>My Levels</h1>
-      <p>This page contains all of my uploaded levels with a description and image of each.</p>
-    </div>
+    <h1>My Levels</h1>
+    <p>This page contains all of my uploaded levels with a description and image of each.</p>
   </div>
 
   <script>
@@ -117,20 +114,17 @@
       wrapper.classList.toggle("shifted");
     }
 
-    // Adjust this path if sidebar.html is not in the same folder:
-    // e.g., fetch('../sidebar.html') or fetch('./sidebar.html')
-    fetch('sidebar.html')
+    // Load sidebar links from sidebar.html in root folder
+    fetch('../sidebar.html')
       .then(response => {
-        if (!response.ok) {
-          throw new Error("Sidebar file not found");
-        }
+        if (!response.ok) throw new Error("Sidebar file not found");
         return response.text();
       })
       .then(data => {
         document.getElementById('sidebar').innerHTML = data;
       })
       .catch(error => {
-        document.getElementById('sidebar').innerHTML =
+        document.getElementById('sidebar').innerHTML = 
           `<p style="padding: 20px; color: #f88;">Failed to load sidebar.<br>${error.message}</p>`;
         console.error("Sidebar loading error:", error);
       });
