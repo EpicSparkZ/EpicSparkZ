@@ -98,6 +98,7 @@
       margin: 30px 0;
       overflow: hidden;
       transition: all 0.5s ease;
+      max-width: 600px; /* limit width so dropdowns don’t stretch too wide */
     }
 
     .dropdown button {
@@ -105,9 +106,9 @@
       border: none;
       color: white;
       text-align: left;
-      padding: 15px;
+      padding: 20px 15px; /* slightly bigger padding */
       width: 100%;
-      font-size: 1.1rem;
+      font-size: 1.25rem; /* bigger titles */
       cursor: pointer;
     }
 
@@ -118,18 +119,33 @@
       padding: 0 15px;
       transition: max-height 0.5s ease, opacity 0.5s ease, padding 0.3s ease;
       pointer-events: none;
+      display: flex; /* align image and text side by side */
+      gap: 15px;
+      align-items: flex-start; /* align image top with text */
+      flex-wrap: wrap; /* wrap on small widths */
     }
 
     .dropdown.open .dropdown-content {
       opacity: 1;
       padding: 15px;
       pointer-events: auto;
+      max-height: 1000px; /* big enough max height for smooth expand */
     }
 
     .dropdown-content img {
-      max-width: 100%;
+      max-width: 200px;
+      max-height: 120px;
       border-radius: 5px;
-      margin-bottom: 10px;
+      margin: 0;
+      flex-shrink: 0; /* prevent image from shrinking */
+      object-fit: cover;
+    }
+
+    .dropdown-content p {
+      margin: 0;
+      color: #ccc;
+      line-height: 1.4;
+      flex: 1 1 300px; /* text takes rest of the space */
     }
   </style>
 </head>
