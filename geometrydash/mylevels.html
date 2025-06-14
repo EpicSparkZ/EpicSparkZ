@@ -91,18 +91,6 @@
       box-sizing: border-box;
     }
 
-    #searchBar {
-      width: 100%;
-      padding: 10px;
-      font-size: 16px;
-      margin: 20px 0;
-      background-color: #2a2a2a;
-      color: white;
-      border: 1px solid #444;
-      border-radius: 5px;
-      box-sizing: border-box;
-    }
-
     .dropdown {
       background-color: #2a2a2a;
       border: 1px solid #444;
@@ -137,8 +125,8 @@
 
     .dropdown.open .dropdown-content {
       opacity: 1;
-      max-height: 300px;
-      overflow-y: auto;
+      max-height: 300px; /* scrollable height */
+      overflow-y: auto;  /* enable vertical scrolling */
       padding: 15px 0;
       pointer-events: auto;
     }
@@ -157,6 +145,12 @@
       border-radius: 5px;
       margin-bottom: 10px;
     }
+
+    /* ADDED ONLY: Allow text wrapping inside dropdown paragraphs */
+    .dropdown-inner p {
+      word-wrap: break-word;
+      white-space: normal;
+    }
   </style>
 </head>
 <body>
@@ -171,26 +165,19 @@
   <!-- Sidebar -->
   <div class="sidebar" id="sidebar">Loading sidebar...</div>
 
-  <!-- Wrapper -->
+  <!-- Wrapper for shifting content -->
   <div class="wrapper" id="wrapper">
     <div class="main-content">
-      <h1 style="text-align: center;">My Levels</h1>
-      <p style="text-align: center;">This page contains all of my uploaded levels with a description and image of each.</p>
+      <h1>My Levels</h1>
+      <p>This page contains all of my uploaded levels with a description and image of each.</p>
 
-      <input
-        type="text"
-        id="searchBar"
-        placeholder="Search levels..."
-        oninput="filterDropdowns()"
-      />
-
-      <!-- Dropdowns -->
+        <!-- Dropdowns -->
       <div class="dropdown">
         <button onclick="toggleDropdown(this)">0a1 Bonk</button>
         <div class="dropdown-content">
           <div class="dropdown-inner">
             <img src="https://levelthumbs.prevter.me/thumbnail/111622447/small" alt="0a1 Bonk">
-            <p>UNDER CONSTRUCTION tttttttttttttttttttttttttttttttttttttttttttttttttteeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeesssssssssssssssssssssssssssssssssssssssssssssssssssssssstttttttttttttttttttttttttttttttttttttttttttttttttttttt</p>
+            <p>UNDER CONSTRUCTION</p>
           </div>
         </div>
       </div>
@@ -210,16 +197,6 @@
         <div class="dropdown-content">
           <div class="dropdown-inner">
             <img src="https://levelthumbs.prevter.me/thumbnail/113708470/small" alt="EpicSparkZ Challenge">
-            <p>UNDER CONSTRUCTION</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="dropdown">
-        <button onclick="toggleDropdown(this)">Darkness</button>
-        <div class="dropdown-content">
-          <div class="dropdown-inner">
-            <img src="https://levelthumbs.prevter.me/thumbnail/101721779/small" alt="Darkness">
             <p>UNDER CONSTRUCTION</p>
           </div>
         </div>
@@ -254,8 +231,6 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
 
   <script>
     function toggleSidebar() {
@@ -281,19 +256,12 @@
       }
     }
 
-    function filterDropdowns() {
-      const searchInput = document.getElementById('searchBar').value.replace(/\s/g, '').toLowerCase();
-      const dropdowns = document.querySelectorAll('.dropdown');
-
-      dropdowns.forEach(dropdown => {
-        const buttonText = dropdown.querySelector('button').textContent.replace(/\s/g, '').toLowerCase();
-        dropdown.style.display = buttonText.includes(searchInput) ? '' : 'none';
-      });
-    }
-
+    // Load sidebar from root-level sidebar.html
     fetch('/sidebar.html')
       .then(response => {
-        if (!response.ok) throw new Error("Failed to load sidebar: " + response.status);
+        if (!response.ok) {
+          throw new Error("Failed to load sidebar: " + response.status);
+        }
         return response.text();
       })
       .then(data => {
