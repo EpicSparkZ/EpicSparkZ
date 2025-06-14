@@ -83,55 +83,52 @@
 
     .main-content {
       padding: 40px;
-      max-width: 800px;
-      margin: 0 auto;
+      max-width: none;
+      margin: 0;
     }
 
-    .dropdown-section {
-      margin-top: 40px;
-    }
-
-    .dropdown-header {
-      background-color: #2e2e2e;
-      padding: 15px 20px;
-      cursor: pointer;
-      font-weight: bold;
-      border-radius: 5px;
+    .dropdown {
+      margin: 20px 0;
       border: 1px solid #444;
-      transition: background-color 0.2s;
+      border-radius: 5px;
+      overflow: hidden;
     }
 
-    .dropdown-header:hover {
-      background-color: #3a3a3a;
+    .dropdown button {
+      width: 100%;
+      padding: 15px;
+      font-size: 16px;
+      background-color: #333;
+      color: white;
+      border: none;
+      text-align: left;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .dropdown button:hover {
+      background-color: #444;
     }
 
     .dropdown-content {
-      transform: scaleY(0);
-      transform-origin: top;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, opacity 0.4s ease;
       opacity: 0;
-      transition: transform 0.35s ease, opacity 0.35s ease;
-      background-color: #333;
-      border-radius: 0 0 5px 5px;
-      border: 1px solid #444;
-      border-top: none;
-      color: #ddd;
-      display: none;
-      padding: 0 20px;
+      padding: 0 15px;
     }
 
-    .dropdown-content.open {
-      display: block;
-      transform: scaleY(1);
+    .dropdown.open .dropdown-content {
+      max-height: 500px;
       opacity: 1;
-      padding: 20px;
+      padding: 15px;
     }
 
     .dropdown-content img {
       max-width: 100%;
       height: auto;
-      display: block;
       margin-bottom: 10px;
-      border-radius: 5px;
+      border-radius: 4px;
     }
   </style>
 </head>
@@ -145,7 +142,9 @@
   </div>
 
   <!-- Sidebar -->
-  <div class="sidebar" id="sidebar"></div>
+  <div class="sidebar" id="sidebar">
+    <!-- Sidebar links will load here -->
+  </div>
 
   <!-- Wrapper for shifting content -->
   <div class="wrapper" id="wrapper">
@@ -153,20 +152,24 @@
       <h1>My Levels</h1>
       <p>This page contains all of my uploaded levels with a description and image of each.</p>
 
-      <!-- Dropdowns -->
-      <div class="dropdown-section">
-        <div class="dropdown-header" onclick="toggleDropdown(this)">Level 1: Haunted</div>
+      <!-- Dropdown Example 1 -->
+      <div class="dropdown">
+        <button onclick="toggleDropdown(this)">HAUNTED</button>
         <div class="dropdown-content">
-          <img src="https://via.placeholder.com/600x300?text=Haunted+Level" alt="Haunted Level Image">
-          <p>Haunted is a dark, atmospheric level with intense sync and storytelling elements.</p>
-        </div>
-
-        <div class="dropdown-header" onclick="toggleDropdown(this)">Level 2: Flight Deck</div>
-        <div class="dropdown-content">
-          <img src="https://via.placeholder.com/600x300?text=Flight+Deck" alt="Flight Deck Image">
-          <p>Flight Deck is a high-speed level designed with dynamic transitions and aerial themes.</p>
+          <img src="path_to_image1.jpg" alt="Level Screenshot">
+          <p>HAUNTED is one of my most unique Geometry Dash levels.</p>
         </div>
       </div>
+
+      <!-- Dropdown Example 2 -->
+      <div class="dropdown">
+        <button onclick="toggleDropdown(this)">ELECTRIC STORM</button>
+        <div class="dropdown-content">
+          <img src="path_to_image2.jpg" alt="Level Screenshot">
+          <p>ELECTRIC STORM is a fast-paced level with high-energy visuals and music.</p>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -178,6 +181,11 @@
       wrapper.classList.toggle("shifted");
     }
 
+    function toggleDropdown(button) {
+      const dropdown = button.parentElement;
+      dropdown.classList.toggle("open");
+    }
+
     // Load sidebar links from sidebar.html
     fetch('sidebar.html')
       .then(response => response.text())
@@ -187,24 +195,6 @@
       .catch(error => {
         console.error("Failed to load sidebar:", error);
       });
-
-    function toggleDropdown(header) {
-      const content = header.nextElementSibling;
-      if (content.classList.contains("open")) {
-        content.style.display = "block";
-        requestAnimationFrame(() => {
-          content.classList.remove("open");
-        });
-        setTimeout(() => {
-          content.style.display = "none";
-        }, 350);
-      } else {
-        content.style.display = "block";
-        requestAnimationFrame(() => {
-          content.classList.add("open");
-        });
-      }
-    }
   </script>
 
 </body>
