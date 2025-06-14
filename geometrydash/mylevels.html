@@ -119,21 +119,24 @@
     .dropdown.open .dropdown-content {
       opacity: 1;
       max-height: 1000px;
-      padding: 10px 15px;
+      padding: 15px 0;
       pointer-events: auto;
     }
 
     .dropdown-inner {
-      max-width: 600px;
-      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
     }
 
     .dropdown-content img {
       max-width: 100%;
+      height: auto;
       border-radius: 5px;
       margin-bottom: 10px;
-      display: block;
     }
+
   </style>
 </head>
 <body>
