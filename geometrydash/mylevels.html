@@ -10,7 +10,6 @@
       background-color: #1e1e1e;
       color: white;
       overflow-x: hidden;
-      text-align: center; /* center text */
     }
 
     .sidebar {
@@ -24,7 +23,6 @@
       transition: left 0.3s ease;
       box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
       z-index: 1000;
-      text-align: left; /* sidebar text left aligned */
     }
 
     .sidebar.open {
@@ -77,12 +75,41 @@
 
     .wrapper {
       transition: margin-left 0.3s ease;
-      padding: 40px;
-      /* text centered already on body */
     }
 
     .wrapper.shifted {
       margin-left: 250px;
+    }
+
+    .main-content {
+      padding: 40px;
+    }
+
+    /* Dropdown styles */
+    .dropdown-header {
+      cursor: pointer;
+      user-select: none;
+      color: #ccc;
+      margin-bottom: 10px;
+      font-size: 1.25rem;
+    }
+
+    .dropdown-header:hover {
+      color: white;
+    }
+
+    .dropdown-content {
+      display: none;
+      margin-bottom: 30px;
+      color: #ddd;
+    }
+
+    .dropdown-content img {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 10px;
+      border-radius: 6px;
+      box-shadow: 0 0 10px rgba(255 255 255 / 0.1);
     }
   </style>
 </head>
@@ -102,8 +129,26 @@
 
   <!-- Wrapper for shifting content -->
   <div class="wrapper" id="wrapper">
-    <h1>My Levels</h1>
-    <p>This page contains all of my uploaded levels with a description and image of each.</p>
+    <div class="main-content">
+      <h1>My Levels</h1>
+      <p>This page contains all of my uploaded levels with a description and image of each.</p>
+
+      <!-- Dropdown #1 -->
+      <h2 class="dropdown-header">Level 1 Details ▼</h2>
+      <div class="dropdown-content">
+        <img src="https://via.placeholder.com/400x200" alt="Level 1 Image" />
+        <p>Description and details about Level 1 go here.</p>
+      </div>
+
+      <!-- Dropdown #2 -->
+      <h2 class="dropdown-header">Level 2 Details ▼</h2>
+      <div class="dropdown-content">
+        <img src="https://via.placeholder.com/400x200" alt="Level 2 Image" />
+        <p>Description and details about Level 2 go here.</p>
+      </div>
+
+      <!-- Add more dropdown sections by copying the two elements above -->
+    </div>
   </div>
 
   <script>
@@ -114,20 +159,35 @@
       wrapper.classList.toggle("shifted");
     }
 
-    // Load sidebar links from sidebar.html in root folder
-    fetch('../sidebar.html')
-      .then(response => {
-        if (!response.ok) throw new Error("Sidebar file not found");
-        return response.text();
-      })
+    // Load sidebar links from sidebar.html
+    fetch('sidebar.html')
+      .then(response => response.text())
       .then(data => {
         document.getElementById('sidebar').innerHTML = data;
       })
       .catch(error => {
-        document.getElementById('sidebar').innerHTML = 
-          `<p style="padding: 20px; color: #f88;">Failed to load sidebar.<br>${error.message}</p>`;
-        console.error("Sidebar loading error:", error);
+        console.error("Failed to load sidebar:", error);
       });
+
+    // Dropdown toggle for multiple dropdowns
+    document.addEventListener('DOMContentLoaded', () => {
+      const dropdownHeaders = document.querySelectorAll('.dropdown-header');
+
+      dropdownHeaders.forEach(header => {
+        header.addEventListener('click', () => {
+          const content = header.nextElementSibling;
+          if (!content) return;
+
+          if (content.style.display === 'block') {
+            content.style.display = 'none';
+            header.textContent = header.textContent.replace('▲', '▼');
+          } else {
+            content.style.display = 'block';
+            header.textContent = header.textContent.replace('▼', '▲');
+          }
+        });
+      });
+    });
   </script>
 
 </body>
