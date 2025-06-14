@@ -22,6 +22,7 @@
       padding-top: 60px;
       transition: left 0.3s ease;
       box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+      z-index: 1000;
     }
 
     .sidebar.open {
@@ -72,14 +73,16 @@
       transition: all 0.3s ease;
     }
 
-    .main-content {
-      margin-left: 0;
-      padding: 40px;
+    .wrapper {
       transition: margin-left 0.3s ease;
     }
 
-    .sidebar.open ~ .main-content {
+    .wrapper.shifted {
       margin-left: 250px;
+    }
+
+    .main-content {
+      padding: 40px;
     }
   </style>
 </head>
@@ -97,15 +100,20 @@
     <!-- Sidebar links will load here -->
   </div>
 
-  <!-- Main Content -->
-  <div class="main-content">
-    <h1>My Levels</h1>
-    <p>This page contains all of my uploaded level with a description and image of it.</p>
+  <!-- Wrapper for shifting content -->
+  <div class="wrapper" id="wrapper">
+    <div class="main-content">
+      <h1>My Levels</h1>
+      <p>This page contains all of my uploaded levels with a description and image of each.</p>
+    </div>
   </div>
 
   <script>
     function toggleSidebar() {
-      document.getElementById("sidebar").classList.toggle("open");
+      const sidebar = document.getElementById("sidebar");
+      const wrapper = document.getElementById("wrapper");
+      sidebar.classList.toggle("open");
+      wrapper.classList.toggle("shifted");
     }
 
     // Load sidebar links from sidebar.html
