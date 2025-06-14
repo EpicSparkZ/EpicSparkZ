@@ -9,7 +9,7 @@
       font-family: Arial, sans-serif;
       background-color: #1e1e1e;
       color: white;
-      overflow-x: hidden; /* prevents horizontal scroll */
+      overflow-x: hidden;
     }
 
     .sidebar {
@@ -75,8 +75,8 @@
 
     .wrapper {
       transition: margin-left 0.3s ease;
-      max-width: 100vw; /* prevent overflow when sidebar is open */
-      overflow-x: hidden; /* prevent horizontal scrolling */
+      max-width: 100vw;
+      overflow-x: hidden;
     }
 
     .wrapper.shifted {
@@ -105,10 +105,10 @@
       background: none;
       border: none;
       color: white;
-      text-align: center; /* Centered title */
-      padding: 20px; /* a bit more padding for bigger button */
+      text-align: center;
+      padding: 20px;
       width: 100%;
-      font-size: 1.4rem; /* bigger font */
+      font-size: 1.4rem;
       font-weight: bold;
       cursor: pointer;
     }
@@ -124,7 +124,8 @@
 
     .dropdown.open .dropdown-content {
       opacity: 1;
-      max-height: 1000px; /* big enough for content */
+      max-height: 300px; /* scrollable height */
+      overflow-y: auto;  /* enable vertical scrolling */
       padding: 15px 0;
       pointer-events: auto;
     }
