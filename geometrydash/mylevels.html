@@ -89,24 +89,7 @@
       max-width: 800px;
       margin: 0 auto;
       box-sizing: border-box;
-
-      display: flex;
-      flex-direction: column;
-      align-items: center;
       text-align: center;
-    }
-
-    .search-bar input {
-      padding: 10px;
-      border: 1px solid #444;
-      border-radius: 5px;
-      background-color: #2a2a2a;
-      color: white;
-      font-size: 1rem;
-      margin-bottom: 30px;
-      width: 100%;
-      max-width: 400px;
-      display: block;
     }
 
     .dropdown {
@@ -116,12 +99,8 @@
       margin: 30px 0;
       overflow: hidden;
       transition: all 0.5s ease;
-      max-width: 400px;
-      width: 100%;
+      max-width: 100%;
       box-sizing: border-box;
-
-      margin-left: auto;
-      margin-right: auto;
     }
 
     .dropdown button {
@@ -158,6 +137,7 @@
       flex-direction: column;
       align-items: center;
       text-align: center;
+      max-width: 100%;
     }
 
     .dropdown-content img {
@@ -165,6 +145,17 @@
       height: auto;
       border-radius: 5px;
       margin-bottom: 10px;
+    }
+
+    #searchBar {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      background-color: #2a2a2a;
+      color: white;
+      border: 1px solid #444;
+      border-radius: 5px;
+      margin-top: 20px;
     }
   </style>
 </head>
@@ -180,28 +171,74 @@
   <!-- Sidebar -->
   <div class="sidebar" id="sidebar">Loading sidebar...</div>
 
-  <!-- Wrapper -->
+  <!-- Wrapper for shifting content -->
   <div class="wrapper" id="wrapper">
     <div class="main-content">
       <h1>My Levels</h1>
       <p>This page contains all of my uploaded levels with a description and image of each.</p>
 
-      <div class="search-bar">
-        <input type="text" id="searchInput" placeholder="Search levels..." oninput="filterDropdowns()">
+      <input type="text" id="searchBar" oninput="filterDropdowns()" placeholder="Search levels...">
+
+      <!-- DROPDOWNS BELOW -->
+      <div class="dropdown">
+        <button onclick="toggleDropdown(this)">0a1 Bonk</button>
+        <div class="dropdown-content">
+          <div class="dropdown-inner">
+            <img src="https://levelthumbs.prevter.me/thumbnail/111622447/small" alt="0a1 Bonk">
+            <p>UNDER CONSTRUCTION</p>
+          </div>
+        </div>
       </div>
 
-      <!-- Dropdowns -->
-      <div class="dropdown"><button onclick="toggleDropdown(this)">0a1 Bonk</button><div class="dropdown-content"><div class="dropdown-inner"><img src="https://levelthumbs.prevter.me/thumbnail/111622447/small" alt="0a1 Bonk"><p>UNDER CONSTRUCTION</p></div></div></div>
+      <div class="dropdown">
+        <button onclick="toggleDropdown(this)">C H I L L</button>
+        <div class="dropdown-content">
+          <div class="dropdown-inner">
+            <img src="https://levelthumbs.prevter.me/thumbnail/84539175/small" alt="C H I L L">
+            <p>UNDER CONSTRUCTION</p>
+          </div>
+        </div>
+      </div>
 
-      <div class="dropdown"><button onclick="toggleDropdown(this)">C H I L L</button><div class="dropdown-content"><div class="dropdown-inner"><img src="https://levelthumbs.prevter.me/thumbnail/84539175/small" alt="C H I L L"><p>UNDER CONSTRUCTION</p></div></div></div>
+      <div class="dropdown">
+        <button onclick="toggleDropdown(this)">EpicSparkZ Challenge</button>
+        <div class="dropdown-content">
+          <div class="dropdown-inner">
+            <img src="https://levelthumbs.prevter.me/thumbnail/113708470/small" alt="EpicSparkZ Challenge">
+            <p>UNDER CONSTRUCTION</p>
+          </div>
+        </div>
+      </div>
 
-      <div class="dropdown"><button onclick="toggleDropdown(this)">EpicSparkZ Challenge</button><div class="dropdown-content"><div class="dropdown-inner"><img src="https://levelthumbs.prevter.me/thumbnail/113708470/small" alt="EpicSparkZ Challenge"><p>UNDER CONSTRUCTION</p></div></div></div>
+      <div class="dropdown">
+        <button onclick="toggleDropdown(this)">Glitch Hop</button>
+        <div class="dropdown-content">
+          <div class="dropdown-inner">
+            <img src="https://levelthumbs.prevter.me/thumbnail/113786810/small" alt="Glitch Hop">
+            <p>UNDER CONSTRUCTION</p>
+          </div>
+        </div>
+      </div>
 
-      <div class="dropdown"><button onclick="toggleDropdown(this)">Glitch Hop</button><div class="dropdown-content"><div class="dropdown-inner"><img src="https://levelthumbs.prevter.me/thumbnail/113786810/small" alt="Glitch Hop"><p>UNDER CONSTRUCTION</p></div></div></div>
+      <div class="dropdown">
+        <button onclick="toggleDropdown(this)">HAUNTED</button>
+        <div class="dropdown-content">
+          <div class="dropdown-inner">
+            <img src="https://levelthumbs.prevter.me/thumbnail/115308697/small" alt="HAUNTED">
+            <p>UNDER CONSTRUCTION</p>
+          </div>
+        </div>
+      </div>
 
-      <div class="dropdown"><button onclick="toggleDropdown(this)">HAUNTED</button><div class="dropdown-content"><div class="dropdown-inner"><img src="https://levelthumbs.prevter.me/thumbnail/115308697/small" alt="HAUNTED"><p>UNDER CONSTRUCTION</p></div></div></div>
-
-      <div class="dropdown"><button onclick="toggleDropdown(this)">Tears of Joy</button><div class="dropdown-content"><div class="dropdown-inner"><img src="https://levelthumbs.prevter.me/thumbnail/108108615/small" alt="Tears of Joy"><p>UNDER CONSTRUCTION</p></div></div></div>
+      <div class="dropdown">
+        <button onclick="toggleDropdown(this)">Tears of Joy</button>
+        <div class="dropdown-content">
+          <div class="dropdown-inner">
+            <img src="https://levelthumbs.prevter.me/thumbnail/108108615/small" alt="Tears of Joy">
+            <p>UNDER CONSTRUCTION</p>
+          </div>
+        </div>
+      </div>
 
     </div>
   </div>
@@ -231,16 +268,15 @@
     }
 
     function filterDropdowns() {
-      const input = document.getElementById("searchInput").value.toLowerCase().replace(/\s+/g, '');
+      const input = document.getElementById("searchBar").value.toLowerCase().replace(/\s+/g, '');
       const dropdowns = document.querySelectorAll(".dropdown");
 
-      dropdowns.forEach(drop => {
-        const text = drop.querySelector("button").textContent.toLowerCase().replace(/\s+/g, '');
-        drop.style.display = text.includes(input) ? "block" : "none";
+      dropdowns.forEach(dropdown => {
+        const title = dropdown.querySelector("button").textContent.toLowerCase().replace(/\s+/g, '');
+        dropdown.style.display = title.includes(input) ? "block" : "none";
       });
     }
 
-    // Load sidebar
     fetch('/sidebar.html')
       .then(response => {
         if (!response.ok) throw new Error("Failed to load sidebar");
@@ -249,8 +285,8 @@
       .then(data => {
         document.getElementById("sidebar").innerHTML = data;
       })
-      .catch(err => {
-        console.error(err);
+      .catch(error => {
+        console.error(error);
         document.getElementById("sidebar").innerHTML = "Failed to load sidebar.";
       });
   </script>
