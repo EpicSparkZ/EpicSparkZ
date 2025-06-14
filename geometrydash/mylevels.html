@@ -111,21 +111,28 @@
       max-height: 0;
       opacity: 0;
       overflow: hidden;
-      padding: 0 15px;
+      padding: 0;
       transition: max-height 0.5s ease, opacity 0.5s ease, padding 0.3s ease;
       pointer-events: none;
     }
 
     .dropdown.open .dropdown-content {
       opacity: 1;
-      padding: 15px;
+      max-height: 1000px;
+      padding: 10px 15px;
       pointer-events: auto;
+    }
+
+    .dropdown-inner {
+      max-width: 600px;
+      margin-top: 10px;
     }
 
     .dropdown-content img {
       max-width: 100%;
       border-radius: 5px;
       margin-bottom: 10px;
+      display: block;
     }
   </style>
 </head>
@@ -151,8 +158,10 @@
       <div class="dropdown">
         <button onclick="toggleDropdown(this)">HAUNTED</button>
         <div class="dropdown-content">
-          <img src="https://levelthumbs.prevter.me/thumbnail/115308697/small" alt="HAUNTED">
-          <p>UNDER CONSTRUCTION</p>
+          <div class="dropdown-inner">
+            <img src="https://levelthumbs.prevter.me/thumbnail/115308697/small" alt="HAUNTED">
+            <p>UNDER CONSTRUCTION</p>
+          </div>
         </div>
       </div>
 
@@ -160,8 +169,10 @@
       <div class="dropdown">
         <button onclick="toggleDropdown(this)">C H I L L</button>
         <div class="dropdown-content">
-          <img src="https://levelthumbs.prevter.me/thumbnail/84539175/small" alt="C H I L L">
-          <p>UNDER CONSTRUCTION</p>
+          <div class="dropdown-inner">
+            <img src="https://levelthumbs.prevter.me/thumbnail/84539175/small" alt="C H I L L">
+            <p>UNDER CONSTRUCTION</p>
+          </div>
         </div>
       </div>
 
