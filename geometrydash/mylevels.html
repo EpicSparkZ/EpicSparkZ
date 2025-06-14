@@ -83,52 +83,48 @@
 
     .main-content {
       padding: 40px;
-      max-width: none;
-      margin: 0;
+      max-width: 800px;
+      margin: 0 auto;
     }
 
     .dropdown {
-      margin: 20px 0;
+      background-color: #2a2a2a;
       border: 1px solid #444;
       border-radius: 5px;
-      overflow: hidden;
+      margin: 20px 0;
     }
 
     .dropdown button {
-      width: 100%;
-      padding: 15px;
-      font-size: 16px;
-      background-color: #333;
-      color: white;
+      background: none;
       border: none;
+      color: white;
       text-align: left;
+      padding: 15px;
+      width: 100%;
+      font-size: 1.1rem;
       cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    .dropdown button:hover {
-      background-color: #444;
     }
 
     .dropdown-content {
       max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.4s ease, opacity 0.4s ease;
       opacity: 0;
+      overflow: hidden;
       padding: 0 15px;
+      transition: max-height 0.5s ease, opacity 0.5s ease, padding 0.3s ease;
+      pointer-events: none;
     }
 
     .dropdown.open .dropdown-content {
-      max-height: 500px;
+      max-height: 1000px;
       opacity: 1;
       padding: 15px;
+      pointer-events: auto;
     }
 
     .dropdown-content img {
       max-width: 100%;
-      height: auto;
+      border-radius: 5px;
       margin-bottom: 10px;
-      border-radius: 4px;
     }
   </style>
 </head>
@@ -142,9 +138,7 @@
   </div>
 
   <!-- Sidebar -->
-  <div class="sidebar" id="sidebar">
-    <!-- Sidebar links will load here -->
-  </div>
+  <div class="sidebar" id="sidebar"></div>
 
   <!-- Wrapper for shifting content -->
   <div class="wrapper" id="wrapper">
@@ -154,19 +148,19 @@
 
       <!-- Dropdown Example 1 -->
       <div class="dropdown">
-        <button onclick="toggleDropdown(this)">HAUNTED</button>
+        <button onclick="toggleDropdown(this)">Level 1: Haunted</button>
         <div class="dropdown-content">
-          <img src="path_to_image1.jpg" alt="Level Screenshot">
-          <p>HAUNTED is one of my most unique Geometry Dash levels.</p>
+          <img src="https://via.placeholder.com/600x200?text=Haunted" alt="Haunted">
+          <p>A mysterious and atmospheric level with haunting visuals and custom music.</p>
         </div>
       </div>
 
       <!-- Dropdown Example 2 -->
       <div class="dropdown">
-        <button onclick="toggleDropdown(this)">ELECTRIC STORM</button>
+        <button onclick="toggleDropdown(this)">Level 2: Eternal Flames</button>
         <div class="dropdown-content">
-          <img src="path_to_image2.jpg" alt="Level Screenshot">
-          <p>ELECTRIC STORM is a fast-paced level with high-energy visuals and music.</p>
+          <img src="https://via.placeholder.com/600x200?text=Eternal+Flames" alt="Eternal Flames">
+          <p>A fiery and fast-paced level filled with intensity and high-skill gameplay.</p>
         </div>
       </div>
 
@@ -183,7 +177,17 @@
 
     function toggleDropdown(button) {
       const dropdown = button.parentElement;
-      dropdown.classList.toggle("open");
+      const content = dropdown.querySelector('.dropdown-content');
+
+      if (dropdown.classList.contains('open')) {
+        content.style.maxHeight = content.scrollHeight + "px"; // set before collapse
+        requestAnimationFrame(() => {
+          dropdown.classList.remove("open");
+        });
+      } else {
+        dropdown.classList.add("open");
+        content.style.maxHeight = content.scrollHeight + "px";
+      }
     }
 
     // Load sidebar links from sidebar.html
