@@ -4,13 +4,13 @@
   <meta charset="UTF-8" />
   <title>My Levels</title>
   <style>
-    body {
+    body, html {
+      height: 100%;
       margin: 0;
       font-family: Arial, sans-serif;
       background-color: #1e1e1e;
       color: white;
       overflow-x: hidden;
-      text-align: center; /* Center text */
     }
 
     .sidebar {
@@ -24,7 +24,6 @@
       transition: left 0.3s ease;
       box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
       z-index: 1000;
-      text-align: left; /* Sidebar text left-aligned */
     }
 
     .sidebar.open {
@@ -76,6 +75,7 @@
     }
 
     .wrapper {
+      min-height: 100%;
       transition: margin-left 0.3s ease;
     }
 
@@ -84,45 +84,54 @@
     }
 
     .main-content {
-      padding: 40px;
+      padding-top: 40px;
       max-width: 700px;
       margin: 0 auto;
-      text-align: center; /* Center the main content text */
+      text-align: center;
     }
 
-    .main-content p {
-      margin-bottom: 30px; /* space below the intro paragraph */
+    /* Dropdown Styles */
+    .dropdown {
+      margin: 30px auto 10px; /* space above and below */
+      max-width: 700px;
+      text-align: left;
     }
 
     .dropdown-header {
+      background-color: #2a2a2a;
+      padding: 15px 20px;
       cursor: pointer;
+      font-weight: 600;
+      border-radius: 5px;
       user-select: none;
       color: #ccc;
-      margin-bottom: 10px;
-      font-size: 1.25rem;
-      transition: color 0.2s ease;
-      margin-top: 40px; /* Added vertical spacing */
-    }
-
-    .dropdown-header:hover {
-      color: white;
+      border: 1px solid #444;
     }
 
     .dropdown-content {
-      max-height: 0;
       overflow: hidden;
-      transition: max-height 0.5s ease;
-      margin-bottom: 10px;
+      max-height: 0;
+      opacity: 0;
+      transition: max-height 0.5s ease, opacity 0.5s ease;
+      background-color: #333;
+      border-radius: 0 0 5px 5px;
+      border: 1px solid #444;
+      border-top: none;
+      padding: 0 20px;
+      color: #ddd;
     }
 
     .dropdown-content.open {
-      max-height: 1000px; /* Large enough to show content */
+      max-height: 500px; /* large enough for content */
+      opacity: 1;
+      padding: 20px;
     }
 
     .dropdown-content img {
+      display: block;
       max-width: 100%;
-      height: auto;
-      margin-bottom: 15px; /* spacing below image */
+      margin-bottom: 15px;
+      border-radius: 5px;
     }
   </style>
 </head>
@@ -147,18 +156,22 @@
       <p>This page contains all of my uploaded levels with a description and image of each.</p>
 
       <div class="dropdown">
-        <div class="dropdown-header" onclick="toggleDropdown(this)">Level 1: Haunted</div>
+        <div class="dropdown-header" onclick="toggleDropdown(this)">
+          Level 1 - Haunted Forest
+        </div>
         <div class="dropdown-content">
-          <img src="https://via.placeholder.com/600x300?text=Haunted+Level+Image" alt="Haunted Level Image" />
-          <p>This is a spooky haunted level full of surprises and challenges.</p>
+          <img src="https://via.placeholder.com/600x300?text=Haunted+Forest" alt="Haunted Forest level preview" />
+          <p>A spooky level with challenging jumps and eerie music.</p>
         </div>
       </div>
 
       <div class="dropdown">
-        <div class="dropdown-header" onclick="toggleDropdown(this)">Level 2: Sky High</div>
+        <div class="dropdown-header" onclick="toggleDropdown(this)">
+          Level 2 - Crystal Caves
+        </div>
         <div class="dropdown-content">
-          <img src="https://via.placeholder.com/600x300?text=Sky+High+Level+Image" alt="Sky High Level Image" />
-          <p>Fly through the clouds in this thrilling sky-themed level.</p>
+          <img src="https://via.placeholder.com/600x300?text=Crystal+Caves" alt="Crystal Caves level preview" />
+          <p>A shiny cave-themed level full of tricky maneuvers and glittering gems.</p>
         </div>
       </div>
 
@@ -173,11 +186,6 @@
       wrapper.classList.toggle("shifted");
     }
 
-    function toggleDropdown(header) {
-      const content = header.nextElementSibling;
-      content.classList.toggle("open");
-    }
-
     // Load sidebar links from sidebar.html
     fetch('sidebar.html')
       .then(response => response.text())
@@ -187,6 +195,12 @@
       .catch(error => {
         console.error("Failed to load sidebar:", error);
       });
+
+    // Dropdown toggle function
+    function toggleDropdown(header) {
+      const content = header.nextElementSibling;
+      content.classList.toggle("open");
+    }
   </script>
 
 </body>
