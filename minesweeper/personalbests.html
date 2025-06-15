@@ -85,80 +85,21 @@
       margin-bottom: 4px;
     }
 
-    /* Smooth opacity transition for fading effect */
-    .main-content p, .main-content h1, .main-content h2 {
-      transition: opacity 0.3s ease;
-    }
-
-    /* Beginner: light green to dark green */
-    .best-time-link {
-      color: #32cd32; /* brighter lime green */
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-    .best-time-link:hover {
-      color: #006400; /* dark green */
-    }
-
-    /* Intermediate: teal blue to dark teal */
-    .int-time-link {
-      color: #008080; /* teal */
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-    .int-time-link:hover {
-      color: #004c4c; /* dark teal */
-    }
-
-    /* Expert: less desaturated red */
-    .expert-time-link {
-      color: #e57373; /* softer, less saturated red */
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-    .expert-time-link:hover {
-      color: #8b0000; /* dark red */
-    }
-
-    /* Easy NG: lime green to dark green */
-    .easy-ng-time-link {
-      color: #32cd32; /* lime green */
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-    .easy-ng-time-link:hover {
-      color: #006400; /* dark green */
-    }
-
-    /* Medium NG: teal blue to dark teal */
-    .medium-ng-time-link {
-      color: #008080; /* teal */
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-    .medium-ng-time-link:hover {
-      color: #004c4c; /* dark teal */
-    }
-
-    /* Hard NG: reddish orange to dark */
-    .hard-ng-time-link {
-      color: #ff4500; /* reddish orange */
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-    .hard-ng-time-link:hover {
-      color: #8b2500; /* dark reddish */
-    }
-
-    /* Evil NG: less desaturated purple to dark purple */
-    .evil-ng-time-link {
-      color: #a186be; /* less desaturated purple */
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-    .evil-ng-time-link:hover {
-      color: #4b0082; /* dark indigo purple */
-    }
+    /* Color classes */
+    .best-time-link { color: #32cd32; text-decoration: none; transition: color 0.3s ease; }
+    .best-time-link:hover { color: #006400; }
+    .int-time-link { color: #008080; text-decoration: none; transition: color 0.3s ease; }
+    .int-time-link:hover { color: #004c4c; }
+    .expert-time-link { color: #e57373; text-decoration: none; transition: color 0.3s ease; }
+    .expert-time-link:hover { color: #8b0000; }
+    .easy-ng-time-link { color: #32cd32; text-decoration: none; transition: color 0.3s ease; }
+    .easy-ng-time-link:hover { color: #006400; }
+    .medium-ng-time-link { color: #008080; text-decoration: none; transition: color 0.3s ease; }
+    .medium-ng-time-link:hover { color: #004c4c; }
+    .hard-ng-time-link { color: #ff4500; text-decoration: none; transition: color 0.3s ease; }
+    .hard-ng-time-link:hover { color: #8b2500; }
+    .evil-ng-time-link { color: #a186be; text-decoration: none; transition: color 0.3s ease; }
+    .evil-ng-time-link:hover { color: #4b0082; }
 
   </style>
 </head>
@@ -216,52 +157,52 @@
 
   <script>
     function toggleSidebar() {
-      const sidebar = document.getElementById('sidebar');
-      sidebar.classList.toggle('open');
+      document.getElementById('sidebar').classList.toggle('open');
       updateOpacity();
     }
 
     // Load sidebar nav
     fetch('/sidebar.html')
       .then(res => res.ok ? res.text() : Promise.reject(res))
-      .then(html => document.getElementById('sidebar').innerHTML = html)
+      .then(html => {
+        document.getElementById('sidebar').innerHTML = html;
+        updateOpacity();
+      })
       .catch(err => {
         console.error('Sidebar load failed', err);
         document.getElementById('sidebar').innerHTML = 'Failed to load menu.';
       });
 
+    // Opacity update function
     function updateOpacity() {
       const sidebar = document.getElementById('sidebar');
       const sidebarRect = sidebar.getBoundingClientRect();
       const sidebarRight = sidebarRect.right;
 
-      const threshold = 150; // pixels from sidebar to start fading
+      const fadeDistance = 100; // px distance to start fade
 
       const texts = document.querySelectorAll('.main-content p, .main-content h1, .main-content h2');
 
       texts.forEach(el => {
         const rect = el.getBoundingClientRect();
-        const distance = rect.left - sidebarRight;
+        const distanceToSidebar = rect.left - sidebarRight;
 
-        if (distance <= 0) {
-          // Text is under sidebar area (should be invisible)
+        if (distanceToSidebar < 0) {
           el.style.opacity = 0;
-        } else if (distance < threshold) {
-          // Fade based on proximity
-          el.style.opacity = distance / threshold;
+        } else if (distanceToSidebar < fadeDistance) {
+          el.style.opacity = distanceToSidebar / fadeDistance;
         } else {
-          // Fully visible
           el.style.opacity = 1;
         }
       });
     }
 
-    // Initial call
-    updateOpacity();
-
-    // Update on scroll and resize
+    // Update opacity on scroll and resize for responsiveness
     window.addEventListener('scroll', updateOpacity);
     window.addEventListener('resize', updateOpacity);
+
+    // Initial call
+    window.addEventListener('load', updateOpacity);
   </script>
 
 </body>
