@@ -78,6 +78,16 @@
     h1 { font-size: 2rem; margin-bottom: 20px; }
     p, li { line-height: 1.6; margin-bottom: 10px; }
     ul { padding-left: 1.2em; }
+
+    /* Custom link color for personal best times */
+    .best-time-link {
+      color: #006400; /* dark green */
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .best-time-link:hover {
+      color: #90ee90; /* light green */
+    }
   </style>
 </head>
 <body>
@@ -96,8 +106,7 @@
     <p>This page contains all of my personal bests for all categories that I have achieved on Minesweeper.Online.</p>
     <br><br>
     <h2>Best Times:</h2>
-    <p>Beginner:</p> 
-    <p><a href="https://minesweeper.online/player/18271871" style="color: #4cf0ff;">2.323</a></p>
+    <p>Beginner: <a href="https://minesweeper.online/player/18271871" class="best-time-link">2.323</a></p>
   </div>
 
   <script>
