@@ -212,13 +212,30 @@
     <div class="main-content">
       <div style="position: absolute; top: 40px; right: 40px; text-align: right; color: white; line-height: 1.6; font-size: 1rem;">
         <div>Total Uploaded Levels:</div>
-        <div id="total-rates" style="cursor:pointer; color:#0af;">Total Rates:</div>
+
+        <div class="dropdown" style="margin-top: 5px;">
+          <button id="total-rates-btn" style="color:#0af; cursor:pointer; font-weight: bold; background:none; border:none; width: 100%; text-align: right; padding: 0;">Total Rates:</button>
+          <div class="dropdown-content">
+            <div class="dropdown-inner" style="text-align:left; padding: 10px 0;">
+              <p>Total Star Rates: 1234</p>
+              <p>Total Features: 56</p>
+              <p>Total Epics: 78</p>
+              <p>Total Legendaries: 9</p>
+              <p>Total Mythics: 10</p>
+              <hr style="border-color:#444;">
+              <h2>My Levels</h2>
+              <p>This page contains all of my uploaded levels with a description and image of each.</p>
+              <input type="text" placeholder="Search levels..." disabled style="width:100%; padding:8px; margin: 10px 0; background-color:#2a2a2a; border: 1px solid #444; color:#888;">
+              <p>0a1 Bonk (111622447)</p>
+            </div>
+          </div>
+        </div>
+
         <div>Total Creator Points:</div>
         <div>Total Features:</div>
         <div>Total Epics:</div>
         <div>Total Legendaries:</div>
         <div>Total Mythics:</div>
-        <div id="rates-text" style="display:none; margin-top: 10px; text-align:left;"></div>
       </div>
       <h1>My Levels</h1>
       <p>This page contains all of my uploaded levels with a description and image of each.</p>
@@ -346,27 +363,6 @@
     });
   }
 
-  document.getElementById('total-rates').addEventListener('click', () => {
-    const ratesText = document.getElementById('rates-text');
-    if (ratesText.style.display === 'none' || !ratesText.style.display) {
-      ratesText.style.display = 'block';
-      ratesText.innerHTML = `
-        <p>Total Star Rates: 1234</p>
-        <p>Total Features: 56</p>
-        <p>Total Epics: 78</p>
-        <p>Total Legendaries: 9</p>
-        <p>Total Mythics: 10</p>
-        <hr>
-        <h2>My Levels</h2>
-        <p>This page contains all of my uploaded levels with a description and image of each.</p>
-        <input type="text" placeholder="Search levels..." disabled style="width:100%; padding:8px; margin: 10px 0;">
-        <p>0a1 Bonk (111622447)</p>
-      `;
-    } else {
-      ratesText.style.display = 'none';
-    }
-  });
-
   fetch('/sidebar.html')
     .then(response => {
       if (!response.ok) {
@@ -381,6 +377,23 @@
       console.error(error);
       document.getElementById("sidebar").innerHTML = "Failed to load sidebar.";
     });
+
+  // Toggle the Total Rates dropdown
+  document.getElementById('total-rates-btn').addEventListener('click', function() {
+    const dropdown = this.parentElement;
+    const content = dropdown.querySelector('.dropdown-content');
+
+    if (dropdown.classList.contains('open')) {
+      content.style.maxHeight = content.scrollHeight + "px";
+      requestAnimationFrame(() => {
+        content.style.maxHeight = "0px";
+        dropdown.classList.remove('open');
+      });
+    } else {
+      dropdown.classList.add('open');
+      content.style.maxHeight = content.scrollHeight + "px";
+    }
+  });
 </script>
 
 </body>
