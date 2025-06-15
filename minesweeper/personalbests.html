@@ -85,6 +85,11 @@
       margin-bottom: 4px;
     }
 
+    /* Smooth opacity transition for fading effect */
+    .main-content p, .main-content h1, .main-content h2 {
+      transition: opacity 0.3s ease;
+    }
+
     /* Beginner: light green to dark green */
     .best-time-link {
       color: #32cd32; /* brighter lime green */
@@ -211,7 +216,9 @@
 
   <script>
     function toggleSidebar() {
-      document.getElementById('sidebar').classList.toggle('open');
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('open');
+      updateOpacity();
     }
 
     // Load sidebar nav
@@ -222,6 +229,39 @@
         console.error('Sidebar load failed', err);
         document.getElementById('sidebar').innerHTML = 'Failed to load menu.';
       });
+
+    function updateOpacity() {
+      const sidebar = document.getElementById('sidebar');
+      const sidebarRect = sidebar.getBoundingClientRect();
+      const sidebarRight = sidebarRect.right;
+
+      const threshold = 150; // pixels from sidebar to start fading
+
+      const texts = document.querySelectorAll('.main-content p, .main-content h1, .main-content h2');
+
+      texts.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        const distance = rect.left - sidebarRight;
+
+        if (distance <= 0) {
+          // Text is under sidebar area (should be invisible)
+          el.style.opacity = 0;
+        } else if (distance < threshold) {
+          // Fade based on proximity
+          el.style.opacity = distance / threshold;
+        } else {
+          // Fully visible
+          el.style.opacity = 1;
+        }
+      });
+    }
+
+    // Initial call
+    updateOpacity();
+
+    // Update on scroll and resize
+    window.addEventListener('scroll', updateOpacity);
+    window.addEventListener('resize', updateOpacity);
   </script>
 
 </body>
