@@ -7,37 +7,33 @@
   <style>
     body {
       margin: 0;
-      background-color: #111;
-      color: white;
       font-family: Arial, sans-serif;
+      background-color: #1e1e1e;
+      color: white;
       overflow-x: hidden;
     }
 
     .sidebar {
       position: fixed;
       top: 0;
-      left: -260px;
-      width: 260px;
+      left: -250px;
+      width: 250px;
       height: 100%;
-      background-color: #222;
-      padding: 60px 20px 20px;
-      box-shadow: 2px 0 6px rgba(0,0,0,0.5);
+      background-color: #2a2a2a;
+      padding-top: 60px;
       transition: left 0.3s ease;
-      z-index: 900;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.5);
+      z-index: 1000;
     }
-    .sidebar.open {
-      left: 0;
-    }
-
+    .sidebar.open { left: 0; }
     .sidebar a {
       display: block;
-      padding: 10px 0;
       color: #ccc;
+      padding: 12px 20px;
       text-decoration: none;
+      transition: background 0.2s;
     }
-    .sidebar a:hover {
-      color: white;
-    }
+    .sidebar a:hover { background-color: #444; color: #fff; }
 
     .sidebar-box {
       position: fixed;
@@ -47,9 +43,9 @@
       height: 35px;
       background-color: #2a2a2a;
       border-radius: 6px;
-      z-index: 950;
-      transition: opacity 0.3s ease;
+      z-index: 1000;
       pointer-events: none;
+      transition: opacity 0.3s ease;
       opacity: 1;
     }
 
@@ -59,64 +55,65 @@
       left: 20px;
       width: 30px;
       height: 24px;
-      z-index: 1000;
       cursor: pointer;
+      z-index: 1001;
     }
     .hamburger div {
       width: 100%;
       height: 4px;
-      margin: 4px 0;
       background-color: white;
+      margin: 4px 0;
       transition: all 0.3s ease;
     }
 
     .main-content {
+      margin-left: 0;
+      padding: 40px;
+      transition: margin-left 0.3s ease;
       max-width: 800px;
-      padding: 40px 20px;
-      margin: 0 auto;
+      box-sizing: border-box;
+    }
+    .sidebar.open ~ .main-content {
+      margin-left: 250px;
     }
 
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 20px;
-    }
-    p {
-      margin: 6px 0;
+    h1 { font-size: 2rem; margin-bottom: 20px; }
+    p, li { line-height: 1.6; }
+    ul { padding-left: 1.2em; }
+
+    .main-content > p {
+      margin-top: 4px;
+      margin-bottom: 4px;
     }
 
-    a {
-      text-decoration: none;
-      transition: color 0.2s ease;
-    }
-
-    .best-time-link { color: #32cd32; }
+    .best-time-link { color: #32cd32; text-decoration: none; transition: color 0.3s ease; }
     .best-time-link:hover { color: #006400; }
 
-    .int-time-link { color: #008080; }
+    .int-time-link { color: #008080; text-decoration: none; transition: color 0.3s ease; }
     .int-time-link:hover { color: #004c4c; }
 
-    .expert-time-link { color: #e57373; }
+    .expert-time-link { color: #e57373; text-decoration: none; transition: color 0.3s ease; }
     .expert-time-link:hover { color: #8b0000; }
 
-    .easy-ng-time-link { color: #32cd32; }
+    .easy-ng-time-link { color: #32cd32; text-decoration: none; transition: color 0.3s ease; }
     .easy-ng-time-link:hover { color: #006400; }
 
-    .medium-ng-time-link { color: #008080; }
+    .medium-ng-time-link { color: #008080; text-decoration: none; transition: color 0.3s ease; }
     .medium-ng-time-link:hover { color: #004c4c; }
 
-    .hard-ng-time-link { color: #ff4500; }
+    .hard-ng-time-link { color: #ff4500; text-decoration: none; transition: color 0.3s ease; }
     .hard-ng-time-link:hover { color: #8b2500; }
 
-    .evil-ng-time-link { color: #a186be; }
+    .evil-ng-time-link { color: #a186be; text-decoration: none; transition: color 0.3s ease; }
     .evil-ng-time-link:hover { color: #4b0082; }
   </style>
 </head>
 <body>
 
-  <!-- Sidebar box -->
-  <div class="sidebar-box" id="sidebar-box"></div>
+  <!-- Box around hamburger -->
+  <div class="sidebar-box"></div>
 
-  <!-- Hamburger icon -->
+  <!-- Hamburger -->
   <div class="hamburger" onclick="toggleSidebar()">
     <div></div><div></div><div></div>
   </div>
@@ -124,7 +121,7 @@
   <!-- Sidebar -->
   <div class="sidebar" id="sidebar">Loading...</div>
 
-  <!-- Main content -->
+  <!-- Main -->
   <div class="main-content">
     <h1>Personal Bests</h1>
     <p>This page contains all of my personal bests for all categories that I have achieved on Minesweeper.Online.</p>
@@ -169,7 +166,7 @@
   <script>
     function toggleSidebar() {
       const sidebar = document.getElementById('sidebar');
-      const box = document.getElementById('sidebar-box');
+      const box = document.querySelector('.sidebar-box');
       sidebar.classList.toggle('open');
       box.style.opacity = sidebar.classList.contains('open') ? '0' : '1';
     }
@@ -177,7 +174,8 @@
     fetch('/sidebar.html')
       .then(res => res.ok ? res.text() : Promise.reject(res))
       .then(html => document.getElementById('sidebar').innerHTML = html)
-      .catch(() => {
+      .catch(err => {
+        console.error('Sidebar load failed', err);
         document.getElementById('sidebar').innerHTML = 'Failed to load menu.';
       });
   </script>
