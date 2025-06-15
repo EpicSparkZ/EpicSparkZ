@@ -211,17 +211,15 @@
   <div class="wrapper" id="wrapper">
     <div class="main-content">
       <div style="position: absolute; top: 40px; right: 40px; text-align: right; color: white; line-height: 1.6; font-size: 1rem;">
-  <div>Total Uploaded Levels:</div>
-  <div id="total-rates" style="cursor:pointer; text-decoration: underline;">Total Rates:</div>
-  <div>Total Creator Points:</div>
-  <div id="rates-text" style="display:none; margin-top:4px; font-size: 0.9rem; color:#aaa;">
-    Here is the text shown when you click Total Rates.
-  </div>
-  <div>Total Features:</div>
-  <div>Total Epics:</div>
-  <div>Total Legendaries:</div>
-  <div>Total Mythics:</div>
-</div>
+        <div>Total Uploaded Levels:</div>
+        <div id="total-rates" style="cursor:pointer; color:#0af;">Total Rates:</div>
+        <div>Total Creator Points:</div>
+        <div>Total Features:</div>
+        <div>Total Epics:</div>
+        <div>Total Legendaries:</div>
+        <div>Total Mythics:</div>
+        <div id="rates-text" style="display:none; margin-top: 10px; text-align:left;"></div>
+      </div>
       <h1>My Levels</h1>
       <p>This page contains all of my uploaded levels with a description and image of each.</p>
 
@@ -348,6 +346,27 @@
     });
   }
 
+  document.getElementById('total-rates').addEventListener('click', () => {
+    const ratesText = document.getElementById('rates-text');
+    if (ratesText.style.display === 'none' || !ratesText.style.display) {
+      ratesText.style.display = 'block';
+      ratesText.innerHTML = `
+        <p>Total Star Rates: 1234</p>
+        <p>Total Features: 56</p>
+        <p>Total Epics: 78</p>
+        <p>Total Legendaries: 9</p>
+        <p>Total Mythics: 10</p>
+        <hr>
+        <h2>My Levels</h2>
+        <p>This page contains all of my uploaded levels with a description and image of each.</p>
+        <input type="text" placeholder="Search levels..." disabled style="width:100%; padding:8px; margin: 10px 0;">
+        <p>0a1 Bonk (111622447)</p>
+      `;
+    } else {
+      ratesText.style.display = 'none';
+    }
+  });
+
   fetch('/sidebar.html')
     .then(response => {
       if (!response.ok) {
@@ -362,15 +381,6 @@
       console.error(error);
       document.getElementById("sidebar").innerHTML = "Failed to load sidebar.";
     });
-
-  document.getElementById('total-rates').addEventListener('click', () => {
-    const ratesText = document.getElementById('rates-text');
-    if (ratesText.style.display === 'none') {
-      ratesText.style.display = 'block';
-    } else {
-      ratesText.style.display = 'none';
-    }
-  });
 </script>
 
 </body>
