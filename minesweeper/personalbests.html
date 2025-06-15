@@ -41,14 +41,12 @@
       left: 15px;
       width: 40px;
       height: 35px;
-      background-color: #2a2a2a; /* very dark grey */
+      background-color: #2a2a2a;
       border-radius: 6px;
       z-index: 1000;
       pointer-events: none;
       transition: opacity 0.3s ease;
-    }
-    .sidebar.open ~ .sidebar-box {
-      opacity: 0;
+      opacity: 1;
     }
 
     .hamburger {
@@ -167,7 +165,10 @@
 
   <script>
     function toggleSidebar() {
-      document.getElementById('sidebar').classList.toggle('open');
+      const sidebar = document.getElementById('sidebar');
+      const box = document.querySelector('.sidebar-box');
+      sidebar.classList.toggle('open');
+      box.style.opacity = sidebar.classList.contains('open') ? '0' : '1';
     }
 
     fetch('/sidebar.html')
