@@ -196,6 +196,28 @@
       background-size: 1600% 1600%;
       animation: rainbowGradient 20s linear infinite;
     }
+
+    /* Added arrow indicator for clickable total rates */
+    #total-rates {
+      cursor: pointer;
+      user-select: none;
+      position: relative;
+      padding-right: 20px;
+    }
+
+    #total-rates::after {
+      content: '▼';
+      position: absolute;
+      right: 5px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.8rem;
+      transition: transform 0.3s ease;
+    }
+
+    #total-rates.open::after {
+      transform: translateY(-50%) rotate(180deg);
+    }
   </style>
 </head>
 <body>
@@ -212,7 +234,7 @@
     <div class="main-content">
       <div style="position: absolute; top: 40px; right: 40px; text-align: right; color: white; line-height: 1.6; font-size: 1rem; width: 250px;">
         <div>Total Uploaded Levels:</div>
-        <div id="total-rates" style="cursor:pointer; user-select:none;">Total Rates:</div>
+        <div id="total-rates" onclick="toggleTotalRates()">Total Rates:</div>
         <div id="stats-default">
           <div>Total Features:</div>
           <div>Total Epics:</div>
@@ -233,6 +255,9 @@
           <input type="text" id="search-input" placeholder="Search levels..." oninput="filterDropdowns()" style="width: 100%; box-sizing: border-box; margin-bottom: 10px;">
         </div>
       </div>
+
+      <!-- rest of your content unchanged -->
+
       <h1>My Levels</h1>
       <p>This page contains all of my uploaded levels with a description and image of each.</p>
 
@@ -251,7 +276,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="dropdown">
         <button onclick="toggleDropdown(this)">C H I L L (84539175)</button>
         <div class="dropdown-content">
@@ -263,7 +288,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="dropdown">
         <button onclick="toggleDropdown(this)">EpicSparkZ Challenge (113708470)</button>
         <div class="dropdown-content">
@@ -275,7 +300,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="dropdown">
         <button onclick="toggleDropdown(this)">Glitch Hop (113786810)</button>
         <div class="dropdown-content">
@@ -299,6 +324,7 @@
           </div>
         </div>
       </div>
+
       <div class="dropdown">
         <button onclick="toggleDropdown(this)">Tears of Joy (108108615)</button>
         <div class="dropdown-content">
@@ -322,6 +348,8 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
 
 <script>
   function toggleSidebar() {
@@ -362,13 +390,16 @@
   function toggleTotalRates() {
     const dropdown = document.getElementById('rates-dropdown');
     const defaultStats = document.getElementById('stats-default');
+    const totalRates = document.getElementById('total-rates');
 
     if (dropdown.style.display === 'none' || dropdown.style.display === '') {
       dropdown.style.display = 'block';
       defaultStats.style.display = 'none';
+      totalRates.classList.add('open');
     } else {
       dropdown.style.display = 'none';
       defaultStats.style.display = 'block';
+      totalRates.classList.remove('open');
     }
   }
 
