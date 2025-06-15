@@ -230,6 +230,29 @@
   margin-left: 0 !important;
 }
 
+    /* Force left alignment for all rates */
+#rates-dropdown {
+  text-align: left !important;
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+}
+
+/* Also force children divs inside rates-dropdown */
+#rates-dropdown > div {
+  text-align: left !important;
+  margin-left: 0 !important;
+}
+
+/* Check parent container if it’s flex centering */
+#total-rates, 
+#stats-default,
+#rates-dropdown {
+  display: block !important;
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+  text-align: left !important;
+}
+
 
   </style>
 </head>
