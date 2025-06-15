@@ -10,109 +10,7 @@
       font-family: Arial, sans-serif;
       background-color: #1e1e1e;
       color: white;
-      overflow-x: hidden;
     }
-
-    .sidebar {
-      position: fixed;
-      top: 0;
-      left: -250px;
-      width: 250px;
-      height: 100%;
-      background-color: #2a2a2a;
-      padding-top: 60px;
-      transition: left 0.3s ease;
-      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
-      z-index: 1000;
-    }
-
-    .sidebar.open {
-      left: 0;
-    }
-
-    .sidebar a {
-      display: block;
-      color: #ccc;
-      padding: 12px 20px;
-      text-decoration: none;
-      transition: background 0.2s;
-    }
-
-    .sidebar a:hover {
-      background-color: #444;
-      color: #fff;
-    }
-
-    .sidebar-separator {
-      padding: 8px 20px;
-      font-weight: 600;
-      color: #bbb;
-      text-transform: uppercase;
-      font-size: 0.75rem;
-      letter-spacing: 1.5px;
-      border-top: 1px solid #444;
-      border-bottom: 1px solid #444;
-      margin: 20px 0;
-      user-select: none;
-    }
-
-    .hamburger {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      width: 30px;
-      height: 24px;
-      cursor: pointer;
-      z-index: 1001;
-    }
-
-    .hamburger div {
-      width: 100%;
-      height: 4px;
-      background-color: white;
-      margin: 4px 0;
-      transition: all 0.3s ease;
-    }
-
-    .wrapper {
-      transition: margin-left 0.3s ease;
-      max-width: 100vw;
-      overflow-x: hidden;
-    }
-
-    .wrapper.shifted {
-      margin-left: 250px;
-    }
-
-    .main-content {
-      padding: 40px;
-      max-width: 800px;
-      margin: 0 auto;
-      box-sizing: border-box;
-    }
-
-    .main-content h1,
-    .main-content p {
-      text-align: center;
-    }
-
-    #search-container {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    #search-input {
-      padding: 12px 16px;
-      font-size: 1.1rem;
-      border: 1px solid #444;
-      border-radius: 6px;
-      background-color: #2a2a2a;
-      color: white;
-      max-width: 300px;
-      width: 100%;
-      box-sizing: border-box;
-    }
-
     .dropdown {
       background-color: #2a2a2a;
       border: 1px solid #444;
@@ -120,10 +18,7 @@
       margin: 30px 0;
       overflow: hidden;
       transition: all 0.5s ease;
-      max-width: 100%;
-      box-sizing: border-box;
     }
-
     .dropdown button {
       background: none;
       border: none;
@@ -135,7 +30,6 @@
       font-weight: bold;
       cursor: pointer;
     }
-
     .dropdown-content {
       max-height: 0;
       opacity: 0;
@@ -144,7 +38,6 @@
       transition: max-height 0.5s ease, opacity 0.5s ease, padding 0.3s ease;
       pointer-events: none;
     }
-
     .dropdown.open .dropdown-content {
       opacity: 1;
       max-height: 300px;
@@ -152,7 +45,6 @@
       padding: 15px 0;
       pointer-events: auto;
     }
-
     .dropdown-inner {
       display: flex;
       flex-direction: column;
@@ -160,14 +52,12 @@
       text-align: center;
       max-width: 100%;
     }
-
     .dropdown-content img {
       max-width: 100%;
       height: auto;
       border-radius: 5px;
       margin-bottom: 10px;
     }
-
     .dropdown-inner p {
       white-space: normal !important;
       word-break: break-word;
@@ -176,12 +66,10 @@
       text-align: left;
       margin: 0 15px 10px;
     }
-
     @keyframes rainbowGradient {
       0%   { background-position: 0% 50%; }
       100% { background-position: 100% 50%; }
     }
-
     .rainbow-bg {
       background: linear-gradient(270deg,
         rgba(255, 0, 0, 0.2),
@@ -200,179 +88,125 @@
 </head>
 <body>
 
-  <div class="hamburger" onclick="toggleSidebar()">
-    <div></div>
-    <div></div>
-    <div></div>
-  </div>
-
-  <div class="sidebar" id="sidebar">Loading sidebar...</div>
-
-  <div class="wrapper" id="wrapper">
-    <div class="main-content">
-      <h1>My Levels</h1>
-      <p>This page contains all of my uploaded levels with a description and image of each.</p>
-
-      <div id="search-container">
-        <input type="text" id="search-input" placeholder="Search levels..." oninput="filterDropdowns()" />
+  <div class="dropdown">
+    <button onclick="toggleDropdown(this)">OPERATION SKYWALKER (115529640)</button>
+    <div class="dropdown-content">
+      <div class="dropdown-inner">
+        <img src="https://levelthumbs.prevter.me/thumbnail/115529640/small" alt="OPERATION SKYWALKER" />
+        <p>Use 2.1 percentage or no percentage for a better experience!</p>
       </div>
-
-      <div class="dropdown">
-        <button onclick="toggleDropdown(this)">OPERATION SKYWALKER (115529640)</button>
-        <div class="dropdown-content">
-          <div class="dropdown-inner">
-            <img src="https://levelthumbs.prevter.me/thumbnail/115529640/small" alt="OPERATION SKYWALKER">
-            <p>Use 2.1 percentage or no percentage for a better experience!</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="dropdown">
-        <button onclick="toggleDropdown(this)">UNREALISTIC (115397730)</button>
-        <div class="dropdown-content">
-          <div class="dropdown-inner">
-            <img src="https://levelthumbs.prevter.me/thumbnail/115397730/small" alt="UNREALISTIC">
-            <p>Use 2.1 percentage or no percentage for a better experience!</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="dropdown">
-        <button onclick="toggleDropdown(this)">AMY THE HERO (115358703)</button>
-        <div class="dropdown-content">
-          <div class="dropdown-inner">
-            <img src="https://levelthumbs.prevter.me/thumbnail/115358703/small" alt="AMY THE HERO">
-            <p>Use 2.1 percentage or no percentage for a better experience!</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="dropdown rainbow-bg">
-        <button onclick="toggleDropdown(this)">HAUNTED (115308697)</button>
-        <div class="dropdown-content">
-          <div class="dropdown-inner">
-            <img src="https://levelthumbs.prevter.me/thumbnail/115308697/small" alt="HAUNTED">
-            <h4><i>Use 2.1 percentage or no percentage for a better experience! Have fun on this intense ride :3</i></h4>
-            <br>
-            <p>UNDER CONSTRUCTION</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="dropdown">
-        <button onclick="toggleDropdown(this)">CHOCOLATE (115197489)</button>
-        <div class="dropdown-content">
-          <div class="dropdown-inner">
-            <img src="https://levelthumbs.prevter.me/thumbnail/115197489/small" alt="CHOCOLATE">
-            <p>Use 2.1 percentage or no percentage for a better experience!</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="dropdown">
-        <button onclick="toggleDropdown(this)">POWER (115090415)</button>
-        <div class="dropdown-content">
-          <div class="dropdown-inner">
-            <img src="https://levelthumbs.prevter.me/thumbnail/115090415/small" alt="POWER">
-            <p>Use 2.1 percentage or no percentage for a better experience!</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="dropdown">
-        <button onclick="toggleDropdown(this)">MADNESS (115034896)</button>
-        <div class="dropdown-content">
-          <div class="dropdown-inner">
-            <img src="https://levelthumbs.prevter.me/thumbnail/115034896/small" alt="MADNESS">
-            <p>Use 2.1 percentage or no percentage for a better experience!</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="dropdown">
-        <button onclick="toggleDropdown(this)">ADDICTIVE (114900330)</button>
-        <div class="dropdown-content">
-          <div class="dropdown-inner">
-            <img src="https://levelthumbs.prevter.me/thumbnail/114900330/small" alt="ADDICTIVE">
-            <p>Use 2.1 percentage or no percentage for a better experience!</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="dropdown">
-        <button onclick="toggleDropdown(this)">MURDERER (114819482)</button>
-        <div class="dropdown-content">
-          <div class="dropdown-inner">
-            <img src="https://levelthumbs.prevter.me/thumbnail/114819482/small" alt="MURDERER">
-            <p>Use 2.1 percentage or no percentage for a better experience!</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="dropdown">
-        <button onclick="toggleDropdown(this)">BLUE (114752018)</button>
-        <div class="dropdown-content">
-          <div class="dropdown-inner">
-            <img src="https://levelthumbs.prevter.me/thumbnail/114752018/small" alt="BLUE">
-            <p>Use 2.1 percentage or no percentage for a better experience!</p>
-          </div>
-        </div>
-      </div>
-
     </div>
   </div>
 
-<script>
-  function toggleSidebar() {
-    const sidebar = document.getElementById("sidebar");
-    const wrapper = document.getElementById("wrapper");
-    sidebar.classList.toggle("open");
-    wrapper.classList.toggle("shifted");
-  }
+  <div class="dropdown">
+    <button onclick="toggleDropdown(this)">UNREALISTIC (115397730)</button>
+    <div class="dropdown-content">
+      <div class="dropdown-inner">
+        <img src="https://levelthumbs.prevter.me/thumbnail/115397730/small" alt="UNREALISTIC" />
+        <p>Use 2.1 percentage or no percentage for a better experience!</p>
+      </div>
+    </div>
+  </div>
 
-  function toggleDropdown(button) {
-    const dropdown = button.parentElement;
-    const content = dropdown.querySelector(".dropdown-content");
+  <div class="dropdown">
+    <button onclick="toggleDropdown(this)">AMY THE HERO (115358703)</button>
+    <div class="dropdown-content">
+      <div class="dropdown-inner">
+        <img src="https://levelthumbs.prevter.me/thumbnail/115358703/small" alt="AMY THE HERO" />
+        <p>Use 2.1 percentage or no percentage for a better experience!</p>
+      </div>
+    </div>
+  </div>
 
-    if (dropdown.classList.contains("open")) {
-      content.style.maxHeight = content.scrollHeight + "px";
-      requestAnimationFrame(() => {
-        content.style.maxHeight = "0px";
-        dropdown.classList.remove("open");
-      });
-    } else {
-      dropdown.classList.add("open");
-      content.style.maxHeight = content.scrollHeight + "px";
-    }
-  }
+  <div class="dropdown rainbow-bg">
+    <button onclick="toggleDropdown(this)">HAUNTED (115308697)</button>
+    <div class="dropdown-content">
+      <div class="dropdown-inner">
+        <img src="https://levelthumbs.prevter.me/thumbnail/115308697/small" alt="HAUNTED" />
+        <h4><i>Use 2.1 percentage or no percentage for a better experience! Have fun on this intense ride :3</i></h4>
+        <br />
+        <p>UNDER CONSTRUCTION</p>
+      </div>
+    </div>
+  </div>
 
-  function filterDropdowns() {
-    const input = document.getElementById("search-input");
-    const filter = input.value.toLowerCase().replace(/\s+/g, '');
-    const dropdowns = document.querySelectorAll(".dropdown");
-    
-    dropdowns.forEach(dropdown => {
-      const button = dropdown.querySelector("button");
-      const text = button.textContent.toLowerCase().replace(/\s+/g, '');
-      dropdown.style.display = text.includes(filter) ? "" : "none";
-    });
-  }
+  <div class="dropdown">
+    <button onclick="toggleDropdown(this)">CHOCOLATE (115197489)</button>
+    <div class="dropdown-content">
+      <div class="dropdown-inner">
+        <img src="https://levelthumbs.prevter.me/thumbnail/115197489/small" alt="CHOCOLATE" />
+        <p>Use 2.1 percentage or no percentage for a better experience!</p>
+      </div>
+    </div>
+  </div>
 
-  fetch('/sidebar.html')
-    .then(response => {
-      if (!response.ok) {
-        throw new Error("Failed to load sidebar: " + response.status);
+  <div class="dropdown">
+    <button onclick="toggleDropdown(this)">POWER (115090415)</button>
+    <div class="dropdown-content">
+      <div class="dropdown-inner">
+        <img src="https://levelthumbs.prevter.me/thumbnail/115090415/small" alt="POWER" />
+        <p>Use 2.1 percentage or no percentage for a better experience!</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="dropdown">
+    <button onclick="toggleDropdown(this)">MADNESS (115034896)</button>
+    <div class="dropdown-content">
+      <div class="dropdown-inner">
+        <img src="https://levelthumbs.prevter.me/thumbnail/115034896/small" alt="MADNESS" />
+        <p>Use 2.1 percentage or no percentage for a better experience!</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="dropdown">
+    <button onclick="toggleDropdown(this)">ADDICTIVE (114900330)</button>
+    <div class="dropdown-content">
+      <div class="dropdown-inner">
+        <img src="https://levelthumbs.prevter.me/thumbnail/114900330/small" alt="ADDICTIVE" />
+        <p>Use 2.1 percentage or no percentage for a better experience!</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="dropdown">
+    <button onclick="toggleDropdown(this)">MURDERER (114819482)</button>
+    <div class="dropdown-content">
+      <div class="dropdown-inner">
+        <img src="https://levelthumbs.prevter.me/thumbnail/114819482/small" alt="MURDERER" />
+        <p>Use 2.1 percentage or no percentage for a better experience!</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="dropdown">
+    <button onclick="toggleDropdown(this)">BLUE (114752018)</button>
+    <div class="dropdown-content">
+      <div class="dropdown-inner">
+        <img src="https://levelthumbs.prevter.me/thumbnail/114752018/small" alt="BLUE" />
+        <p>Use 2.1 percentage or no percentage for a better experience!</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleDropdown(button) {
+      const dropdown = button.parentElement;
+      const content = dropdown.querySelector('.dropdown-content');
+
+      if (dropdown.classList.contains('open')) {
+        content.style.maxHeight = content.scrollHeight + 'px';
+        requestAnimationFrame(() => {
+          content.style.maxHeight = '0px';
+          dropdown.classList.remove('open');
+        });
+      } else {
+        dropdown.classList.add('open');
+        content.style.maxHeight = content.scrollHeight + 'px';
       }
-      return response.text();
-    })
-    .then(data => {
-      document.getElementById("sidebar").innerHTML = data;
-    })
-    .catch(error => {
-      console.error(error);
-      document.getElementById("sidebar").innerHTML = "Failed to load sidebar.";
-    });
-</script>
+    }
+  </script>
 
 </body>
 </html>
