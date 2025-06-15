@@ -76,12 +76,18 @@
     }
 
     h1 { font-size: 2rem; margin-bottom: 20px; }
-    p, li { line-height: 1.6; margin-bottom: 10px; }
+    p, li { line-height: 1.6; }
     ul { padding-left: 1.2em; }
+
+    /* Reduce vertical spacing for all paragraphs in main content */
+    .main-content > p {
+      margin-top: 4px;
+      margin-bottom: 4px;
+    }
 
     /* Beginner: light green to dark green */
     .best-time-link {
-      color: #90ee90; /* light green */
+      color: #32cd32; /* brighter lime green */
       text-decoration: none;
       transition: color 0.3s ease;
     }
@@ -89,19 +95,19 @@
       color: #006400; /* dark green */
     }
 
-    /* Intermediate: more vivid light blue to dark blue */
+    /* Intermediate: teal blue to dark teal */
     .int-time-link {
-      color: #3399ff; /* more vivid light blue */
+      color: #008080; /* teal */
       text-decoration: none;
       transition: color 0.3s ease;
     }
     .int-time-link:hover {
-      color: #00008b; /* dark blue */
+      color: #004c4c; /* dark teal */
     }
 
-    /* Expert: more vivid light red to dark red */
+    /* Expert: less desaturated red */
     .expert-time-link {
-      color: #ff6f6f; /* more vivid light red */
+      color: #e57373; /* softer, less saturated red */
       text-decoration: none;
       transition: color 0.3s ease;
     }
@@ -109,45 +115,46 @@
       color: #8b0000; /* dark red */
     }
 
-    /* Easy NG: vivid lime green */
-    .easy-ng-time {
+    /* Easy NG: lime green to dark green */
+    .easy-ng-time-link {
       color: #32cd32; /* lime green */
       text-decoration: none;
       transition: color 0.3s ease;
     }
-    .easy-ng-time:hover {
-      color: #228b22; /* dark lime green */
+    .easy-ng-time-link:hover {
+      color: #006400; /* dark green */
     }
 
-    /* Medium NG: teal blue */
-    .medium-ng-time {
+    /* Medium NG: teal blue to dark teal */
+    .medium-ng-time-link {
       color: #008080; /* teal */
       text-decoration: none;
       transition: color 0.3s ease;
     }
-    .medium-ng-time:hover {
+    .medium-ng-time-link:hover {
       color: #004c4c; /* dark teal */
     }
 
-    /* Hard NG: reddish orange */
-    .hard-ng-time {
-      color: #ff4500; /* orange red */
+    /* Hard NG: reddish orange to dark */
+    .hard-ng-time-link {
+      color: #ff4500; /* reddish orange */
       text-decoration: none;
       transition: color 0.3s ease;
     }
-    .hard-ng-time:hover {
-      color: #b22200; /* dark red-orange */
+    .hard-ng-time-link:hover {
+      color: #8b2500; /* dark reddish */
     }
 
-    /* Evil NG: less desaturated purple */
-    .evil-ng-time {
-      color: #9b30ff; /* more vibrant purple */
+    /* Evil NG: less desaturated purple to dark purple */
+    .evil-ng-time-link {
+      color: #a186be; /* less desaturated purple */
       text-decoration: none;
       transition: color 0.3s ease;
     }
-    .evil-ng-time:hover {
-      color: #5d00b3; /* darker purple */
+    .evil-ng-time-link:hover {
+      color: #4b0082; /* dark indigo purple */
     }
+
   </style>
 </head>
 <body>
@@ -164,15 +171,15 @@
   <div class="main-content">
     <h1>Personal Bests</h1>
     <p>This page contains all of my personal bests for all categories that I have achieved on Minesweeper.Online.</p>
-    <br /><br />
+    <br><br>
     <h2>Best Times:</h2>
     <p>Beginner: <a href="https://minesweeper.online/game/4642035795" class="best-time-link">2.323</a></p>
     <p>Intermediate: <a href="https://minesweeper.online/game/4702038568" class="int-time-link">24.278</a></p>
     <p>Expert: <a href="https://minesweeper.online/game/4699007190" class="expert-time-link">89.709</a></p>
-    <p>Easy NG: <a href="https://minesweeper.online/game/3452042094" class="easy-ng-time">2.692</a></p>
-    <p>Medium NG: <a href="https://minesweeper.online/game/3603920817" class="medium-ng-time">31.904</a></p>
-    <p>Hard NG: <a href="https://minesweeper.online/game/4707186339" class="hard-ng-time">94.525</a></p>
-    <p>Evil NG: <a href="https://minesweeper.online/game/3497398169" class="evil-ng-time">147.283</a></p>
+    <p>Easy NG: <a href="https://minesweeper.online/game/3452042094" class="easy-ng-time-link">2.692</a></p>
+    <p>Medium NG: <a href="https://minesweeper.online/game/3603920817" class="medium-ng-time-link">31.904</a></p>
+    <p>Hard NG: <a href="https://minesweeper.online/game/4707186339" class="hard-ng-time-link">94.525</a></p>
+    <p>Evil NG: <a href="https://minesweeper.online/game/3497398169" class="evil-ng-time-link">147.283</a></p>
   </div>
 
   <script>
