@@ -177,19 +177,18 @@
       margin: 0 15px 10px;
     }
 
-    /* RAINBOW EFFECT ONLY FOR HAUNTED BUTTON */
-    @keyframes rainbow {
-      0% { color: red; }
-      16% { color: orange; }
-      33% { color: yellow; }
-      50% { color: green; }
-      66% { color: blue; }
-      83% { color: indigo; }
-      100% { color: violet; }
+    @keyframes rainbowBackground {
+      0% { background-color: red; }
+      16% { background-color: orange; }
+      33% { background-color: yellow; }
+      50% { background-color: green; }
+      66% { background-color: blue; }
+      83% { background-color: indigo; }
+      100% { background-color: violet; }
     }
 
-    .rainbow-text {
-      animation: rainbow 3s linear infinite;
+    .rainbow-bg {
+      animation: rainbowBackground 10s linear infinite;
     }
   </style>
 </head>
@@ -223,7 +222,7 @@
           </div>
         </div>
       </div>
-
+      
       <div class="dropdown">
         <button onclick="toggleDropdown(this)">C H I L L (84539175)</button>
         <div class="dropdown-content">
@@ -235,7 +234,7 @@
           </div>
         </div>
       </div>
-
+      
       <div class="dropdown">
         <button onclick="toggleDropdown(this)">EpicSparkZ Challenge (113708470)</button>
         <div class="dropdown-content">
@@ -247,7 +246,7 @@
           </div>
         </div>
       </div>
-
+      
       <div class="dropdown">
         <button onclick="toggleDropdown(this)">Glitch Hop (113786810)</button>
         <div class="dropdown-content">
@@ -260,8 +259,8 @@
         </div>
       </div>
 
-      <div class="dropdown">
-        <button onclick="toggleDropdown(this)" class="rainbow-text">HAUNTED (115308697)</button>
+      <div class="dropdown rainbow-bg">
+        <button onclick="toggleDropdown(this)">HAUNTED (115308697)</button>
         <div class="dropdown-content">
           <div class="dropdown-inner">
             <img src="https://levelthumbs.prevter.me/thumbnail/115308697/small" alt="HAUNTED">
@@ -271,7 +270,7 @@
           </div>
         </div>
       </div>
-
+      
       <div class="dropdown">
         <button onclick="toggleDropdown(this)">Tears of Joy (108108615)</button>
         <div class="dropdown-content">
