@@ -173,35 +173,36 @@
         document.getElementById('sidebar').innerHTML = 'Failed to load menu.';
       });
 
-    // Opacity update function
     function updateOpacity() {
       const sidebar = document.getElementById('sidebar');
       const sidebarRect = sidebar.getBoundingClientRect();
-      const sidebarRight = sidebarRect.right;
+      const sidebarRightEdge = sidebarRect.right;
 
-      const fadeDistance = 100; // px distance to start fade
+      const fadeDistance = 150; // px distance for full fade effect
 
-      const texts = document.querySelectorAll('.main-content p, .main-content h1, .main-content h2');
+      // Select all paragraphs and headings inside main content
+      const textElements = document.querySelectorAll('.main-content p, .main-content h1, .main-content h2');
 
-      texts.forEach(el => {
-        const rect = el.getBoundingClientRect();
-        const distanceToSidebar = rect.left - sidebarRight;
+      textElements.forEach(el => {
+        const elRect = el.getBoundingClientRect();
+        // Calculate horizontal distance from left edge of element to right edge of sidebar
+        const distance = elRect.left - sidebarRightEdge;
 
-        if (distanceToSidebar < 0) {
-          el.style.opacity = 0;
-        } else if (distanceToSidebar < fadeDistance) {
-          el.style.opacity = distanceToSidebar / fadeDistance;
+        if (distance <= 0) {
+          // Under or behind sidebar = fully transparent
+          el.style.opacity = '0';
+        } else if (distance > 0 && distance < fadeDistance) {
+          // Fade linearly based on distance
+          el.style.opacity = (distance / fadeDistance).toFixed(2);
         } else {
-          el.style.opacity = 1;
+          // Far enough to be fully visible
+          el.style.opacity = '1';
         }
       });
     }
 
-    // Update opacity on scroll and resize for responsiveness
     window.addEventListener('scroll', updateOpacity);
     window.addEventListener('resize', updateOpacity);
-
-    // Initial call
     window.addEventListener('load', updateOpacity);
   </script>
 
