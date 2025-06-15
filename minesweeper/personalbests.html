@@ -13,37 +13,43 @@
       overflow-x: hidden;
     }
 
-    /* Container around sidebar for the semi-transparent box */
+    /* Container box exactly around sidebar */
     .sidebar-container {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 260px; /* slightly wider than sidebar */
-      height: 100%;
-      background-color: rgba(50, 50, 50, 0.5); /* 50% opacity dark gray */
-      border-radius: 10px; /* slightly rounded corners */
-      padding: 5px; /* padding around the sidebar */
+      top: 10px;  /* little padding around */
+      left: 10px;
+      width: 270px; /* sidebar width (250) + padding (2*10) */
+      height: calc(100% - 20px); /* full height minus padding */
+      border-radius: 12px;
+      background-color: rgba(50, 50, 50, 0.5); /* 50% opacity */
       box-sizing: border-box;
-      z-index: 999;
       pointer-events: none; /* so it doesn't block clicks */
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 999;
+    }
+
+    /* Show box only when sidebar is open */
+    .sidebar.open + .sidebar-container {
+      opacity: 1;
     }
 
     /* Sidebar itself */
     .sidebar {
       position: fixed;
-      top: 0;
+      top: 20px;
       left: -250px;
       width: 250px;
-      height: 100%;
+      height: calc(100% - 40px);
       background-color: #2a2a2a;
       padding-top: 60px;
       transition: left 0.3s ease;
       box-shadow: 2px 0 5px rgba(0,0,0,0.5);
       z-index: 1000;
-      border-radius: 5px;
+      border-radius: 8px;
       pointer-events: auto; /* enable interactions */
     }
-    .sidebar.open { left: 0; }
+    .sidebar.open { left: 20px; }
     .sidebar a {
       display: block;
       color: #ccc;
@@ -90,14 +96,14 @@
       box-sizing: border-box;
     }
     .sidebar.open ~ .main-content {
-      margin-left: 250px;
+      margin-left: 290px; /* to account for sidebar + box padding */
     }
 
     h1 { font-size: 2rem; margin-bottom: 20px; }
     p, li { line-height: 1.6; }
     ul { padding-left: 1.2em; }
 
-    /* Reduce vertical spacing for all paragraphs in main content */
+    /* Reduce vertical spacing for paragraphs in main content */
     .main-content > p {
       margin-top: 4px;
       margin-bottom: 4px;
@@ -118,7 +124,6 @@
     .hard-ng-time-link:hover { color: #8b2500; }
     .evil-ng-time-link { color: #a186be; text-decoration: none; transition: color 0.3s ease; }
     .evil-ng-time-link:hover { color: #4b0082; }
-
   </style>
 </head>
 <body>
@@ -128,11 +133,11 @@
     <div></div><div></div><div></div>
   </div>
 
-  <!-- Sidebar container for the semi-transparent box -->
-  <div class="sidebar-container"></div>
-
   <!-- Sidebar -->
   <div class="sidebar" id="sidebar">Loading...</div>
+
+  <!-- Small semi-transparent box around sidebar -->
+  <div class="sidebar-container"></div>
 
   <!-- Main -->
   <div class="main-content">
@@ -178,7 +183,8 @@
 
   <script>
     function toggleSidebar() {
-      document.getElementById('sidebar').classList.toggle('open');
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('open');
     }
 
     // Load sidebar nav
