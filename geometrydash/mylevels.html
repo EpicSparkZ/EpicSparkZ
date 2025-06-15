@@ -12,7 +12,7 @@
       color: white;
       overflow-x: hidden;
     }
-    /* ... other styles ... */
+
     .sidebar {
       position: fixed;
       top: 0;
@@ -25,9 +25,11 @@
       box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
       z-index: 1000;
     }
+
     .sidebar.open {
       left: 0;
     }
+
     .sidebar a {
       display: block;
       color: #ccc;
@@ -35,10 +37,12 @@
       text-decoration: none;
       transition: background 0.2s;
     }
+
     .sidebar a:hover {
       background-color: #444;
       color: #fff;
     }
+
     .sidebar-separator {
       padding: 8px 20px;
       font-weight: 600;
@@ -51,6 +55,7 @@
       margin: 20px 0;
       user-select: none;
     }
+
     .hamburger {
       position: fixed;
       top: 20px;
@@ -60,6 +65,7 @@
       cursor: pointer;
       z-index: 1001;
     }
+
     .hamburger div {
       width: 100%;
       height: 4px;
@@ -67,28 +73,34 @@
       margin: 4px 0;
       transition: all 0.3s ease;
     }
+
     .wrapper {
       transition: margin-left 0.3s ease;
       max-width: 100vw;
       overflow-x: hidden;
     }
+
     .wrapper.shifted {
       margin-left: 250px;
     }
+
     .main-content {
       padding: 40px;
       max-width: 800px;
       margin: 0 auto;
       box-sizing: border-box;
     }
+
     .main-content h1,
     .main-content p {
       text-align: center;
     }
+
     #search-container {
       text-align: center;
       margin-bottom: 20px;
     }
+
     #search-input {
       padding: 12px 16px;
       font-size: 1.1rem;
@@ -100,6 +112,7 @@
       width: 100%;
       box-sizing: border-box;
     }
+
     .dropdown {
       background-color: #2a2a2a;
       border: 1px solid #444;
@@ -110,6 +123,7 @@
       max-width: 100%;
       box-sizing: border-box;
     }
+
     .dropdown button {
       background: none;
       border: none;
@@ -121,6 +135,7 @@
       font-weight: bold;
       cursor: pointer;
     }
+
     .dropdown-content {
       max-height: 0;
       opacity: 0;
@@ -129,6 +144,7 @@
       transition: max-height 0.5s ease, opacity 0.5s ease, padding 0.3s ease;
       pointer-events: none;
     }
+
     .dropdown.open .dropdown-content {
       opacity: 1;
       max-height: 300px;
@@ -136,6 +152,7 @@
       padding: 15px 0;
       pointer-events: auto;
     }
+
     .dropdown-inner {
       display: flex;
       flex-direction: column;
@@ -143,12 +160,14 @@
       text-align: center;
       max-width: 100%;
     }
+
     .dropdown-content img {
       max-width: 100%;
       height: auto;
       border-radius: 5px;
       margin-bottom: 10px;
     }
+
     .dropdown-inner p {
       white-space: normal !important;
       word-break: break-word;
@@ -157,10 +176,12 @@
       text-align: left;
       margin: 0 15px 10px;
     }
+
     @keyframes rainbowGradient {
       0%   { background-position: 0% 50%; }
       100% { background-position: 100% 50%; }
     }
+
     .rainbow-bg {
       background: linear-gradient(270deg,
         rgba(255, 0, 0, 0.2),
@@ -174,42 +195,6 @@
       );
       background-size: 1600% 1600%;
       animation: rainbowGradient 20s linear infinite;
-    }
-
-    /* Added styles for top-right info container */
-    #info-container {
-      position: absolute;
-      top: 40px;
-      right: 40px;
-      text-align: right;
-      color: white;
-      line-height: 1.6;
-      font-size: 1rem;
-      max-width: 280px;
-      user-select: none;
-    }
-    #info-container div {
-      margin: 6px 0;
-      cursor: default;
-    }
-    #total-rates {
-      cursor: pointer;
-      text-decoration: underline;
-      color: #66ccff;
-    }
-    #rates-dropdown {
-      max-height: 0;
-      opacity: 0;
-      overflow: hidden;
-      transition: max-height 0.4s ease, opacity 0.4s ease, padding 0.3s ease;
-      padding: 0;
-      margin-top: 0;
-    }
-    #rates-dropdown.open {
-      max-height: 500px;
-      opacity: 1;
-      padding: 6px 0 0 0;
-      margin-top: 6px;
     }
   </style>
 </head>
@@ -225,26 +210,44 @@
 
   <div class="wrapper" id="wrapper">
     <div class="main-content">
-      <div id="info-container">
+      <div style="position: absolute; top: 40px; right: 40px; text-align: right; color: white; line-height: 1.6; font-size: 1rem;">
         <div>Total Uploaded Levels:</div>
-        <div id="total-rates" onclick="toggleRatesDropdown()">Total Rates:</div>
+        <div id="total-rates" style="cursor:pointer; user-select:none;" onclick="toggleTotalRates()">Total Rates:</div>
         <div>Total Creator Points:</div>
-        <div id="rates-dropdown">
+        <div id="rates-dropdown" style="display:none; margin-top: 5px; text-align: left;">
           <div>Total Star Rates:</div>
           <div>Total Features:</div>
           <div>Total Epics:</div>
           <div>Total Legendaries:</div>
           <div>Total Mythics:</div>
-          <div style="margin-top: 12px; font-weight: bold;">My Levels</div>
+          <br>
+          <div><strong>My Levels</strong></div>
           <div>This page contains all of my uploaded levels with a description and image of each.</div>
-          <div id="search-container" style="margin-top: 12px;">
-            <input type="text" id="search-input" placeholder="Search levels..." oninput="filterDropdowns()" />
+          <br>
+          <input type="text" id="search-input" placeholder="Search levels..." oninput="filterDropdowns()" style="width: 100%; box-sizing: border-box; margin-bottom: 10px;">
+          <div class="dropdown">
+            <button onclick="toggleDropdown(this)">0a1 Bonk (111622447)</button>
+            <div class="dropdown-content">
+              <div class="dropdown-inner">
+                <img src="https://levelthumbs.prevter.me/thumbnail/111622447/small" alt="0a1 Bonk">
+                <h4><i>Ever wanted to CLIMB on top of 0a1 and CRUSH him? Well now you can!</i></h4>
+                <br>
+                <p>UNDER CONSTRUCTION</p>
+              </div>
+            </div>
           </div>
         </div>
+        <div>Total Features:</div>
+        <div>Total Epics:</div>
+        <div>Total Legendaries:</div>
+        <div>Total Mythics:</div>
       </div>
-
       <h1>My Levels</h1>
       <p>This page contains all of my uploaded levels with a description and image of each.</p>
+
+      <div id="search-container">
+        <input type="text" id="search-input" placeholder="Search levels..." oninput="filterDropdowns()" />
+      </div>
 
       <div class="dropdown">
         <button onclick="toggleDropdown(this)">0a1 Bonk (111622447)</button>
@@ -257,11 +260,77 @@
           </div>
         </div>
       </div>
+      
+      <div class="dropdown">
+        <button onclick="toggleDropdown(this)">C H I L L (84539175)</button>
+        <div class="dropdown-content">
+          <div class="dropdown-inner">
+            <img src="https://levelthumbs.prevter.me/thumbnail/84539175/small" alt="C H I L L">
+            <h4><i>I present to you, the full version of C H I L L!! Thank you for all the support with this, I wouldnt have had the motivation without it! :3</i></h4>
+            <br>
+            <p>UNDER CONSTRUCTION</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="dropdown">
+        <button onclick="toggleDropdown(this)">EpicSparkZ Challenge (113708470)</button>
+        <div class="dropdown-content">
+          <div class="dropdown-inner">
+            <img src="https://levelthumbs.prevter.me/thumbnail/113708470/small" alt="EpicSparkZ Challenge">
+            <h4><i>A collab between me an ewiuryuiewr! Me and ewiuryuiewrs final level of 2024! Happy new years!!!!</i></h4>
+            <br>
+            <p>UNDER CONSTRUCTION</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="dropdown">
+        <button onclick="toggleDropdown(this)">Glitch Hop (113786810)</button>
+        <div class="dropdown-content">
+          <div class="dropdown-inner">
+            <img src="https://levelthumbs.prevter.me/thumbnail/113786810/small" alt="Glitch Hop">
+            <h4><i>Verified after 548 attempts! This level has been in progress for a year and a half! Enjoy :3</i></h4>
+            <br>
+            <p>UNDER CONSTRUCTION</p>
+          </div>
+        </div>
+      </div>
 
-      <!-- other dropdowns omitted for brevity -->
+      <div class="dropdown rainbow-bg">
+        <button onclick="toggleDropdown(this)">HAUNTED (115308697)</button>
+        <div class="dropdown-content">
+          <div class="dropdown-inner">
+            <img src="https://levelthumbs.prevter.me/thumbnail/115308697/small" alt="HAUNTED">
+            <h4><i>Use 2.1 percentage or no percentage for a better experience! Have fun on this intense ride :3</i></h4>
+            <br>
+            <p>UNDER CONSTRUCTION</p>
+          </div>
+        </div>
+      </div>
+      <div class="dropdown">
+        <button onclick="toggleDropdown(this)">Tears of Joy (108108615)</button>
+        <div class="dropdown-content">
+          <div class="dropdown-inner">
+            <img src="https://levelthumbs.prevter.me/thumbnail/108108615/small" alt="Tears of Joy">
+            <h4><i>2nd challenge for the ECL | Took me 4 - 5 months to verify this, decided to nerf it to what it is now.</i></h4>
+            <br>
+            <p>UNDER CONSTRUCTION</p>
+          </div>
+        </div>
+      </div>
 
-    </div>
-  </div>
+      <div class="dropdown">
+        <button onclick="toggleDropdown(this)">The Darkness of Night (115337441)</button>
+        <div class="dropdown-content">
+          <div class="dropdown-inner">
+            <img src="https://levelthumbs.prevter.me/thumbnail/115337441/small" alt="The Darkness of Night">
+            <h4><i>The darkness consumes you. There is nothing you can do but accept your fate. | UNVERIFIED TOP 1 CHALLENGE LIST LEVEL | This is about 2x harder than vsc, almost humanly impossible.</i></h4>
+            <br>
+            <p>UNDER CONSTRUCTION</p>
+          </div>
+        </div>
+      </div>
 
 <script>
   function toggleSidebar() {
@@ -287,15 +356,6 @@
     }
   }
 
-  function toggleRatesDropdown() {
-    const ratesDropdown = document.getElementById("rates-dropdown");
-    if (ratesDropdown.classList.contains("open")) {
-      ratesDropdown.classList.remove("open");
-    } else {
-      ratesDropdown.classList.add("open");
-    }
-  }
-
   function filterDropdowns() {
     const input = document.getElementById("search-input");
     const filter = input.value.toLowerCase().replace(/\s+/g, '');
@@ -306,6 +366,15 @@
       const text = button.textContent.toLowerCase().replace(/\s+/g, '');
       dropdown.style.display = text.includes(filter) ? "" : "none";
     });
+  }
+
+  function toggleTotalRates() {
+    const dropdown = document.getElementById('rates-dropdown');
+    if (dropdown.style.display === 'none' || dropdown.style.display === '') {
+      dropdown.style.display = 'block';
+    } else {
+      dropdown.style.display = 'none';
+    }
   }
 
   fetch('/sidebar.html')
