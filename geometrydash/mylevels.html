@@ -210,28 +210,23 @@
 
   <div class="wrapper" id="wrapper">
     <div class="main-content">
-      <div style="position: absolute; top: 40px; right: 40px; text-align: right; color: white; line-height: 1.6; font-size: 1rem; width: 250px;">
+      <div style="position: absolute; top: 40px; right: 40px; text-align: right; color: white; line-height: 1.6; font-size: 1rem;">
         <div>Total Uploaded Levels:</div>
-        <div id="total-rates" style="cursor:pointer; user-select:none;">Total Rates:</div>
-        <div id="stats-default">
-          <div>Total Features:</div>
-          <div>Total Epics:</div>
-          <div>Total Legendaries:</div>
-          <div>Total Mythics:</div>
-          <div>Total Creator Points:</div>
+        <div id="total-rates" style="cursor: pointer; user-select: none;">
+          Total Rates &#x25BC;
         </div>
-        <div id="rates-dropdown" style="display:none; margin-top: 5px; text-align: left;">
+        <div id="total-rates-dropdown" style="display: none; margin-left: 10px; margin-top: 5px; text-align: right;">
           <div>Total Star Rates:</div>
           <div>Total Features:</div>
           <div>Total Epics:</div>
           <div>Total Legendaries:</div>
           <div>Total Mythics:</div>
-          <br>
-          <div><strong>My Levels</strong></div>
+          <div>My Levels</div>
           <div>This page contains all of my uploaded levels with a description and image of each.</div>
-          <br>
-          <input type="text" id="search-input" placeholder="Search levels..." oninput="filterDropdowns()" style="width: 100%; box-sizing: border-box; margin-bottom: 10px;">
+          <div>Search levels...</div>
+          <div>0a1 Bonk (111622447)</div>
         </div>
+        <div>Total Creator Points:</div>
       </div>
       <h1>My Levels</h1>
       <p>This page contains all of my uploaded levels with a description and image of each.</p>
@@ -359,19 +354,6 @@
     });
   }
 
-  function toggleTotalRates() {
-    const dropdown = document.getElementById('rates-dropdown');
-    const defaultStats = document.getElementById('stats-default');
-
-    if (dropdown.style.display === 'none' || dropdown.style.display === '') {
-      dropdown.style.display = 'block';
-      defaultStats.style.display = 'none';
-    } else {
-      dropdown.style.display = 'none';
-      defaultStats.style.display = 'block';
-    }
-  }
-
   fetch('/sidebar.html')
     .then(response => {
       if (!response.ok) {
@@ -386,6 +368,15 @@
       console.error(error);
       document.getElementById("sidebar").innerHTML = "Failed to load sidebar.";
     });
+
+  document.getElementById('total-rates').addEventListener('click', () => {
+    const dropdown = document.getElementById('total-rates-dropdown');
+    if (dropdown.style.display === 'none') {
+      dropdown.style.display = 'block';
+    } else {
+      dropdown.style.display = 'none';
+    }
+  });
 </script>
 
 </body>
