@@ -13,6 +13,22 @@
       overflow-x: hidden;
     }
 
+    /* Container around sidebar for the semi-transparent box */
+    .sidebar-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 260px; /* slightly wider than sidebar */
+      height: 100%;
+      background-color: rgba(50, 50, 50, 0.5); /* 50% opacity dark gray */
+      border-radius: 10px; /* slightly rounded corners */
+      padding: 5px; /* padding around the sidebar */
+      box-sizing: border-box;
+      z-index: 999;
+      pointer-events: none; /* so it doesn't block clicks */
+    }
+
+    /* Sidebar itself */
     .sidebar {
       position: fixed;
       top: 0;
@@ -24,6 +40,8 @@
       transition: left 0.3s ease;
       box-shadow: 2px 0 5px rgba(0,0,0,0.5);
       z-index: 1000;
+      border-radius: 5px;
+      pointer-events: auto; /* enable interactions */
     }
     .sidebar.open { left: 0; }
     .sidebar a {
@@ -110,6 +128,9 @@
     <div></div><div></div><div></div>
   </div>
 
+  <!-- Sidebar container for the semi-transparent box -->
+  <div class="sidebar-container"></div>
+
   <!-- Sidebar -->
   <div class="sidebar" id="sidebar">Loading...</div>
 
@@ -158,7 +179,6 @@
   <script>
     function toggleSidebar() {
       document.getElementById('sidebar').classList.toggle('open');
-      updateOpacity();
     }
 
     // Load sidebar nav
@@ -166,44 +186,11 @@
       .then(res => res.ok ? res.text() : Promise.reject(res))
       .then(html => {
         document.getElementById('sidebar').innerHTML = html;
-        updateOpacity();
       })
       .catch(err => {
         console.error('Sidebar load failed', err);
         document.getElementById('sidebar').innerHTML = 'Failed to load menu.';
       });
-
-    function updateOpacity() {
-      const sidebar = document.getElementById('sidebar');
-      const sidebarRect = sidebar.getBoundingClientRect();
-      const sidebarRightEdge = sidebarRect.right;
-
-      const fadeDistance = 150; // px distance for full fade effect
-
-      // Select all paragraphs and headings inside main content
-      const textElements = document.querySelectorAll('.main-content p, .main-content h1, .main-content h2');
-
-      textElements.forEach(el => {
-        const elRect = el.getBoundingClientRect();
-        // Calculate horizontal distance from left edge of element to right edge of sidebar
-        const distance = elRect.left - sidebarRightEdge;
-
-        if (distance <= 0) {
-          // Under or behind sidebar = fully transparent
-          el.style.opacity = '0';
-        } else if (distance > 0 && distance < fadeDistance) {
-          // Fade linearly based on distance
-          el.style.opacity = (distance / fadeDistance).toFixed(2);
-        } else {
-          // Far enough to be fully visible
-          el.style.opacity = '1';
-        }
-      });
-    }
-
-    window.addEventListener('scroll', updateOpacity);
-    window.addEventListener('resize', updateOpacity);
-    window.addEventListener('load', updateOpacity);
   </script>
 
 </body>
