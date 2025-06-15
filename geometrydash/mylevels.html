@@ -212,8 +212,11 @@
     <div class="main-content">
       <div style="position: absolute; top: 40px; right: 40px; text-align: right; color: white; line-height: 1.6; font-size: 1rem;">
   <div>Total Uploaded Levels:</div>
-  <div>Total Rates:</div>
+  <div id="total-rates" style="cursor:pointer; text-decoration: underline;">Total Rates:</div>
   <div>Total Creator Points:</div>
+  <div id="rates-text" style="display:none; margin-top:4px; font-size: 0.9rem; color:#aaa;">
+    Here is the text shown when you click Total Rates.
+  </div>
   <div>Total Features:</div>
   <div>Total Epics:</div>
   <div>Total Legendaries:</div>
@@ -359,6 +362,15 @@
       console.error(error);
       document.getElementById("sidebar").innerHTML = "Failed to load sidebar.";
     });
+
+  document.getElementById('total-rates').addEventListener('click', () => {
+    const ratesText = document.getElementById('rates-text');
+    if (ratesText.style.display === 'none') {
+      ratesText.style.display = 'block';
+    } else {
+      ratesText.style.display = 'none';
+    }
+  });
 </script>
 
 </body>
