@@ -79,14 +79,34 @@
     p, li { line-height: 1.6; margin-bottom: 10px; }
     ul { padding-left: 1.2em; }
 
-    /* Custom link color for personal best times */
+    /* Beginner: dark green */
     .best-time-link {
-      color: #90ee90; /* light green */
+      color: #006400; /* dark green */
       text-decoration: none;
       transition: color 0.3s ease;
     }
     .best-time-link:hover {
-      color: #006400; /* dark green */
+      color: #90ee90; /* light green */
+    }
+
+    /* Intermediate: light blue to dark blue */
+    .int-time-link {
+      color: #add8e6; /* light blue */
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .int-time-link:hover {
+      color: #00008b; /* dark blue */
+    }
+
+    /* Expert: light red to dark red */
+    .expert-time-link {
+      color: #f08080; /* light red */
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .expert-time-link:hover {
+      color: #8b0000; /* dark red */
     }
   </style>
 </head>
@@ -107,8 +127,8 @@
     <br><br>
     <h2>Best Times:</h2>
     <p>Beginner: <a href="https://minesweeper.online/game/4642035795" class="best-time-link">2.323</a></p>
-    <p>Intermediate: <a href="https://minesweeper.online/game/4702038568" class="best-time-link">24.278</a></p>
-    <p>Expert: <a href="https://minesweeper.online/game/4699007190" class="best-time-link">89.709</a></p>
+    <p>Intermediate: <a href="https://minesweeper.online/game/4702038568" class="int-time-link">24.278</a></p>
+    <p>Expert: <a href="https://minesweeper.online/game/4699007190" class="expert-time-link">89.709</a></p>
   </div>
 
   <script>
