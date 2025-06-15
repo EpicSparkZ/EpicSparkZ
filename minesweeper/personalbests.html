@@ -73,7 +73,8 @@
       max-width: 800px;
       box-sizing: border-box;
     }
-    .sidebar.open ~ .main-content {
+
+    body.sidebar-open .main-content {
       margin-left: 250px;
     }
 
@@ -168,6 +169,7 @@
       const sidebar = document.getElementById('sidebar');
       const box = document.querySelector('.sidebar-box');
       sidebar.classList.toggle('open');
+      document.body.classList.toggle('sidebar-open');
       box.style.opacity = sidebar.classList.contains('open') ? '0' : '1';
     }
 
