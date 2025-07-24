@@ -1,4 +1,10 @@
 <style>
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
   .sidebar-scroll::-webkit-scrollbar {
     display: none;
   }
@@ -8,29 +14,17 @@
   }
 
   .sidebar-scroll {
-    height: 100vh;
-    overflow-y: scroll;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow-y: auto;
     padding-right: 10px;
     box-sizing: border-box;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
-
-@media screen and (max-width: 600px) {
-  .sidebar-scroll {
-    padding-right: 6px;
-  }
-
-  .sidebar-link a {
-    font-size: 14px;
-    padding: 10px 14px;
-  }
-
-  .sidebar-separator {
-    font-size: 0.7rem;
-    padding: 6px 14px;
-  }
-}
 </style>
 
 <div class="sidebar-scroll">
