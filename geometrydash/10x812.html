@@ -123,27 +123,21 @@
     .button-row {
       display: flex;
       gap: 10px;
+      align-items: center;
     }
 
-    button {
+    button, select {
       padding: 8px 14px;
       font-size: 14px;
-      cursor: pointer;
       background-color: #333;
       color: white;
       border: 1px solid #666;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      cursor: pointer;
     }
 
     button:disabled {
       opacity: 0.5;
       cursor: not-allowed;
-    }
-
-    .pause-icon {
-      font-size: 18px;
     }
   </style>
 </head>
@@ -166,9 +160,12 @@
 
     <div class="button-row">
       <button id="generateBtn" onclick="startColorGeneration()">Generate</button>
-      <button id="pauseBtn" onclick="togglePause()" disabled>
-        <span id="pauseIcon" class="pause-icon">&#9208;</span>
-      </button>
+      <button id="pauseBtn" onclick="togglePause()" style="display: none;">Paused</button>
+      <select id="speedSelect" onchange="updateSpeed()" disabled>
+        <option value="500">Slow</option>
+        <option value="200" selected>Normal</option>
+        <option value="50">Fast</option>
+      </select>
     </div>
   </div>
 
@@ -199,24 +196,40 @@
 
     let interval = null;
     let isPaused = false;
+    let speed = 200;
 
     function startColorGeneration() {
       if (interval) return;
-      document.getElementById("pauseBtn").disabled = false;
-      interval = setInterval(() => {
-        if (!isPaused) {
-          cells.forEach(cell => {
-            const randColor = colorOptions[Math.floor(Math.random() * colorOptions.length)];
-            cell.style.backgroundColor = randColor;
-          });
-        }
-      }, 200);
+
+      document.getElementById("generateBtn").style.display = "none";
+      const pauseBtn = document.getElementById("pauseBtn");
+      pauseBtn.style.display = "inline-block";
+      pauseBtn.innerText = "Paused";
+      document.getElementById("speedSelect").disabled = false;
+
+      interval = setInterval(updateColors, speed);
+    }
+
+    function updateColors() {
+      if (!isPaused) {
+        cells.forEach(cell => {
+          const randColor = colorOptions[Math.floor(Math.random() * colorOptions.length)];
+          cell.style.backgroundColor = randColor;
+        });
+      }
     }
 
     function togglePause() {
       isPaused = !isPaused;
-      const icon = document.getElementById("pauseIcon");
-      icon.innerHTML = isPaused ? "&#9654;" : "&#9208;";
+      document.getElementById("pauseBtn").innerText = isPaused ? "Unpaused" : "Paused";
+    }
+
+    function updateSpeed() {
+      speed = parseInt(document.getElementById("speedSelect").value);
+      if (interval) {
+        clearInterval(interval);
+        interval = setInterval(updateColors, speed);
+      }
     }
   </script>
 
