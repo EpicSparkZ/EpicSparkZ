@@ -132,11 +132,18 @@
       background-color: #333;
       color: white;
       border: 1px solid #666;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     button:disabled {
       opacity: 0.5;
       cursor: not-allowed;
+    }
+
+    .pause-icon {
+      font-size: 18px;
     }
   </style>
 </head>
@@ -159,7 +166,9 @@
 
     <div class="button-row">
       <button id="generateBtn" onclick="startColorGeneration()">Generate</button>
-      <button id="pauseBtn" onclick="togglePause()" disabled>Paused</button>
+      <button id="pauseBtn" onclick="togglePause()" disabled>
+        <span id="pauseIcon" class="pause-icon">&#9208;</span>
+      </button>
     </div>
   </div>
 
@@ -177,7 +186,6 @@
         console.error("Failed to load sidebar:", error);
       });
 
-    // Grid setup
     const grid = document.getElementById("colorGrid");
     const colorOptions = ["white", "black", "blue", "teal", "red", "pink", "yellow", "orange", "green", "purple"];
     const cells = [];
@@ -193,7 +201,7 @@
     let isPaused = false;
 
     function startColorGeneration() {
-      if (interval) return; // Already running
+      if (interval) return;
       document.getElementById("pauseBtn").disabled = false;
       interval = setInterval(() => {
         if (!isPaused) {
@@ -207,7 +215,8 @@
 
     function togglePause() {
       isPaused = !isPaused;
-      document.getElementById("pauseBtn").innerText = isPaused ? "Paused" : "Unpaused";
+      const icon = document.getElementById("pauseIcon");
+      icon.innerHTML = isPaused ? "&#9654;" : "&#9208;";
     }
   </script>
 
