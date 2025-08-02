@@ -12,6 +12,9 @@
       background-color: #1e1e1e;
       color: white;
       overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .sidebar {
@@ -33,6 +36,10 @@
 
     .sidebar-scroll::-webkit-scrollbar {
       display: none;
+    }
+
+    .sidebar-link {
+      margin: 2px 0;
     }
 
     .sidebar-scroll {
@@ -89,67 +96,58 @@
     }
 
     .main-content {
-      margin-left: 0;
-      padding: 40px;
-      transition: margin-left 0.3s ease;
-    }
-
-    .sidebar.open ~ .main-content {
-      margin-left: 250px;
+      margin-top: 60px;
+      padding: 20px;
+      text-align: center;
+      width: 100%;
     }
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(9, 40px);
-      grid-template-rows: repeat(9, 40px);
-      gap: 2px;
-      margin-bottom: 10px;
+      grid-template-columns: repeat(9, 30px);
+      grid-template-rows: repeat(9, 30px);
+      gap: 4px;
+      margin: 20px auto;
     }
 
     .cell {
-      width: 40px;
-      height: 40px;
-      background-color: #000;
-      border: 1px solid #444;
+      width: 30px;
+      height: 30px;
+      background-color: #333;
     }
 
     .controls {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
+      margin-top: 20px;
     }
 
-    .buttons {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 10px;
+    .speed-dropdown {
+      margin-top: 10px;
+      color: #999;
+    }
+
+    .speed-dropdown select:disabled {
+      opacity: 0.5;
+    }
+
+    .code-box {
+      font-family: monospace;
+      background-color: #2a2a2a;
+      padding: 10px;
+      margin-top: 10px;
+      width: fit-content;
+      max-width: 90vw;
+      font-size: 12px;
+      white-space: pre-wrap;
+    }
+
+    .pause-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
     }
 
     .pause-btn img {
-      height: 20px;
-    }
-
-    select {
-      background-color: #333;
-      color: #ccc;
-      border: 1px solid #666;
-      padding: 5px;
-      border-radius: 4px;
-      filter: brightness(0.7);
-    }
-
-    code {
-      background-color: #2b2b2b;
-      color: #0f0;
-      padding: 5px;
-      font-family: monospace;
-      white-space: pre-wrap;
-      display: block;
-      font-size: 12px;
-      height: 80px;
-      overflow-y: auto;
-      margin-bottom: 10px;
-      max-width: 95vw;
+      height: 30px;
     }
   </style>
 </head>
@@ -161,112 +159,108 @@
     <div></div>
   </div>
 
-  <div class="sidebar" id="sidebar">
-    <!-- Sidebar loads here -->
-  </div>
+  <div class="sidebar" id="sidebar"></div>
 
   <div class="main-content">
     <h1>10x812 Online</h1>
-    
+
     <div class="grid" id="colorGrid"></div>
-    <code id="colorCodes"></code>
+
+    <div class="code-box" id="colorCodes"></div>
 
     <div class="controls">
-      <div class="buttons">
-        <button id="generateBtn" onclick="startGenerating()">Generate</button>
-        <button id="pauseBtn" class="pause-btn" onclick="togglePause()" disabled>
-          <img id="pauseIcon" src="https://gdbrowser.com/assets/paused.png" alt="Paused">
-        </button>
+      <button id="generateBtn" onclick="startGenerating()">Generate</button>
+      <button id="pauseBtn" class="pause-btn" onclick="togglePause()" style="display: none;" disabled>
+        <img id="pauseIcon" src="/pause.png" alt="Pause">
+      </button>
+
+      <div class="speed-dropdown">
+        <label for="speed">Speed:</label>
+        <select id="speed" disabled>
+          <option value="1000">1x</option>
+          <option value="500">2x</option>
+          <option value="250">4x</option>
+          <option value="125">8x</option>
+        </select>
       </div>
-      <select id="speedSelect" disabled>
-        <option value="1000">Speed: 1x</option>
-        <option value="500">Speed: 2x</option>
-        <option value="250">Speed: 4x</option>
-        <option value="125">Speed: 8x</option>
-      </select>
     </div>
   </div>
 
   <script>
+    const colors = [
+      { hex: "#FFFFFF", value: 10 },
+      { hex: "#000000", value: 9 },
+      { hex: "#0009FF", value: 4 },
+      { hex: "#00FFF7", value: 5 },
+      { hex: "#FF0000", value: 1 },
+      { hex: "#FF00CE", value: 2 },
+      { hex: "#F2FF00", value: 7 },
+      { hex: "#FF8600", value: 8 },
+      { hex: "#06FF00", value: 6 },
+      { hex: "#A000FF", value: 3 },
+    ];
+
+    let interval;
+    let paused = false;
+
+    const grid = document.getElementById("colorGrid");
+    const codeBox = document.getElementById("colorCodes");
+    const speedSelect = document.getElementById("speed");
+    const pauseBtn = document.getElementById("pauseBtn");
+    const pauseIcon = document.getElementById("pauseIcon");
+
     function toggleSidebar() {
       document.getElementById("sidebar").classList.toggle("open");
     }
 
     fetch('/sidebar.html')
-      .then(response => response.text())
-      .then(data => {
-        document.getElementById('sidebar').innerHTML = data;
-      })
-      .catch(error => {
-        console.error("Failed to load sidebar:", error);
-      });
+      .then(res => res.text())
+      .then(data => document.getElementById("sidebar").innerHTML = data);
 
-    const colorMap = [
-      { hex: "#FFFFFF", value: 10 }, // White
-      { hex: "#FF0000", value: 1 },  // Red
-      { hex: "#000000", value: 9 },  // Black
-      { hex: "#FF00CE", value: 2 },  // Pink
-      { hex: "#A000FF", value: 3 },  // Purple
-      { hex: "#0009FF", value: 4 },  // Blue
-      { hex: "#00FFF7", value: 5 },  // Teal
-      { hex: "#06FF00", value: 6 },  // Green
-      { hex: "#F2FF00", value: 7 },  // Yellow
-      { hex: "#FF8600", value: 8 },  // Orange
-    ];
-
-    const grid = document.getElementById("colorGrid");
-    const codeBlock = document.getElementById("colorCodes");
-    const pauseBtn = document.getElementById("pauseBtn");
-    const pauseIcon = document.getElementById("pauseIcon");
-    const generateBtn = document.getElementById("generateBtn");
-    const speedSelect = document.getElementById("speedSelect");
-
-    let intervalId = null;
-    let isPaused = false;
-
-    // Create 9x9 grid
-    const cells = [];
-    for (let i = 0; i < 81; i++) {
-      const cell = document.createElement("div");
-      cell.className = "cell";
-      grid.appendChild(cell);
-      cells.push(cell);
+    function createGrid() {
+      grid.innerHTML = "";
+      for (let i = 0; i < 81; i++) {
+        const cell = document.createElement("div");
+        cell.classList.add("cell");
+        grid.appendChild(cell);
+      }
     }
 
     function startGenerating() {
-      generateBtn.disabled = true;
+      document.getElementById("generateBtn").style.display = "none";
+      pauseBtn.style.display = "inline-block";
       pauseBtn.disabled = false;
       speedSelect.disabled = false;
 
-      if (intervalId) clearInterval(intervalId);
-      intervalId = setInterval(updateGrid, parseInt(speedSelect.value));
-    }
-
-    function updateGrid() {
-      if (isPaused) return;
-
-      let output = "";
-      for (let i = 0; i < 81; i++) {
-        const color = colorMap[Math.floor(Math.random() * colorMap.length)];
-        cells[i].style.backgroundColor = color.hex;
-        output += color.value.toString().padStart(2, "0") + ((i + 1) % 9 === 0 ? "\n" : " ");
-      }
-      codeBlock.textContent = output.trim();
+      generateColors();
+      interval = setInterval(generateColors, parseInt(speedSelect.value));
     }
 
     function togglePause() {
-      isPaused = !isPaused;
-      pauseIcon.src = isPaused
-        ? "https://gdbrowser.com/assets/unpaused.png"
-        : "https://gdbrowser.com/assets/paused.png";
+      paused = !paused;
+      pauseIcon.src = paused ? "/play.png" : "/pause.png";
+      if (paused) {
+        clearInterval(interval);
+      } else {
+        interval = setInterval(generateColors, parseInt(speedSelect.value));
+      }
     }
 
-    speedSelect.addEventListener("change", () => {
-      if (intervalId) {
-        clearInterval(intervalId);
-        intervalId = setInterval(updateGrid, parseInt(speedSelect.value));
+    function generateColors() {
+      const cells = grid.children;
+      let output = "";
+
+      for (let i = 0; i < cells.length; i++) {
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        cells[i].style.backgroundColor = color.hex;
+        output += color.value.toString().padStart(2, " ") + (i % 9 === 8 ? "\n" : " ");
       }
-    });
+
+      codeBox.textContent = output.trim();
+    }
+
+    createGrid();
   </script>
+
 </body>
 </html>
