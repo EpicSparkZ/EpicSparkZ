@@ -57,50 +57,23 @@
     .sidebar.open ~ .main-content {
       margin-left: 250px;
     }
-
-    .dropdown {
-      background-color: #292929;
-      padding: 15px;
-      border-radius: 8px;
-      max-width: 500px;
-      margin-bottom: 20px;
-    }
-
-    .dropdown img {
-      width: 160px;
-      height: 90px;
-      object-fit: cover;
-      border-radius: 8px;
-    }
-
-    .dropdown h4,
-    .dropdown h6,
-    .dropdown p {
-      margin: 10px 0 0 0;
-    }
   </style>
 </head>
 <body>
 
-  <!-- Hamburger -->
   <div class="hamburger" onclick="toggleSidebar()">
     <div></div>
     <div></div>
     <div></div>
   </div>
 
-  <!-- Sidebar -->
-  <div class="sidebar" id="sidebar"></div>
+  <div class="sidebar" id="sidebar">
+    <!-- Sidebar loads here -->
+  </div>
 
-  <!-- Main Content -->
   <div class="main-content">
     <h1>10x812 Online</h1>
-    <div class="dropdown">
-      <img src="https://raw.githubusercontent.com/EpicSparkZ/EpicSparkZ/main/10x812.png" alt="10x812 Thumbnail">
-      <h4><i>Made in less than 2 days! Thank you to wiynlol for the original idea! Please comment any bugs you may encounter.</i></h4>
-      <h6>Star rated 07/26/2025 as my second rate!</h6>
-      <p>This level is currently playable online. This page is under construction.</p>
-    </div>
+    <p>This page is under construction.</p>
   </div>
 
   <script>
@@ -114,7 +87,7 @@
         document.getElementById('sidebar').innerHTML = data;
       })
       .catch(error => {
-        console.error('Failed to load sidebar:', error);
+        console.error("Failed to load sidebar:", error);
       });
   </script>
 
