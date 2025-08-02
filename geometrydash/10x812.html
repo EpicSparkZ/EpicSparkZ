@@ -3,19 +3,99 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>9x9 Color Grid</title>
+  <title>10x812 Online</title>
+  <link rel="icon" href="/webicon.png" type="image/png">
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
       background-color: #1e1e1e;
       color: white;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      overflow-x: hidden;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      width: 250px;
+      height: 100%;
+      background-color: #2a2a2a;
+      padding-top: 60px;
+      transition: left 0.3s ease;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+      overflow-y: auto;
+    }
+
+    .sidebar.open {
+      left: 0;
+    }
+
+    .sidebar-scroll::-webkit-scrollbar {
+      display: none;
+    }
+
+    .sidebar-scroll {
       height: 100vh;
-      overflow: hidden;
+      overflow-y: scroll;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+      padding-right: 10px;
+      box-sizing: border-box;
+    }
+
+    .sidebar-separator {
+      padding: 8px 20px;
+      font-weight: 600;
+      color: #bbb;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 1.5px;
+      border-top: 1px solid #444;
+      border-bottom: 1px solid #444;
+      margin: 20px 0;
+      user-select: none;
+    }
+
+    .sidebar a {
+      display: block;
+      color: #ccc;
+      padding: 12px 20px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .sidebar a:hover {
+      background-color: #444;
+      color: #fff;
+    }
+
+    .hamburger {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      width: 30px;
+      height: 24px;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    .hamburger div {
+      width: 100%;
+      height: 4px;
+      background-color: white;
+      margin: 4px 0;
+      transition: all 0.3s ease;
+    }
+
+    .main-content {
+      margin-left: 0;
+      padding: 40px;
+      transition: margin-left 0.3s ease;
+    }
+
+    .sidebar.open ~ .main-content {
+      margin-left: 250px;
     }
 
     .grid {
@@ -23,7 +103,7 @@
       grid-template-columns: repeat(9, 40px);
       grid-template-rows: repeat(9, 40px);
       gap: 2px;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
     }
 
     .cell {
@@ -36,7 +116,7 @@
     .controls {
       display: flex;
       flex-direction: column;
-      align-items: center;
+      align-items: flex-start;
     }
 
     .buttons {
@@ -55,42 +135,72 @@
       border: 1px solid #666;
       padding: 5px;
       border-radius: 4px;
+      filter: brightness(0.7);
     }
 
     code {
       background-color: #2b2b2b;
       color: #0f0;
-      padding: 10px;
+      padding: 5px;
       font-family: monospace;
       white-space: pre-wrap;
       display: block;
+      font-size: 12px;
+      height: 80px;
+      overflow-y: auto;
       margin-bottom: 10px;
       max-width: 95vw;
-      overflow-x: auto;
     }
   </style>
 </head>
 <body>
 
-  <div class="grid" id="colorGrid"></div>
-  <code id="colorCodes">Click Generate to begin.</code>
+  <div class="hamburger" onclick="toggleSidebar()">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
 
-  <div class="controls">
-    <div class="buttons">
-      <button id="generateBtn" onclick="startGenerating()">Generate</button>
-      <button id="pauseBtn" class="pause-btn" onclick="togglePause()" disabled>
-        <img id="pauseIcon" src="https://gdbrowser.com/assets/paused.png" alt="Paused">
-      </button>
+  <div class="sidebar" id="sidebar">
+    <!-- Sidebar loads here -->
+  </div>
+
+  <div class="main-content">
+    <h1>10x812 Online</h1>
+    
+    <div class="grid" id="colorGrid"></div>
+    <code id="colorCodes"></code>
+
+    <div class="controls">
+      <div class="buttons">
+        <button id="generateBtn" onclick="startGenerating()">Generate</button>
+        <button id="pauseBtn" class="pause-btn" onclick="togglePause()" disabled>
+          <img id="pauseIcon" src="https://gdbrowser.com/assets/paused.png" alt="Paused">
+        </button>
+      </div>
+      <select id="speedSelect" disabled>
+        <option value="1000">Speed: 1x</option>
+        <option value="500">Speed: 2x</option>
+        <option value="250">Speed: 4x</option>
+        <option value="125">Speed: 8x</option>
+      </select>
     </div>
-    <select id="speedSelect" disabled>
-      <option value="1000">Speed: 1x</option>
-      <option value="500">Speed: 2x</option>
-      <option value="250">Speed: 4x</option>
-      <option value="125">Speed: 8x</option>
-    </select>
   </div>
 
   <script>
+    function toggleSidebar() {
+      document.getElementById("sidebar").classList.toggle("open");
+    }
+
+    fetch('/sidebar.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('sidebar').innerHTML = data;
+      })
+      .catch(error => {
+        console.error("Failed to load sidebar:", error);
+      });
+
     const colorMap = [
       { hex: "#FFFFFF", value: 10 }, // White
       { hex: "#FF0000", value: 1 },  // Red
