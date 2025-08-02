@@ -96,10 +96,47 @@
       margin-left: 0;
       padding: 40px;
       transition: margin-left 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .sidebar.open ~ .main-content {
       margin-left: 250px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(9, 30px);
+      grid-template-rows: repeat(9, 30px);
+      gap: 4px;
+      margin: 30px 0;
+    }
+
+    .cell {
+      width: 30px;
+      height: 30px;
+      background-color: black;
+      border: 1px solid #444;
+    }
+
+    .button-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    button {
+      padding: 8px 14px;
+      font-size: 14px;
+      cursor: pointer;
+      background-color: #333;
+      color: white;
+      border: 1px solid #666;
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
     }
   </style>
 </head>
@@ -117,7 +154,13 @@
 
   <div class="main-content">
     <h1>10x812 Online</h1>
-    <p>This page is under construction.</p>
+
+    <div class="grid" id="colorGrid"></div>
+
+    <div class="button-row">
+      <button id="generateBtn" onclick="startColorGeneration()">Generate</button>
+      <button id="pauseBtn" onclick="togglePause()" disabled>Paused</button>
+    </div>
   </div>
 
   <script>
@@ -133,6 +176,39 @@
       .catch(error => {
         console.error("Failed to load sidebar:", error);
       });
+
+    // Grid setup
+    const grid = document.getElementById("colorGrid");
+    const colorOptions = ["white", "black", "blue", "teal", "red", "pink", "yellow", "orange", "green", "purple"];
+    const cells = [];
+
+    for (let i = 0; i < 81; i++) {
+      const div = document.createElement("div");
+      div.className = "cell";
+      grid.appendChild(div);
+      cells.push(div);
+    }
+
+    let interval = null;
+    let isPaused = false;
+
+    function startColorGeneration() {
+      if (interval) return; // Already running
+      document.getElementById("pauseBtn").disabled = false;
+      interval = setInterval(() => {
+        if (!isPaused) {
+          cells.forEach(cell => {
+            const randColor = colorOptions[Math.floor(Math.random() * colorOptions.length)];
+            cell.style.backgroundColor = randColor;
+          });
+        }
+      }, 200);
+    }
+
+    function togglePause() {
+      isPaused = !isPaused;
+      document.getElementById("pauseBtn").innerText = isPaused ? "Paused" : "Unpaused";
+    }
   </script>
 
 </body>
