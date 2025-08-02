@@ -30,6 +30,49 @@
       left: 0;
     }
 
+    .sidebar-scroll::-webkit-scrollbar {
+      display: none;
+    }
+
+    .sidebar-link {
+      margin: 2px 0;
+    }
+
+    .sidebar-scroll {
+      height: 100vh;
+      overflow-y: scroll;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+      padding-right: 10px;
+      box-sizing: border-box;
+    }
+
+    .sidebar-separator {
+      padding: 8px 20px;
+      font-weight: 600;
+      color: #bbb;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 1.5px;
+      border-top: 1px solid #444;
+      border-bottom: 1px solid #444;
+      margin: 20px 0;
+      user-select: none;
+    }
+
+    .sidebar a {
+      display: block;
+      color: #ccc;
+      padding: 12px 20px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .sidebar a:hover {
+      background-color: #444;
+      color: #fff;
+    }
+
     .hamburger {
       position: fixed;
       top: 20px;
