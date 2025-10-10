@@ -241,37 +241,21 @@
   
   <script>
     function toggleSidebar() {
-      const sidebar = document.getElementById("sidebar");
-      const wrapper = document.getElementById("wrapper");
-      sidebar.classList.toggle("open");
-      wrapper.classList.toggle("shifted");
+      document.getElementById('sidebar').classList.toggle('open');
     }
 
-    function toggleDropdown(button) {
-      const dropdown = button.parentElement;
-      const content = dropdown.querySelector(".dropdown-content");
-      if (dropdown.classList.contains("open")) {
-        content.style.maxHeight = content.scrollHeight + "px";
-        requestAnimationFrame(() => {
-          content.style.maxHeight = "0px";
-          dropdown.classList.remove("open");
-        });
-      } else {
-        dropdown.classList.add("open");
-        content.style.maxHeight = content.scrollHeight + "px";
-      }
-    }
-
+    // Correct fetch path: loads sidebar.html from root of repo
     fetch('../sidebar.html')
       .then(res => {
-        if (!res.ok) throw new Error('Sidebar failed to load');
+        if (!res.ok) throw new Error('404');
         return res.text();
       })
       .then(html => {
         document.getElementById('sidebar').innerHTML = html;
       })
       .catch(err => {
-        document.getElementById('sidebar').innerHTML = 'Failed to load sidebar.';
+        console.error('Sidebar load failed:', err);
+        document.getElementById('sidebar').innerHTML = 'Failed to load menu.';
       });
   </script>
 </body>
