@@ -127,11 +127,12 @@
     .dropdown-inner video,
     .dropdown-inner iframe {
       width: 100%;
-      max-width: 640px;
-      height: auto;
+      max-width: 800px;
+      aspect-ratio: 16 / 9;
       border-radius: 8px;
       margin-bottom: 10px;
       background-color: black;
+      display: block;
     }
 
     .dropdown-inner h4 {
@@ -174,22 +175,25 @@
 
       
       <div class="dropdown">
-  <button onclick="toggleDropdown(this)">As I Fade</button>
-  <div class="dropdown-content">
-    <div class="dropdown-inner">
-      <p><b>Last available preview:</b></p>
-      <iframe 
-        src="https://www.youtube.com/embed/3449_F2VMmE?si=blTqvTIzzVYJt0wE" 
-        title="As I Fade Preview" 
-        allowfullscreen>
-      </iframe>
-      <h6>Current Stage: Decoration</h6>
-      <h4><i>N/A</i></h4>
+        <button onclick="toggleDropdown(this)">As I Fade</button>
+        <div class="dropdown-content">
+          <div class="dropdown-inner">
+            <p><b>Last available preview:</b></p>
+            <iframe 
+              src="https://www.youtube.com/embed/3449_F2VMmE?si=blTqvTIzzVYJt0wE" 
+              title="As I Fade Preview" 
+              allowfullscreen>
+            </iframe>
+            <h5>Current Stage: Decoration</h5>
+            <h4><i>N/A</i></h4>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
-</div>
 
-      
+  
   <script>
     function toggleSidebar() {
       const sidebar = document.getElementById("sidebar");
