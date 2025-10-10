@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Upcoming Levels</title>
+  <title>Upcoming Levels (Video Version)</title>
   <link rel="icon" href="/webicon.png" type="image/png">
   <style>
     body {
@@ -14,7 +14,6 @@
       overflow-x: hidden;
     }
 
-    /* Sidebar & hamburger styling (unchanged) */
     .sidebar {
       position: fixed;
       top: 0;
@@ -24,12 +23,10 @@
       background-color: #2a2a2a;
       padding-top: 60px;
       transition: left 0.3s ease;
-      box-shadow: 2px 0 5px rgba(0,0,0,0.5);
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
       z-index: 1000;
     }
-    .sidebar.open {
-      left: 0;
-    }
+    .sidebar.open { left: 0; }
     .sidebar a {
       display: block;
       color: #ccc;
@@ -41,18 +38,7 @@
       background-color: #444;
       color: #fff;
     }
-    .sidebar-separator {
-      padding: 8px 20px;
-      font-weight: 600;
-      color: #bbb;
-      text-transform: uppercase;
-      font-size: 0.75rem;
-      letter-spacing: 1.5px;
-      border-top: 1px solid #444;
-      border-bottom: 1px solid #444;
-      margin: 20px 0;
-      user-select: none;
-    }
+
     .hamburger {
       position: fixed;
       top: 20px;
@@ -69,15 +55,20 @@
       margin: 4px 0;
       transition: all 0.3s ease;
     }
-    .main-content {
-      margin-left: 0;
-      padding: 40px;
+
+    .wrapper {
       transition: margin-left 0.3s ease;
-      max-width: 800px;
-      box-sizing: border-box;
     }
-    .sidebar.open ~ .main-content {
+    .wrapper.shifted {
       margin-left: 250px;
+    }
+
+    .main-content {
+      padding: 40px;
+      max-width: 800px;
+      margin: 0 auto;
+      box-sizing: border-box;
+      text-align: center;
     }
 
     h1 {
@@ -85,49 +76,178 @@
       margin-bottom: 20px;
     }
 
-    p {
-      line-height: 1.6;
-      margin-bottom: 20px;
+    .dropdown {
+      background-color: #2a2a2a;
+      border: 1px solid #444;
+      border-radius: 5px;
+      margin: 30px 0;
+      overflow: hidden;
+      transition: all 0.5s ease;
     }
+
+    .dropdown button {
+      background: none;
+      border: none;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      width: 100%;
+      font-size: 1.4rem;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .dropdown-content {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      padding: 0;
+      transition: max-height 0.5s ease, opacity 0.5s ease, padding 0.3s ease;
+      pointer-events: none;
+    }
+
+    .dropdown.open .dropdown-content {
+      opacity: 1;
+      max-height: 600px;
+      padding: 15px 0;
+      pointer-events: auto;
+    }
+
+    .dropdown-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .dropdown-inner video,
+    .dropdown-inner iframe {
+      width: 100%;
+      max-width: 640px;
+      height: auto;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      background-color: black;
+    }
+
+    .dropdown-inner h4 {
+      font-style: italic;
+      margin: 10px 0;
+    }
+
+    @keyframes rainbowGradient {
+      0%   { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+    .rainbow-bg {
+      background: linear-gradient(270deg,
+        rgba(255, 0, 0, 0.2),
+        rgba(255, 165, 0, 0.2),
+        rgba(255, 255, 0, 0.2),
+        rgba(0, 128, 0, 0.2),
+        rgba(0, 0, 255, 0.2),
+        rgba(75, 0, 130, 0.2),
+        rgba(238, 130, 238, 0.2),
+        rgba(255, 0, 0, 0.2)
+      );
+      background-size: 1600% 1600%;
+      animation: rainbowGradient 20s linear infinite;
+    }
+
   </style>
 </head>
 <body>
 
-  <!-- Hamburger Button -->
   <div class="hamburger" onclick="toggleSidebar()">
-    <div></div>
-    <div></div>
-    <div></div>
+    <div></div><div></div><div></div>
   </div>
 
-  <!-- Sidebar -->
   <div class="sidebar" id="sidebar">Loading...</div>
 
-  <!-- Main Content -->
-  <div class="main-content">
-    <h1>Upcoming Levels</h1>
-    <p>UNDER CONSTRUCTION</p>
+  <div class="wrapper" id="wrapper">
+    <div class="main-content">
+      <h1>Upcoming Levels (Video Previews)</h1>
+      <p>Each dropdown shows a video instead of an image preview.</p>
+
+      <div class="dropdown">
+        <button onclick="toggleDropdown(this)">Level 1: Prototype Run</button>
+        <div class="dropdown-content">
+          <div class="dropdown-inner">
+            <video controls>
+              <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+              Your browser does not support HTML video.
+            </video>
+            <h4><i>Watch the first prototype of this upcoming level!</i></h4>
+          </div>
+        </div>
+      </div>
+
+      <div class="dropdown rainbow-bg">
+        <button onclick="toggleDropdown(this)">Level 2: 10x812 Preview</button>
+        <div class="dropdown-content">
+          <div class="dropdown-inner">
+            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                    title="10x812 Preview"
+                    frameborder="0"
+                    allowfullscreen></iframe>
+            <h4><i>This one’s got a colorful touch — stay tuned!</i></h4>
+          </div>
+        </div>
+      </div>
+
+      <div class="dropdown">
+        <button onclick="toggleDropdown(this)">Level 3: Glitch Hop (Preview)</button>
+        <div class="dropdown-content">
+          <div class="dropdown-inner">
+            <video controls>
+              <source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4">
+              Your browser does not support HTML video.
+            </video>
+            <h4><i>Testing the new sync and style here — work in progress.</i></h4>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script>
     function toggleSidebar() {
-      document.getElementById('sidebar').classList.toggle('open');
+      const sidebar = document.getElementById("sidebar");
+      const wrapper = document.getElementById("wrapper");
+      sidebar.classList.toggle("open");
+      wrapper.classList.toggle("shifted");
     }
 
-    // Correct fetch path: loads sidebar.html from root of repo
+    function toggleDropdown(button) {
+      const dropdown = button.parentElement;
+      const content = dropdown.querySelector(".dropdown-content");
+      if (dropdown.classList.contains("open")) {
+        content.style.maxHeight = content.scrollHeight + "px";
+        requestAnimationFrame(() => {
+          content.style.maxHeight = "0px";
+          dropdown.classList.remove("open");
+        });
+      } else {
+        dropdown.classList.add("open");
+        content.style.maxHeight = content.scrollHeight + "px";
+      }
+    }
+
     fetch('../sidebar.html')
       .then(res => {
-        if (!res.ok) throw new Error('404');
+        if (!res.ok) throw new Error('Sidebar failed to load');
         return res.text();
       })
       .then(html => {
         document.getElementById('sidebar').innerHTML = html;
       })
       .catch(err => {
-        console.error('Sidebar load failed:', err);
-        document.getElementById('sidebar').innerHTML = 'Failed to load menu.';
+        document.getElementById('sidebar').innerHTML = 'Failed to load sidebar.';
       });
   </script>
-
 </body>
 </html>
