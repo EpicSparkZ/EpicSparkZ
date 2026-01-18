@@ -83,7 +83,6 @@
 
     <label>
       <strong>Ping User</strong><br>
-      <input type="text" id="searchUser" placeholder="Search user...">
       <select id="pingUser">
         <option value="">None</option>
       </select>
@@ -103,7 +102,6 @@
 
   const note = document.getElementById('note');
   const pingUser = document.getElementById('pingUser');
-  const searchUser = document.getElementById('searchUser');
   const form = document.getElementById('noteForm');
 
   // Users you can ping
@@ -124,14 +122,6 @@
     pingUser.appendChild(option);
   });
 
-  // Search/filter dropdown
-  searchUser.addEventListener('input', function() {
-    const filter = this.value.toLowerCase();
-    Array.from(pingUser.options).forEach(option => {
-      option.style.display = (option.value.toLowerCase().includes(filter) || option.value === "") ? "" : "none";
-    });
-  });
-
   // Limit textarea to 15 lines
   note.addEventListener('input', function() {
     const lines = this.value.split('\n');
@@ -148,6 +138,7 @@
       pingText = `<@${userMap[selectedUser]}>`;
     }
 
+    // Only include note if not empty
     const messageContent = (note.value.trim() ? note.value.trim() + (pingText ? "\n" : "") : "") + pingText;
 
     if (!messageContent) {
