@@ -90,21 +90,7 @@
       margin-bottom: 20px;
     }
 
-    /* prevent textarea resizing */
-    textarea {
-      resize: none;
-      width: 100%;
-      padding: 8px;
-      margin-top: 6px;
-      margin-bottom: 20px;
-      background-color: #2a2a2a;
-      color: white;
-      border: 1px solid #444;
-      font-family: inherit;
-      font-size: 1rem;
-    }
-
-    input[type=text] {
+    textarea, select {
       width: 100%;
       padding: 8px;
       margin-top: 6px;
@@ -142,64 +128,91 @@
     <h1>Feind Server API</h1>
     <p>API Status: 🟢</p>
 
-<form id="noteForm">
-  <label>
-    <strong>Message</strong><br>
-    <textarea id="note" rows="5" placeholder="Type your message here..."></textarea>
-  </label>
+    <form id="noteForm">
+      <label>
+        <strong>Message</strong><br>
+        <textarea id="note" rows="5" placeholder="Type your message here..."></textarea>
+      </label>
 
-  <label>
-    <strong>Ping User</strong><br>
-    <input type="text" id="pingUser" placeholder="Enter Discord username (exact)">
-  </label>
+      <label>
+        <strong>Ping User</strong><br>
+        <select id="pingUser">
+          <option value="">None</option>
+        </select>
+      </label>
 
-  <button type="submit">Send</button>
-</form>
+      <button type="submit">Send</button>
+    </form>
+  </div>
 
-<script>
-const note = document.getElementById('note');
-const pingUser = document.getElementById('pingUser');
-const form = document.getElementById('noteForm');
+  <script>
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('open');
+    }
 
-// Mapping: username#tag => Discord ID
-const userMap = {
-  "EpicSparkZ": "941482778116120616",
-  "Raptor": "830376717226475531"
-};
+    fetch('../sidebar.html')
+      .then(res => res.ok ? res.text() : Promise.reject('404'))
+      .then(html => document.getElementById('sidebar').innerHTML = html)
+      .catch(err => {
+        console.error('Sidebar load failed:', err);
+        document.getElementById('sidebar').innerHTML = 'Failed to load menu.';
+      });
 
-// Limit textarea to 15 lines
-note.addEventListener('input', function () {
-  const lines = this.value.split('\n');
-  if (lines.length > 15) this.value = lines.slice(0, 15).join('\n');
-});
+    const note = document.getElementById('note');
+    const pingUser = document.getElementById('pingUser');
+    const form = document.getElementById('noteForm');
 
-form.addEventListener('submit', function(e) {
-  e.preventDefault();
+    // Users you can ping
+    const userMap = {
+      "EpicSparkZ": "941482778116120616",
+      "Raptor": "830376717226475531"
+    };
 
-  const webhookURL = "https://discord.com/api/webhooks/1462555186886086828/MB0byZPUgcryGywo6vTB25CfnSwiIO58FrbI4ENgAB1aL
-";
+    // Populate select options
+    for (const username in userMap) {
+      const option = document.createElement('option');
+      option.value = username;
+      option.textContent = username;
+      pingUser.appendChild(option);
+    }
 
-  let pingText = "";
-  const usernameInput = pingUser.value.trim();
-  if (usernameInput !== "" && userMap[usernameInput]) {
-    pingText = `\n<@${userMap[usernameInput]}>`;
-  }
+    // Limit textarea to 15 lines
+    note.addEventListener('input', function () {
+      const lines = this.value.split('\n');
+      if (lines.length > 15) this.value = lines.slice(0, 15).join('\n');
+    });
 
-  const message = {
-    content: `${note.value || "N/A"}${pingText}`
-  };
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
 
-  fetch(webhookURL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(message)
-  }).then(() => {
-    alert("Message Sent Successfully!");
-    form.reset();
-  });
-});
-</script>
+      const webhookURL = "https://discord.com/api/webhooks/1462555186886086828/MB0byZPUgcryGywo6vTB25CfnSwiIO58FrbI4ENgAB1aLa6mhsYzyDapr4zX48USZlbs";
 
+      let pingText = "";
+      const selectedUser = pingUser.value;
+      if (selectedUser && userMap[selectedUser]) {
+        pingText = `\n<@${userMap[selectedUser]}>`;
+      }
+
+      const message = {
+        content: `${note.value || "N/A"}${pingText}`
+      };
+
+      fetch(webhookURL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(message)
+      })
+      .then(res => {
+        if (!res.ok) throw new Error(`Error: ${res.status}`);
+        alert("Message Sent Successfully!");
+        form.reset();
+      })
+      .catch(err => {
+        console.error(err);
+        alert("Failed to send message. Check console for details.");
+      });
+    });
+  </script>
 
 </body>
 </html>
