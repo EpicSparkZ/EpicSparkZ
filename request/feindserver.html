@@ -6,34 +6,12 @@
   <title>Feind Server</title>
   <link rel="icon" href="/webicon.png" type="image/png">
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #1e1e1e;
-      color: white;
-      overflow-x: hidden;
-    }
-    .sidebar {
-      position: fixed;
-      top: 0;
-      left: -250px;
-      width: 250px;
-      height: 100%;
-      background-color: #2a2a2a;
-      padding-top: 60px;
-      transition: left 0.3s ease;
-      box-shadow: 2px 0 5px rgba(0,0,0,0.5);
-      z-index: 1000;
-    }
+    body { margin: 0; font-family: Arial, sans-serif; background-color: #1e1e1e; color: white; overflow-x: hidden; }
+    .sidebar { position: fixed; top: 0; left: -250px; width: 250px; height: 100%; background-color: #2a2a2a; padding-top: 60px; transition: left 0.3s ease; box-shadow: 2px 0 5px rgba(0,0,0,0.5); z-index: 1000; }
     .sidebar.open { left: 0; }
     .sidebar a { display: block; color: #ccc; padding: 12px 20px; text-decoration: none; transition: background 0.2s; }
     .sidebar a:hover { background-color: #444; color: #fff; }
-    .sidebar-separator {
-      padding: 8px 20px; font-weight: 600; color: #bbb;
-      text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1.5px;
-      border-top: 1px solid #444; border-bottom: 1px solid #444;
-      margin: 20px 0; user-select: none;
-    }
+    .sidebar-separator { padding: 8px 20px; font-weight: 600; color: #bbb; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1.5px; border-top: 1px solid #444; border-bottom: 1px solid #444; margin: 20px 0; user-select: none; }
     .hamburger { position: fixed; top: 20px; left: 20px; width: 30px; height: 24px; cursor: pointer; z-index: 1001; }
     .hamburger div { width: 100%; height: 4px; background-color: white; margin: 4px 0; transition: all 0.3s ease; }
     .main-content { margin-left: 0; padding: 40px; transition: margin-left 0.3s ease; max-width: 800px; box-sizing: border-box; }
@@ -75,7 +53,24 @@
   </form>
 </div>
 
+<!-- Firebase App (core) -->
+<script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-database-compat.js"></script>
+
 <script>
+  // --- FIREBASE CONFIG ---
+  const firebaseConfig = {
+    apiKey: "AIzaSyA2HyO5wSmAZPBjfFrShcS2EF1G9uFT9nk",
+    authDomain: "feindserver-ee38e.firebaseapp.com",
+    databaseURL: "https://feindserver-ee38e-default-rtdb.firebaseio.com",
+    projectId: "feindserver-ee38e",
+    storageBucket: "feindserver-ee38e.appspot.com",
+    messagingSenderId: "612147980631",
+    appId: "1:612147980631:web:699fec3b5ffa01d0ebb612"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+
   function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
 
   fetch('../sidebar.html')
@@ -87,7 +82,6 @@
   const pingUser = document.getElementById('pingUser');
   const selectedUsersContainer = document.getElementById('selectedUsersContainer');
   const form = document.getElementById('noteForm');
-
   let selectedUsers = [];
 
   // Users you can ping
@@ -114,7 +108,6 @@
     pingUser.appendChild(option);
   });
 
-  // When user is selected, add to array
   pingUser.addEventListener('change', () => {
     const username = pingUser.value;
     if (username) {
@@ -138,41 +131,32 @@
     });
   }
 
-  // Limit textarea to 15 lines
   note.addEventListener('input', function() {
     const lines = this.value.split('\n');
     if (lines.length > 15) this.value = lines.slice(0, 15).join('\n');
   });
 
-  form.addEventListener('submit', function(e) {
+  form.addEventListener('submit', async function(e) {
     e.preventDefault();
 
-    const webhookURL = "https://discord.com/api/webhooks/1462555186886086828/MB0byZPUgcryGywo6vTB25CfnSwiIO58FrbI4ENgAB1aLa6mhsYzyDapr4zX48USZlbs";
+    const webhookURL = "YOUR_WEBHOOK_HERE";
 
-    // --- CONTROL PAGE SETTINGS ---
-    const allowSending = localStorage.getItem('allowSending') === 'true';
-    const cooldown = parseInt(localStorage.getItem('cooldownSeconds')) || 0;
+    // --- FIREBASE CHECK ---
+    const snapshot = await db.ref("control").get();
+    const control = snapshot.val() || {};
+    const allowMessages = control.allowMessages !== false; // default true
+    const cooldown = control.cooldown || 0;
+
     const lastSent = parseInt(localStorage.getItem('lastSent')) || 0;
     const now = Date.now();
 
-    if (!allowSending) {
-      alert("Sending is currently disabled.");
-      return;
-    }
+    if (!allowMessages) { alert("Sending is currently disabled."); return; }
+    if (now - lastSent < cooldown) { alert(`Please wait ${Math.ceil((cooldown - (now - lastSent))/1000)} seconds before sending again.`); return; }
 
-    if (now - lastSent < cooldown * 1000) {
-      alert(`Please wait ${Math.ceil((cooldown*1000 - (now - lastSent))/1000)} seconds before sending again.`);
-      return;
-    }
-
-    // Build ping text (all on one line)
     const pingText = selectedUsers.map(u => `<@${userMap[u]}>`).join(" ");
     const messageContent = (note.value.trim() ? note.value.trim() + (pingText ? " " : "") : "") + pingText;
 
-    if (!messageContent) {
-      alert("Please enter a message or select a user to ping.");
-      return;
-    }
+    if (!messageContent) { alert("Please enter a message or select a user to ping."); return; }
 
     fetch(webhookURL, {
       method: "POST",
@@ -187,10 +171,7 @@
       renderSelectedUsers();
       localStorage.setItem('lastSent', now);
     })
-    .catch(err => {
-      console.error(err);
-      alert("Failed to send message. Check console for details.");
-    });
+    .catch(err => { console.error(err); alert("Failed to send message. Check console for details."); });
   });
 </script>
 
