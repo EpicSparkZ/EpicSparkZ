@@ -142,76 +142,63 @@
     <h1>Feind Server API</h1>
     <p>API Status: 🟢</p>
 
-    <form id="noteForm">
-      <label>
-        <strong>Message</strong><br>
-        <textarea id="note" rows="5" placeholder="Type your message here..."></textarea>
-      </label>
+<form id="noteForm">
+  <label>
+    <strong>Message</strong><br>
+    <textarea id="note" rows="5" placeholder="Type your message here..."></textarea>
+  </label>
 
-      <label>
-        <strong>Ping User</strong><br>
-        <input type="text" id="pingUser" placeholder="Enter Discord ID to ping">
-      </label>
+  <label>
+    <strong>Ping Username (optional)</strong><br>
+    <input type="text" id="pingUser" placeholder="Enter Discord username (exact)">
+  </label>
 
-      <button type="submit">Send</button>
-    </form>
-  </div>
+  <button type="submit">Send</button>
+</form>
 
-  <script>
-    function toggleSidebar() {
-      document.getElementById('sidebar').classList.toggle('open');
-    }
+<script>
+const note = document.getElementById('note');
+const pingUser = document.getElementById('pingUser');
+const form = document.getElementById('noteForm');
 
-    fetch('../sidebar.html')
-      .then(res => {
-        if (!res.ok) throw new Error('404');
-        return res.text();
-      })
-      .then(html => {
-        document.getElementById('sidebar').innerHTML = html;
-      })
-      .catch(err => {
-        console.error('Sidebar load failed:', err);
-        document.getElementById('sidebar').innerHTML = 'Failed to load menu.';
-      });
+// Mapping: username#tag => Discord ID
+const userMap = {
+  "EpicSparkZ#1234": "123456789012345678",
+  "OtherUser#5678": "987654321098765432"
+};
 
-    const note = document.getElementById('note');
-    const pingUser = document.getElementById('pingUser');
-    const form = document.getElementById('noteForm');
+// Limit textarea to 15 lines
+note.addEventListener('input', function () {
+  const lines = this.value.split('\n');
+  if (lines.length > 15) this.value = lines.slice(0, 15).join('\n');
+});
 
-    // Limit to 15 lines
-    note.addEventListener('input', function () {
-      const lines = this.value.split('\n');
-      if (lines.length > 15) {
-        this.value = lines.slice(0, 15).join('\n');
-      }
-    });
+form.addEventListener('submit', function(e) {
+  e.preventDefault();
 
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
+  const webhookURL = "YOUR_WEBHOOK_URL_HERE";
 
-      const webhookURL = "https://discord.com/api/webhooks/1462555186886086828/MB0byZPUgcryGywo6vTB25CfnSwiIO58FrbI4ENgAB1aLa6mhsYzyDapr4zX48USZlbs";
+  let pingText = "";
+  const usernameInput = pingUser.value.trim();
+  if (usernameInput !== "" && userMap[usernameInput]) {
+    pingText = `\n<@${userMap[usernameInput]}>`;
+  }
 
-      // Append ping if provided
-      let pingText = "";
-      if (pingUser.value.trim() !== "") {
-        pingText = `\n<@${pingUser.value.trim()}>`; // Must be actual Discord ID
-      }
+  const message = {
+    content: `${note.value || "N/A"}${pingText}`
+  };
 
-      const message = {
-        content: `${note.value || "N/A"}${pingText}`
-      };
+  fetch(webhookURL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(message)
+  }).then(() => {
+    alert("Message Sent Successfully!");
+    form.reset();
+  });
+});
+</script>
 
-      fetch(webhookURL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(message)
-      }).then(() => {
-        alert("Message Sent Successfully!");
-        form.reset();
-      });
-    });
-  </script>
 
 </body>
 </html>
