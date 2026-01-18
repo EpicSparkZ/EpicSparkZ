@@ -116,7 +116,7 @@
 
       <label>
         <strong>Difficulty</strong><br>
-        <input id="difficulty" type="text" style="width: 100%; padding: 8px; margin-top: 6px; margin-bottom: 16px; background-color: #2a2a2a; color: white; border: 1px solid #444;">
+        <input id="difficulty" type="text" required style="width: 100%; padding: 8px; margin-top: 6px; margin-bottom: 16px; background-color: #2a2a2a; color: white; border: 1px solid #444;">
       </label>
 
       <label>
@@ -170,7 +170,7 @@
       }
     });
 
-    // DISCORD SUBMISSION WITH TIMESTAMP
+    // DISCORD SUBMISSION WITH TITLE AND TIMESTAMP
     document.getElementById('levelForm').addEventListener('submit', function(e) {
       e.preventDefault();
 
@@ -181,7 +181,8 @@
 
       const message = {
         content:
-          `<t:${timestamp}:f>\n` + // Discord-formatted timestamp
+          "**New Level Request**\n" +           // Added back above timestamp
+          `<t:${timestamp}:f>\n` +               // Discord-formatted timestamp
           "**Level ID:** " + document.getElementById('levelId').value + "\n" +
           "**Difficulty:** " + (document.getElementById('difficulty').value || "N/A") + "\n" +
           "**Creator:** " + document.getElementById('creatorName').value + "\n" +
