@@ -13,7 +13,18 @@ body {
   color: white;
   overflow-x: hidden;
 }
-.sidebar { position: fixed; top: 0; left: -250px; width: 250px; height: 100%; background-color: #2a2a2a; padding-top: 60px; transition: left 0.3s ease; box-shadow: 2px 0 5px rgba(0,0,0,0.5); z-index: 1000; }
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -250px;
+  width: 250px;
+  height: 100%;
+  background-color: #2a2a2a;
+  padding-top: 60px;
+  transition: left 0.3s ease;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.5);
+  z-index: 1000;
+}
 .sidebar.open { left: 0; }
 .sidebar a { display: block; color: #ccc; padding: 12px 20px; text-decoration: none; transition: background 0.2s; }
 .sidebar a:hover { background-color: #444; color: #fff; }
@@ -24,7 +35,17 @@ body {
 .sidebar.open ~ .main-content { margin-left: 250px; }
 h1 { font-size: 2rem; margin-bottom: 20px; }
 p { line-height: 1.6; margin-bottom: 20px; }
-textarea, select, input { width: 100%; padding: 8px; margin-top: 6px; margin-bottom: 20px; background-color: #2a2a2a; color: white; border: 1px solid #444; font-family: inherit; font-size: 1rem; }
+textarea, select, input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 6px;
+  margin-bottom: 20px;
+  background-color: #2a2a2a;
+  color: white;
+  border: 1px solid #444;
+  font-family: inherit;
+  font-size: 1rem;
+}
 button { padding: 10px 20px; background-color: #444; color: white; border: 1px solid #666; cursor: pointer; }
 .tag {
   background-color: #444;
@@ -32,10 +53,11 @@ button { padding: 10px 20px; background-color: #444; color: white; border: 1px s
   border-radius: 4px;
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
+  color: white;
 }
 .tag span { cursor: pointer; font-weight: bold; }
-#selectedUsersContainer { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 5px; }
+#selectedUsersContainer { display:flex; flex-wrap:wrap; gap:5px; margin-top:5px; }
 </style>
 </head>
 <body>
@@ -102,33 +124,32 @@ Object.keys(userMap).sort().forEach(username => {
   pingUser.appendChild(option);
 });
 
-// Manage selected users
 let selectedUsers = [];
 
+// Add user when selected from dropdown (allow duplicates)
 pingUser.addEventListener('change', () => {
   const username = pingUser.value;
-  if (username && !selectedUsers.includes(username)) {
+  if (username) {
     selectedUsers.push(username);
     renderSelectedUsers();
   }
-  pingUser.value = ""; // reset dropdown
+  pingUser.value = "";
 });
 
+// Render selected users as tags
 function renderSelectedUsers() {
   selectedUsersContainer.innerHTML = "";
-  selectedUsers.forEach(user => {
+  selectedUsers.forEach((user, index) => {
     const tag = document.createElement('div');
     tag.className = "tag";
     tag.textContent = user;
-
-    const removeBtn = document.createElement('span');
-    removeBtn.textContent = "✕";
-    removeBtn.addEventListener('click', () => {
-      selectedUsers = selectedUsers.filter(u => u !== user);
+    const removeSpan = document.createElement('span');
+    removeSpan.textContent = "✕";
+    removeSpan.addEventListener('click', () => {
+      selectedUsers.splice(index, 1);
       renderSelectedUsers();
     });
-
-    tag.appendChild(removeBtn);
+    tag.appendChild(removeSpan);
     selectedUsersContainer.appendChild(tag);
   });
 }
@@ -139,16 +160,18 @@ note.addEventListener('input', function() {
   if (lines.length > 15) this.value = lines.slice(0, 15).join('\n');
 });
 
-// Handle form submission
 form.addEventListener('submit', function(e) {
   e.preventDefault();
   const webhookURL = "https://discord.com/api/webhooks/1462555186886086828/MB0byZPUgcryGywo6vTB25CfnSwiIO58FrbI4ENgAB1aLa6mhsYzyDapr4zX48USZlbs";
 
-  const pingText = selectedUsers.map(user => `<@${userMap[user]}>`).join("\n");
+  // Build ping text for all selected users
+  let pingText = selectedUsers.map(u => `<@${userMap[u]}>`).join("\n");
+
+  // Only include note if not empty
   const messageContent = (note.value.trim() ? note.value.trim() + (pingText ? "\n" : "") : "") + pingText;
 
   if (!messageContent) {
-    alert("Please enter a message or select at least one user to ping.");
+    alert("Please enter a message or select a user to ping.");
     return;
   }
 
