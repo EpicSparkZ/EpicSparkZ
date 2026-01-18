@@ -29,54 +29,22 @@
     .sidebar a { display: block; color: #ccc; padding: 12px 20px; text-decoration: none; transition: background 0.2s; }
     .sidebar a:hover { background-color: #444; color: #fff; }
     .sidebar-separator {
-      padding: 8px 20px;
-      font-weight: 600;
-      color: #bbb;
-      text-transform: uppercase;
-      font-size: 0.75rem;
-      letter-spacing: 1.5px;
-      border-top: 1px solid #444;
-      border-bottom: 1px solid #444;
-      margin: 20px 0;
-      user-select: none;
+      padding: 8px 20px; font-weight: 600; color: #bbb;
+      text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1.5px;
+      border-top: 1px solid #444; border-bottom: 1px solid #444;
+      margin: 20px 0; user-select: none;
     }
     .hamburger { position: fixed; top: 20px; left: 20px; width: 30px; height: 24px; cursor: pointer; z-index: 1001; }
     .hamburger div { width: 100%; height: 4px; background-color: white; margin: 4px 0; transition: all 0.3s ease; }
-    .main-content {
-      margin-left: 0;
-      padding: 40px;
-      transition: margin-left 0.3s ease;
-      max-width: 800px;
-      box-sizing: border-box;
-    }
+    .main-content { margin-left: 0; padding: 40px; transition: margin-left 0.3s ease; max-width: 800px; box-sizing: border-box; }
     .sidebar.open ~ .main-content { margin-left: 250px; }
     h1 { font-size: 2rem; margin-bottom: 20px; }
     p { line-height: 1.6; margin-bottom: 20px; }
-    textarea, select {
-      width: 100%;
-      padding: 8px;
-      margin-top: 6px;
-      margin-bottom: 20px;
-      background-color: #2a2a2a;
-      color: white;
-      border: 1px solid #444;
-      font-family: inherit;
-      font-size: 1rem;
-    }
+    textarea, select { width: 100%; padding: 8px; margin-top: 6px; margin-bottom: 20px; background-color: #2a2a2a; color: white; border: 1px solid #444; font-family: inherit; font-size: 1rem; }
     button { padding: 10px 20px; background-color: #444; color: white; border: 1px solid #666; cursor: pointer; }
-
-    /* Styles for the ping tags */
-    .tag {
-      background-color: #444;
-      color: white;
-      padding: 4px 8px;
-      border-radius: 4px;
-      display: inline-flex;
-      align-items: center;
-      margin: 2px;
-      font-size: 0.9rem;
-    }
-    .tag span { margin-left: 6px; cursor: pointer; font-weight: bold; }
+    .selected-users { margin-bottom: 20px; display: flex; flex-wrap: wrap; gap: 5px; }
+    .selected-user { background: #444; padding: 5px 10px; border-radius: 4px; display: inline-flex; align-items: center; gap: 5px; }
+    .selected-user span { cursor: pointer; font-weight: bold; }
   </style>
 </head>
 <body>
@@ -97,10 +65,11 @@
     <label>
       <strong>Ping Users</strong><br>
       <select id="pingUser">
-        <option value="">Select a user</option>
+        <option value="">Select user...</option>
       </select>
-      <div id="selectedUsersContainer" style="display:flex; flex-wrap:wrap; gap:5px; margin-top:5px;"></div>
     </label>
+
+    <div class="selected-users" id="selectedUsersContainer"></div>
 
     <button type="submit">Send</button>
   </form>
@@ -119,6 +88,8 @@
   const selectedUsersContainer = document.getElementById('selectedUsersContainer');
   const form = document.getElementById('noteForm');
 
+  let selectedUsers = [];
+
   // Users you can ping
   const userMap = {
     "EpicSparkZ": "941482778116120616",
@@ -135,7 +106,7 @@
     "Galaxifard": "1144068676295872653"
   };
 
-  // Populate dropdown options sorted alphabetically
+  // Populate select options alphabetically
   Object.keys(userMap).sort().forEach(username => {
     const option = document.createElement('option');
     option.value = username;
@@ -143,10 +114,7 @@
     pingUser.appendChild(option);
   });
 
-  // Selected users array (duplicates allowed)
-  let selectedUsers = [];
-
-  // Add selected user as tag
+  // When user is selected, add to array
   pingUser.addEventListener('change', () => {
     const username = pingUser.value;
     if (username) {
@@ -158,20 +126,15 @@
 
   function renderSelectedUsers() {
     selectedUsersContainer.innerHTML = "";
-    selectedUsers.forEach((user, index) => {
-      const tag = document.createElement('div');
-      tag.className = 'tag';
-      tag.textContent = user;
-
-      const removeBtn = document.createElement('span');
-      removeBtn.textContent = "✕";
-      removeBtn.onclick = () => {
-        selectedUsers.splice(index, 1);
-        renderSelectedUsers();
-      };
-
-      tag.appendChild(removeBtn);
-      selectedUsersContainer.appendChild(tag);
+    selectedUsers.forEach((user, i) => {
+      const div = document.createElement('div');
+      div.className = 'selected-user';
+      div.textContent = user;
+      const span = document.createElement('span');
+      span.textContent = '✕';
+      span.onclick = () => { selectedUsers.splice(i, 1); renderSelectedUsers(); };
+      div.appendChild(span);
+      selectedUsersContainer.appendChild(div);
     });
   }
 
@@ -183,12 +146,27 @@
 
   form.addEventListener('submit', function(e) {
     e.preventDefault();
+
     const webhookURL = "https://discord.com/api/webhooks/1462555186886086828/MB0byZPUgcryGywo6vTB25CfnSwiIO58FrbI4ENgAB1aLa6mhsYzyDapr4zX48USZlbs";
 
-    // All selected users on same line
-    const pingText = selectedUsers.map(u => `<@${userMap[u]}>`).join(" ");
+    // --- CONTROL PAGE SETTINGS ---
+    const allowSending = localStorage.getItem('allowSending') === 'true';
+    const cooldown = parseInt(localStorage.getItem('cooldownSeconds')) || 0;
+    const lastSent = parseInt(localStorage.getItem('lastSent')) || 0;
+    const now = Date.now();
 
-    // Only include note if not empty
+    if (!allowSending) {
+      alert("Sending is currently disabled.");
+      return;
+    }
+
+    if (now - lastSent < cooldown * 1000) {
+      alert(`Please wait ${Math.ceil((cooldown*1000 - (now - lastSent))/1000)} seconds before sending again.`);
+      return;
+    }
+
+    // Build ping text (all on one line)
+    const pingText = selectedUsers.map(u => `<@${userMap[u]}>`).join(" ");
     const messageContent = (note.value.trim() ? note.value.trim() + (pingText ? " " : "") : "") + pingText;
 
     if (!messageContent) {
@@ -207,6 +185,7 @@
       form.reset();
       selectedUsers = [];
       renderSelectedUsers();
+      localStorage.setItem('lastSent', now);
     })
     .catch(err => {
       console.error(err);
