@@ -1,64 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Feind Server</title>
-<link rel="icon" href="/webicon.png" type="image/png">
-<style>
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: #1e1e1e;
-  color: white;
-  overflow-x: hidden;
-}
-.sidebar {
-  position: fixed;
-  top: 0;
-  left: -250px;
-  width: 250px;
-  height: 100%;
-  background-color: #2a2a2a;
-  padding-top: 60px;
-  transition: left 0.3s ease;
-  box-shadow: 2px 0 5px rgba(0,0,0,0.5);
-  z-index: 1000;
-}
-.sidebar.open { left: 0; }
-.sidebar a { display: block; color: #ccc; padding: 12px 20px; text-decoration: none; transition: background 0.2s; }
-.sidebar a:hover { background-color: #444; color: #fff; }
-.sidebar-separator { padding: 8px 20px; font-weight: 600; color: #bbb; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1.5px; border-top: 1px solid #444; border-bottom: 1px solid #444; margin: 20px 0; user-select: none; }
-.hamburger { position: fixed; top: 20px; left: 20px; width: 30px; height: 24px; cursor: pointer; z-index: 1001; }
-.hamburger div { width: 100%; height: 4px; background-color: white; margin: 4px 0; transition: all 0.3s ease; }
-.main-content { margin-left: 0; padding: 40px; transition: margin-left 0.3s ease; max-width: 800px; box-sizing: border-box; }
-.sidebar.open ~ .main-content { margin-left: 250px; }
-h1 { font-size: 2rem; margin-bottom: 20px; }
-p { line-height: 1.6; margin-bottom: 20px; }
-textarea, select, input {
-  width: 100%;
-  padding: 8px;
-  margin-top: 6px;
-  margin-bottom: 20px;
-  background-color: #2a2a2a;
-  color: white;
-  border: 1px solid #444;
-  font-family: inherit;
-  font-size: 1rem;
-}
-button { padding: 10px 20px; background-color: #444; color: white; border: 1px solid #666; cursor: pointer; }
-.tag {
-  background-color: #444;
-  padding: 4px 8px;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  color: white;
-}
-.tag span { cursor: pointer; font-weight: bold; }
-#selectedUsersContainer { display:flex; flex-wrap:wrap; gap:5px; margin-top:5px; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feind Server</title>
+  <link rel="icon" href="/webicon.png" type="image/png">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #1e1e1e;
+      color: white;
+      overflow-x: hidden;
+    }
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      width: 250px;
+      height: 100%;
+      background-color: #2a2a2a;
+      padding-top: 60px;
+      transition: left 0.3s ease;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.5);
+      z-index: 1000;
+    }
+    .sidebar.open { left: 0; }
+    .sidebar a { display: block; color: #ccc; padding: 12px 20px; text-decoration: none; transition: background 0.2s; }
+    .sidebar a:hover { background-color: #444; color: #fff; }
+    .sidebar-separator {
+      padding: 8px 20px;
+      font-weight: 600;
+      color: #bbb;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 1.5px;
+      border-top: 1px solid #444;
+      border-bottom: 1px solid #444;
+      margin: 20px 0;
+      user-select: none;
+    }
+    .hamburger { position: fixed; top: 20px; left: 20px; width: 30px; height: 24px; cursor: pointer; z-index: 1001; }
+    .hamburger div { width: 100%; height: 4px; background-color: white; margin: 4px 0; transition: all 0.3s ease; }
+    .main-content {
+      margin-left: 0;
+      padding: 40px;
+      transition: margin-left 0.3s ease;
+      max-width: 800px;
+      box-sizing: border-box;
+    }
+    .sidebar.open ~ .main-content { margin-left: 250px; }
+    h1 { font-size: 2rem; margin-bottom: 20px; }
+    p { line-height: 1.6; margin-bottom: 20px; }
+    textarea, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 6px;
+      margin-bottom: 20px;
+      background-color: #2a2a2a;
+      color: white;
+      border: 1px solid #444;
+      font-family: inherit;
+      font-size: 1rem;
+    }
+    button { padding: 10px 20px; background-color: #444; color: white; border: 1px solid #666; cursor: pointer; }
+
+    /* Styles for the ping tags */
+    .tag {
+      background-color: #444;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      margin: 2px;
+      font-size: 0.9rem;
+    }
+    .tag span { margin-left: 6px; cursor: pointer; font-weight: bold; }
+  </style>
 </head>
 <body>
 
@@ -80,7 +99,7 @@ button { padding: 10px 20px; background-color: #444; color: white; border: 1px s
       <select id="pingUser">
         <option value="">Select a user</option>
       </select>
-      <div id="selectedUsersContainer"></div>
+      <div id="selectedUsersContainer" style="display:flex; flex-wrap:wrap; gap:5px; margin-top:5px;"></div>
     </label>
 
     <button type="submit">Send</button>
@@ -88,110 +107,112 @@ button { padding: 10px 20px; background-color: #444; color: white; border: 1px s
 </div>
 
 <script>
-function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
+  function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
 
-fetch('../sidebar.html')
-  .then(res => res.ok ? res.text() : Promise.reject('404'))
-  .then(html => document.getElementById('sidebar').innerHTML = html)
-  .catch(err => { console.error('Sidebar load failed:', err); document.getElementById('sidebar').innerHTML = 'Failed to load menu.'; });
+  fetch('../sidebar.html')
+    .then(res => res.ok ? res.text() : Promise.reject('404'))
+    .then(html => document.getElementById('sidebar').innerHTML = html)
+    .catch(err => { console.error('Sidebar load failed:', err); document.getElementById('sidebar').innerHTML = 'Failed to load menu.'; });
 
-const note = document.getElementById('note');
-const pingUser = document.getElementById('pingUser');
-const selectedUsersContainer = document.getElementById('selectedUsersContainer');
-const form = document.getElementById('noteForm');
+  const note = document.getElementById('note');
+  const pingUser = document.getElementById('pingUser');
+  const selectedUsersContainer = document.getElementById('selectedUsersContainer');
+  const form = document.getElementById('noteForm');
 
-// Users you can ping
-const userMap = {
-  "EpicSparkZ": "941482778116120616",
-  "Raptor": "830376717226475531",
-  "Rutap": "781965040223780874",
-  "Tonk": "667179181565542404",
-  "zGray": "956638625116868662",
-  "EggsAreGreat": "1148606556980650106",
-  "Hogurts": "989062707917504512",
-  "dddashy": "905896395645517844",
-  "Flakey": "1462117336072065260",
-  "Veno": "1101554384145485866",
-  "Caketi": "1004042054944440371",
-  "Galaxifard": "1144068676295872653"
-};
+  // Users you can ping
+  const userMap = {
+    "EpicSparkZ": "941482778116120616",
+    "Raptor": "830376717226475531",
+    "Rutap": "781965040223780874",
+    "Tonk": "667179181565542404",
+    "zGray": "956638625116868662",
+    "EggsAreGreat": "1148606556980650106",
+    "Hogurts": "989062707917504512",
+    "dddashy": "905896395645517844",
+    "Flakey": "1462117336072065260",
+    "Veno": "1101554384145485866",
+    "Caketi": "1004042054944440371",
+    "Galaxifard": "1144068676295872653"
+  };
 
-// Populate dropdown options alphabetically
-Object.keys(userMap).sort().forEach(username => {
-  const option = document.createElement('option');
-  option.value = username;
-  option.textContent = username;
-  pingUser.appendChild(option);
-});
+  // Populate dropdown options sorted alphabetically
+  Object.keys(userMap).sort().forEach(username => {
+    const option = document.createElement('option');
+    option.value = username;
+    option.textContent = username;
+    pingUser.appendChild(option);
+  });
 
-let selectedUsers = [];
+  // Selected users array (duplicates allowed)
+  let selectedUsers = [];
 
-// Add user when selected from dropdown (allow duplicates)
-pingUser.addEventListener('change', () => {
-  const username = pingUser.value;
-  if (username) {
-    selectedUsers.push(username);
-    renderSelectedUsers();
-  }
-  pingUser.value = "";
-});
-
-// Render selected users as tags
-function renderSelectedUsers() {
-  selectedUsersContainer.innerHTML = "";
-  selectedUsers.forEach((user, index) => {
-    const tag = document.createElement('div');
-    tag.className = "tag";
-    tag.textContent = user;
-    const removeSpan = document.createElement('span');
-    removeSpan.textContent = "✕";
-    removeSpan.addEventListener('click', () => {
-      selectedUsers.splice(index, 1);
+  // Add selected user as tag
+  pingUser.addEventListener('change', () => {
+    const username = pingUser.value;
+    if (username) {
+      selectedUsers.push(username); // allow duplicates
       renderSelectedUsers();
-    });
-    tag.appendChild(removeSpan);
-    selectedUsersContainer.appendChild(tag);
+    }
+    pingUser.value = "";
   });
-}
 
-// Limit textarea to 15 lines
-note.addEventListener('input', function() {
-  const lines = this.value.split('\n');
-  if (lines.length > 15) this.value = lines.slice(0, 15).join('\n');
-});
+  function renderSelectedUsers() {
+    selectedUsersContainer.innerHTML = "";
+    selectedUsers.forEach((user, index) => {
+      const tag = document.createElement('div');
+      tag.className = 'tag';
+      tag.textContent = user;
 
-form.addEventListener('submit', function(e) {
-  e.preventDefault();
-  const webhookURL = "https://discord.com/api/webhooks/1462555186886086828/MB0byZPUgcryGywo6vTB25CfnSwiIO58FrbI4ENgAB1aLa6mhsYzyDapr4zX48USZlbs";
+      const removeBtn = document.createElement('span');
+      removeBtn.textContent = "✕";
+      removeBtn.onclick = () => {
+        selectedUsers.splice(index, 1);
+        renderSelectedUsers();
+      };
 
-  // Build ping text for all selected users
-  let pingText = selectedUsers.map(u => `<@${userMap[u]}>`).join("\n");
-
-  // Only include note if not empty
-  const messageContent = (note.value.trim() ? note.value.trim() + (pingText ? "\n" : "") : "") + pingText;
-
-  if (!messageContent) {
-    alert("Please enter a message or select a user to ping.");
-    return;
+      tag.appendChild(removeBtn);
+      selectedUsersContainer.appendChild(tag);
+    });
   }
 
-  fetch(webhookURL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ content: messageContent })
-  })
-  .then(res => {
-    if (!res.ok) throw new Error(`Error: ${res.status}`);
-    alert("Message Sent Successfully!");
-    form.reset();
-    selectedUsers = [];
-    renderSelectedUsers();
-  })
-  .catch(err => {
-    console.error(err);
-    alert("Failed to send message. Check console for details.");
+  // Limit textarea to 15 lines
+  note.addEventListener('input', function() {
+    const lines = this.value.split('\n');
+    if (lines.length > 15) this.value = lines.slice(0, 15).join('\n');
   });
-});
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const webhookURL = "https://discord.com/api/webhooks/1462555186886086828/MB0byZPUgcryGywo6vTB25CfnSwiIO58FrbI4ENgAB1aLa6mhsYzyDapr4zX48USZlbs";
+
+    // All selected users on same line
+    const pingText = selectedUsers.map(u => `<@${userMap[u]}>`).join(" ");
+
+    // Only include note if not empty
+    const messageContent = (note.value.trim() ? note.value.trim() + (pingText ? " " : "") : "") + pingText;
+
+    if (!messageContent) {
+      alert("Please enter a message or select a user to ping.");
+      return;
+    }
+
+    fetch(webhookURL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ content: messageContent })
+    })
+    .then(res => {
+      if (!res.ok) throw new Error(`Error: ${res.status}`);
+      alert("Message Sent Successfully!");
+      form.reset();
+      selectedUsers = [];
+      renderSelectedUsers();
+    })
+    .catch(err => {
+      console.error(err);
+      alert("Failed to send message. Check console for details.");
+    });
+  });
 </script>
 
 </body>
