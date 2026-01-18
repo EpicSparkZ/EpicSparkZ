@@ -11,6 +11,7 @@
     .sidebar.open { left: 0; }
     .sidebar a { display: block; color: #ccc; padding: 12px 20px; text-decoration: none; transition: background 0.2s; }
     .sidebar a:hover { background-color: #444; color: #fff; }
+    .sidebar-separator { padding: 8px 20px; font-weight: 600; color: #bbb; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1.5px; border-top: 1px solid #444; border-bottom: 1px solid #444; margin: 20px 0; user-select: none; }
     .hamburger { position: fixed; top: 20px; left: 20px; width: 30px; height: 24px; cursor: pointer; z-index: 1001; }
     .hamburger div { width: 100%; height: 4px; background-color: white; margin: 4px 0; transition: all 0.3s ease; }
     .main-content { margin-left: 0; padding: 40px; transition: margin-left 0.3s ease; max-width: 800px; box-sizing: border-box; }
@@ -52,12 +53,11 @@
   </form>
 </div>
 
-<!-- Firebase -->
+<!-- Firebase App (core) -->
 <script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-database-compat.js"></script>
 
 <script>
-  // --- FIREBASE CONFIG ---
   const firebaseConfig = {
     apiKey: "AIzaSyA2HyO5wSmAZPBjfFrShcS2EF1G9uFT9nk",
     authDomain: "feindserver-ee38e.firebaseapp.com",
@@ -83,7 +83,6 @@
   const form = document.getElementById('noteForm');
   let selectedUsers = [];
 
-  // Users you can ping
   const userMap = {
     "EpicSparkZ": "941482778116120616",
     "Raptor": "830376717226475531",
@@ -99,7 +98,6 @@
     "Galaxifard": "1144068676295872653"
   };
 
-  // Populate select options alphabetically
   Object.keys(userMap).sort().forEach(username => {
     const option = document.createElement('option');
     option.value = username;
@@ -110,7 +108,7 @@
   pingUser.addEventListener('change', () => {
     const username = pingUser.value;
     if (username) {
-      selectedUsers.push(username); // allow duplicates
+      selectedUsers.push(username);
       renderSelectedUsers();
     }
     pingUser.value = "";
@@ -135,42 +133,39 @@
     if (lines.length > 15) this.value = lines.slice(0, 15).join('\n');
   });
 
-  // --- FORM SUBMIT ---
   form.addEventListener('submit', async function(e) {
     e.preventDefault();
-
-    const webhookURL = "https://discord.com/api/webhooks/1462555186886086828/MB0byZPUgcryGywo6vTB25CfnSwiIO58FrbI4ENgAB1aLa6mhsYzyDapr4zX48USZlbs";
+    const submitButton = form.querySelector('button');
+    submitButton.disabled = true; // disable immediately
 
     try {
-      // Read control settings from Firebase
+      const webhookURL = "YOUR_WEBHOOK_HERE";
+
       const snapshot = await db.ref("control").get();
       const control = snapshot.val() || {};
-      console.log("Control settings:", control);
-
-      const allowMessages = control.allowMessages !== false; // default true
+      const allowMessages = control.allowMessages !== false;
       const cooldown = control.cooldown || 0;
 
       const now = Date.now();
       const lastSent = parseInt(localStorage.getItem('lastSent')) || 0;
 
-      if (!allowMessages) { alert("Sending is currently disabled."); return; }
+      if (!allowMessages) { alert("Sending is currently disabled."); submitButton.disabled = false; return; }
       if (now - lastSent < cooldown) { 
-        alert(`Please wait ${Math.ceil((cooldown - (now - lastSent))/1000)} seconds before sending again.`);
+        alert(`Please wait ${Math.ceil((cooldown - (now - lastSent))/1000)} seconds before sending again.`); 
+        submitButton.disabled = false; 
         return; 
       }
 
       const pingText = selectedUsers.map(u => `<@${userMap[u]}>`).join(" ");
       const messageContent = (note.value.trim() ? note.value.trim() + (pingText ? " " : "") : "") + pingText;
 
-      if (!messageContent) { alert("Please enter a message or select a user to ping."); return; }
+      if (!messageContent) { alert("Please enter a message or select a user to ping."); submitButton.disabled = false; return; }
 
       const res = await fetch(webhookURL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ content: messageContent })
       });
-
-      console.log("Discord response:", res);
 
       if (!res.ok) throw new Error(`Discord returned status ${res.status}`);
 
@@ -181,8 +176,10 @@
       localStorage.setItem('lastSent', now);
 
     } catch(err) {
-      console.error("Send failed:", err);
+      console.error(err);
       alert("Failed to send message. Check console for details.");
+    } finally {
+      submitButton.disabled = false; // re-enable no matter what
     }
   });
 </script>
