@@ -108,26 +108,25 @@
     <h1>Level Requests</h1>
     <p>UNDER CONSTRUCTION</p>
 
-    <!-- Added section -->
-    <form style="margin-top: 30px;">
+    <form id="levelForm" style="margin-top: 30px;">
       <label>
         <strong>Level ID</strong><br>
-        <input type="number" required style="width: 100%; padding: 8px; margin-top: 6px; margin-bottom: 16px; background-color: #2a2a2a; color: white; border: 1px solid #444;">
+        <input id="levelId" type="number" required style="width: 100%; padding: 8px; margin-top: 6px; margin-bottom: 16px; background-color: #2a2a2a; color: white; border: 1px solid #444;">
       </label>
 
       <label>
         <strong>Creator Name</strong><br>
-        <input type="text" required style="width: 100%; padding: 8px; margin-top: 6px; margin-bottom: 16px; background-color: #2a2a2a; color: white; border: 1px solid #444;">
+        <input id="creatorName" type="text" required style="width: 100%; padding: 8px; margin-top: 6px; margin-bottom: 16px; background-color: #2a2a2a; color: white; border: 1px solid #444;">
       </label>
 
       <label>
         <strong>Stream Username</strong><br>
-        <input type="text" required style="width: 100%; padding: 8px; margin-top: 6px; margin-bottom: 16px; background-color: #2a2a2a; color: white; border: 1px solid #444;">
+        <input id="streamUser" type="text" required style="width: 100%; padding: 8px; margin-top: 6px; margin-bottom: 16px; background-color: #2a2a2a; color: white; border: 1px solid #444;">
       </label>
 
       <label>
         <strong>Video (demons and long platformers)</strong><br>
-        <input type="text" style="width: 100%; padding: 8px; margin-top: 6px; margin-bottom: 20px; background-color: #2a2a2a; color: white; border: 1px solid #444;">
+        <input id="videoLink" type="text" style="width: 100%; padding: 8px; margin-top: 6px; margin-bottom: 20px; background-color: #2a2a2a; color: white; border: 1px solid #444;">
       </label>
 
       <button type="submit" style="padding: 10px 20px; background-color: #444; color: white; border: 1px solid #666; cursor: pointer;">
@@ -141,7 +140,6 @@
       document.getElementById('sidebar').classList.toggle('open');
     }
 
-    // Correct fetch path: loads sidebar.html from root of repo
     fetch('../sidebar.html')
       .then(res => {
         if (!res.ok) throw new Error('404');
@@ -154,6 +152,35 @@
         console.error('Sidebar load failed:', err);
         document.getElementById('sidebar').innerHTML = 'Failed to load menu.';
       });
+
+    // DISCORD SUBMISSION
+    document.getElementById('levelForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const webhookURL = "https://discord.com/api/webhooks/1462308265886089450/prWUup3HgLMPNL8Unog3Zz0nEFK_3cCypHl7ILCdH7vbom1ZSC_1s7nfw0104zc87ETU";
+
+      const message = {
+        content:
+          "**New Level Request**\n" +
+          "**Level ID:** " + document.getElementById('levelId').value + "\n" +
+          "**Creator:** " + document.getElementById('creatorName').value + "\n" +
+          "**Stream Username:** " + document.getElementById('streamUser').value + "\n" +
+          "**Video:** " + (document.getElementById('videoLink').value || "N/A")
+      };
+
+      fetch(webhookURL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(message)
+      })
+      .then(() => {
+        alert("Level request submitted!");
+        document.getElementById('levelForm').reset();
+      })
+      .catch(() => {
+        alert("Failed to submit request.");
+      });
+    });
   </script>
 
 </body>
