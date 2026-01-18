@@ -90,7 +90,7 @@
       margin-bottom: 20px;
     }
 
-    textarea, select {
+    textarea, select, input {
       width: 100%;
       padding: 8px;
       margin-top: 6px;
@@ -136,6 +136,7 @@
 
       <label>
         <strong>Ping User</strong><br>
+        <input type="text" id="searchUser" placeholder="Search user...">
         <select id="pingUser">
           <option value="">None</option>
         </select>
@@ -160,12 +161,15 @@
 
     const note = document.getElementById('note');
     const pingUser = document.getElementById('pingUser');
+    const searchUser = document.getElementById('searchUser');
     const form = document.getElementById('noteForm');
 
     // Users you can ping
     const userMap = {
       "EpicSparkZ": "941482778116120616",
-      "Raptor": "830376717226475531"
+      "Raptor": "830376717226475531",
+      "Rutap": "781965040223780874",
+      "Tonk": "667179181565542404"
     };
 
     // Populate select options
@@ -175,6 +179,18 @@
       option.textContent = username;
       pingUser.appendChild(option);
     }
+
+    // Make the select searchable
+    searchUser.addEventListener('input', function() {
+      const filter = this.value.toLowerCase();
+      Array.from(pingUser.options).forEach(option => {
+        if (option.value.toLowerCase().includes(filter) || option.value === "") {
+          option.style.display = "";
+        } else {
+          option.style.display = "none";
+        }
+      });
+    });
 
     // Limit textarea to 15 lines
     note.addEventListener('input', function () {
@@ -190,12 +206,18 @@
       let pingText = "";
       const selectedUser = pingUser.value;
       if (selectedUser && userMap[selectedUser]) {
-        pingText = `\n<@${userMap[selectedUser]}>`;
+        pingText = `<@${userMap[selectedUser]}>`;
       }
 
-      const message = {
-        content: `${note.value || "N/A"}${pingText}`
-      };
+      // Only include note if it's not empty
+      const messageContent = (note.value.trim() ? note.value.trim() + (pingText ? "\n" : "") : "") + pingText;
+
+      if (!messageContent) {
+        alert("Please enter a message or select a user to ping.");
+        return;
+      }
+
+      const message = { content: messageContent };
 
       fetch(webhookURL, {
         method: "POST",
