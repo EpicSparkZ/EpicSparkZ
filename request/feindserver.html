@@ -143,7 +143,7 @@
     <form id="noteForm">
       <label>
         <strong>Message</strong><br>
-        <textarea id="note" rows="5" placeholder="Type your note here..."></textarea>
+        <textarea id="note" rows="5" placeholder="Type your message here..."></textarea>
       </label>
       <button type="submit">Send</button>
     </form>
@@ -184,7 +184,7 @@
       const webhookURL = "https://discord.com/api/webhooks/1462308265886089450/prWUup3HgLMPNL8Unog3Zz0nEFK_3cCypHl7ILCdH7vbom1ZSC_1s7nfw0104zc87ETU";
 
       const message = {
-        content: "**Note:** " + (note.value || "N/A")
+        content: (note.value || "N/A")
       };
 
       fetch(webhookURL, {
