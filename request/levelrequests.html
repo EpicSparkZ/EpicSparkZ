@@ -113,10 +113,10 @@
         <strong>Level ID</strong><br>
         <input id="levelId" type="number" required style="width: 100%; padding: 8px; margin-top: 6px; margin-bottom: 16px; background-color: #2a2a2a; color: white; border: 1px solid #444;">
       </label>
-      
+
       <label>
         <strong>Difficulty</strong><br>
-        <input id="difficulty" type="text" required style="width: 100%; padding: 8px; margin-top: 6px; margin-bottom: 16px; background-color: #2a2a2a; color: white; border: 1px solid #444;">
+        <input id="difficulty" type="text" style="width: 100%; padding: 8px; margin-top: 6px; margin-bottom: 16px; background-color: #2a2a2a; color: white; border: 1px solid #444;">
       </label>
 
       <label>
@@ -131,7 +131,12 @@
 
       <label>
         <strong>Video (demons and long platformers)</strong><br>
-        <input id="videoLink" type="text" style="width: 100%; padding: 8px; margin-top: 6px; margin-bottom: 20px; background-color: #2a2a2a; color: white; border: 1px solid #444;">
+        <input id="videoLink" type="text" style="width: 100%; padding: 8px; margin-top: 6px; margin-bottom: 16px; background-color: #2a2a2a; color: white; border: 1px solid #444;">
+      </label>
+
+      <label>
+        <strong>Note</strong><br>
+        <input id="note" type="text" style="width: 100%; padding: 8px; margin-top: 6px; margin-bottom: 20px; background-color: #2a2a2a; color: white; border: 1px solid #444;">
       </label>
 
       <button type="submit" style="padding: 10px 20px; background-color: #444; color: white; border: 1px solid #666; cursor: pointer;">
@@ -168,9 +173,11 @@
         content:
           "**New Level Request**\n" +
           "**Level ID:** " + document.getElementById('levelId').value + "\n" +
+          "**Difficulty:** " + (document.getElementById('difficulty').value || "N/A") + "\n" +
           "**Creator:** " + document.getElementById('creatorName').value + "\n" +
           "**Stream Username:** " + document.getElementById('streamUser').value + "\n" +
-          "**Video:** " + (document.getElementById('videoLink').value || "N/A")
+          "**Video:** " + (document.getElementById('videoLink').value || "N/A") + "\n" +
+          "**Note:** " + (document.getElementById('note').value || "N/A")
       };
 
       fetch(webhookURL, {
