@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head><title>Control Page</title></head>
+<body>
+<h2>Control Discord Messages</h2>
+
+<label>
+  <input type="checkbox" id="allowSwitch"> Allow Sending
+</label>
+<br>
+<label>
+  Cooldown (seconds): <input type="number" id="cooldownInput" value="0">
+</label>
+<br>
+<button onclick="saveSettings()">Save</button>
+
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+
+<script>
+const firebaseConfig = { /* Paste your config here */ };
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+function saveSettings() {
+  const allow = document.getElementById('allowSwitch').checked;
+  const cooldown = parseInt(document.getElementById('cooldownInput').value) || 0;
+  db.ref('settings').set({ allowSending: allow, cooldownSeconds: cooldown });
+  alert('Settings saved!');
+}
+
+// Load current settings
+db.ref('settings').on('value', snapshot => {
+  const data = snapshot.val();
+  if (!data) return;
+  document.getElementById('allowSwitch').checked = data.allowSending;
+  document.getElementById('cooldownInput').value = data.cooldownSeconds;
+});
+</script>
+</body>
+</html>
