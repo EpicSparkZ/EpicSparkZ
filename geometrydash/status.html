@@ -30,6 +30,28 @@
     .sidebar.open {
       left: 0;
     }
+    .sidebar a {
+      display: block;
+      color: #ccc;
+      padding: 12px 20px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .sidebar a:hover {
+      background-color: #444;
+      color: #fff;
+    }
+    .sidebar-separator {
+      padding: 8px 20px;
+      font-weight: 600;
+      color: #bbb;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 1.5px;
+      border-top: 1px solid #444;
+      border-bottom: 1px solid #444;
+      margin: 20px 0;
+      user-select: none;
 
     .hamburger {
       position: fixed;
@@ -226,12 +248,17 @@ details[open] > p {
       document.getElementById('sidebar').classList.toggle('open');
     }
 
+    // Correct fetch path: loads sidebar.html from root of repo
     fetch('../sidebar.html')
-      .then(res => res.text())
+      .then(res => {
+        if (!res.ok) throw new Error('404');
+        return res.text();
+      })
       .then(html => {
         document.getElementById('sidebar').innerHTML = html;
       })
-      .catch(() => {
+      .catch(err => {
+        console.error('Sidebar load failed:', err);
         document.getElementById('sidebar').innerHTML = 'Failed to load menu.';
       });
 
