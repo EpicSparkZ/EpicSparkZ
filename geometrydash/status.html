@@ -14,8 +14,7 @@
       overflow-x: hidden;
     }
 
-    /* Sidebar & hamburger styling (unchanged) */
-    .sidebar {
+      .sidebar {
       position: fixed;
       top: 0;
       left: -250px;
@@ -24,11 +23,38 @@
       background-color: #2a2a2a;
       padding-top: 60px;
       transition: left 0.3s ease;
-      box-shadow: 2px 0 5px rgba(0,0,0,0.5);
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
       z-index: 1000;
     }
+
     .sidebar.open {
       left: 0;
+    }
+
+    .sidebar a {
+      display: block;
+      color: #ccc;
+      padding: 12px 20px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .sidebar a:hover {
+      background-color: #444;
+      color: #fff;
+    }
+
+    .sidebar-separator {
+      padding: 8px 20px;
+      font-weight: 600;
+      color: #bbb;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 1.5px;
+      border-top: 1px solid #444;
+      border-bottom: 1px solid #444;
+      margin: 20px 0;
+      user-select: none;
     }
 
     .hamburger {
