@@ -117,19 +117,20 @@
     /* Smooth open/close animation */
 details > p {
   overflow: hidden;
-  transition: max-height 0.35s ease, opacity 0.25s ease;
+  transition: max-height 0.35s ease, opacity 0.25s ease, margin-bottom 0.35s ease;
   max-height: 0;
   opacity: 0;
-  margin-top: 5px; /* space after status */
-  padding-bottom: 5px; /* add a little padding at bottom for spacing */
+  margin-top: 20px; /* space after status line */
+  margin-bottom: 0; /* reduce space below so text appears closer to bottom */
 }
 
 details[open] > p {
-  max-height: 200px;
+  max-height: 500px; /* increase to accommodate longer text without clipping */
   opacity: 1;
-  margin-top: 20px; /* slightly less than before to bring text closer to bottom */
-  padding-bottom: 5px; /* keeps bottom tight */
+  margin-top: 20px; /* same space after status */
+  margin-bottom: 5px; /* small space at bottom to hug edge nicely */
 }
+
 
   <!-- Hamburger Button -->
   <div class="hamburger" onclick="toggleSidebar()">
