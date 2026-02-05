@@ -14,7 +14,6 @@
       overflow-x: hidden;
     }
 
-    /* Sidebar & hamburger styling (unchanged) */
     .sidebar {
       position: fixed;
       top: 0;
@@ -66,14 +65,14 @@
 
     p {
       line-height: 1.6;
-      margin-bottom: 10px;
+      margin-bottom: 0;
     }
 
     /* Dropdown styling */
     details {
       background-color: #2a2a2a;
       border-radius: 8px;
-      padding: 15px;
+      padding: 18px 18px 22px 18px; /* more bottom padding */
       margin-bottom: 20px;
     }
 
@@ -89,7 +88,6 @@
       display: none;
     }
 
-    /* Arrow */
     .arrow {
       font-size: 1.2rem;
       transition: transform 0.3s ease;
@@ -105,54 +103,52 @@
     }
 
     .summary-text h3 {
-      margin: 5px 0 0 0;
+      margin: 6px 0 0 0;
       font-weight: normal;
     }
 
-    /* Status colors + glow */
+    /* Status colors (auto-applied by JS) */
     .status-green {
       color: #4caf50;
       text-shadow: 0 0 6px rgba(76, 175, 80, 0.6);
     }
-
     .status-yellow {
       color: #ffeb3b;
       text-shadow: 0 0 6px rgba(255, 235, 59, 0.6);
     }
-
     .status-red {
       color: #f44336;
       text-shadow: 0 0 6px rgba(244, 67, 54, 0.6);
     }
 
-    /* Smooth open/close animation */
+    /* 🔥 Dropdown content spacing tweaks */
     details > p {
       overflow: hidden;
-      transition: max-height 0.35s ease, opacity 0.25s ease;
+      transition: max-height 0.35s ease, opacity 0.25s ease, margin-top 0.3s ease;
       max-height: 0;
       opacity: 0;
+      margin-top: 0;
+      padding-top: 0;
     }
 
     details[open] > p {
       max-height: 200px;
       opacity: 1;
-      margin-top: 10px;
+      margin-top: 28px;     /* MORE space from status text */
+      padding-bottom: 8px; /* pushes text closer to bottom */
     }
   </style>
 </head>
 <body>
 
-  <!-- Hamburger Button -->
   <div class="hamburger" onclick="toggleSidebar()">
     <div></div>
     <div></div>
     <div></div>
   </div>
 
-  <!-- Sidebar -->
   <div class="sidebar" id="sidebar">Loading...</div>
 
-  <!-- Main Content -->
   <div class="main-content">
     <h1>GD Status Information</h1>
     <p>Below is a list of different Geometry Dash related things with a status to show if I am willing to, or not willing to participate in such at the moment.</p>
@@ -162,7 +158,7 @@
         <span class="arrow">▶</span>
         <div class="summary-text">
           <h2>Collab (gameplay)</h2>
-          <h3 class="status-yellow">Status: 🟡</h3>
+          <h3>Status: 🟡</h3>
         </div>
       </summary>
       <p>Am currently taking up some verifications, but will primarily only be from friends that I know well.</p>
@@ -173,7 +169,7 @@
         <span class="arrow">▶</span>
         <div class="summary-text">
           <h2>Collab (Deco)</h2>
-          <h3 class="status-red">Status: 🔴</h3>
+          <h3>Status: 🔴</h3>
         </div>
       </summary>
       <p>Currently not taking up any deco collabs as I have many of my own serious projects to work on.</p>
@@ -184,43 +180,10 @@
         <span class="arrow">▶</span>
         <div class="summary-text">
           <h2>Level Swap (15–30 seconds)</h2>
-          <h3 class="status-green">Status: 🟢</h3>
+          <h3>Status: 🟢</h3>
         </div>
       </summary>
       <p>Willing to do level swaps atm, feel free to ask to do one.</p>
-    </details>
-
-    <details>
-      <summary>
-        <span class="arrow">▶</span>
-        <div class="summary-text">
-          <h2>Level Swap (30–60 seconds)</h2>
-          <h3 class="status-green">Status: 🟢</h3>
-        </div>
-      </summary>
-      <p>Willing to do level swaps atm, feel free to ask to do one.</p>
-    </details>
-
-    <details>
-      <summary>
-        <span class="arrow">▶</span>
-        <div class="summary-text">
-          <h2>Level Swap (61+ seconds)</h2>
-          <h3 class="status-yellow">Status: 🟡</h3>
-        </div>
-      </summary>
-      <p>Will potentially do a level swap, will primarily only be with friends that I know well though.</p>
-    </details>
-
-    <details>
-      <summary>
-        <span class="arrow">▶</span>
-        <div class="summary-text">
-          <h2>Verifications</h2>
-          <h3 class="status-yellow">Status: 🟡</h3>
-        </div>
-      </summary>
-      <p>Am currently taking up some verifications, but will primarily only be from friends that I know well.</p>
     </details>
   </div>
 
@@ -233,174 +196,15 @@
       .then(res => res.text())
       .then(html => {
         document.getElementById('sidebar').innerHTML = html;
-      })
-      .catch(() => {
-        document.getElementById('sidebar').innerHTML = 'Failed to load menu.';
       });
-  </script>
 
-</body>
-</html>
-      left: 20px;
-      width: 30px;
-      height: 24px;
-      cursor: pointer;
-      z-index: 1001;
-    }
-    .hamburger div {
-      width: 100%;
-      height: 4px;
-      background-color: white;
-      margin: 4px 0;
-    }
-
-    .main-content {
-      margin-left: 40px;
-      padding: 30px;
-      transition: margin-left 0.3s ease;
-      max-width: 800px;
-      box-sizing: border-box;
-    }
-
-    .sidebar.open ~ .main-content {
-      margin-left: 250px;
-    }
-
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 20px;
-    }
-
-    p {
-      line-height: 1.6;
-      margin-bottom: 10px;
-    }
-
-    /* Dropdown styling */
-    details {
-      background-color: #2a2a2a;
-      border-radius: 8px;
-      padding: 15px;
-      margin-bottom: 20px;
-    }
-
-    summary {
-      cursor: pointer;
-      list-style: none;
-    }
-
-    summary::-webkit-details-marker {
-      display: none;
-    }
-
-    summary h2 {
-      margin: 0;
-    }
-
-    summary h3 {
-      margin: 5px 0 0 0;
-      font-weight: normal;
-    }
-
-    /* Status colors */
-    .status-green { color: #4caf50; }
-    .status-yellow { color: #ffeb3b; }
-    .status-red { color: #f44336; }
-
-    /* Smooth open/close animation */
-    details > p {
-      overflow: hidden;
-      transition: max-height 0.35s ease, opacity 0.25s ease;
-      max-height: 0;
-      opacity: 0;
-    }
-
-    details[open] > p {
-      max-height: 200px;
-      opacity: 1;
-      margin-top: 10px;
-    }
-  </style>
-</head>
-<body>
-
-  <!-- Hamburger Button -->
-  <div class="hamburger" onclick="toggleSidebar()">
-    <div></div>
-    <div></div>
-    <div></div>
-  </div>
-
-  <!-- Sidebar -->
-  <div class="sidebar" id="sidebar">Loading...</div>
-
-  <!-- Main Content -->
-  <div class="main-content">
-    <h1>GD Status Information</h1>
-    <p>Below is a list of different Geometry Dash related things with a status to show if I am willing to, or not willing to participate in such at the moment.</p>
-
-    <details>
-      <summary>
-        <h2>Collab (gameplay)</h2>
-        <h3 class="status-yellow">Status: 🟡</h3>
-      </summary>
-      <p>Am currently taking up some verifications, but will primarily only be from friends that I know well.</p>
-    </details>
-
-    <details>
-      <summary>
-        <h2>Collab (Deco)</h2>
-        <h3 class="status-red">Status: 🔴</h3>
-      </summary>
-      <p>Currently not taking up any deco collabs as I have many of my own serious projects to work on.</p>
-    </details>
-
-    <details>
-      <summary>
-        <h2>Level Swap (15–30 seconds)</h2>
-        <h3 class="status-green">Status: 🟢</h3>
-      </summary>
-      <p>Willing to do level swaps atm, feel free to ask to do one.</p>
-    </details>
-
-    <details>
-      <summary>
-        <h2>Level Swap (30–60 seconds)</h2>
-        <h3 class="status-green">Status: 🟢</h3>
-      </summary>
-      <p>Willing to do level swaps atm, feel free to ask to do one.</p>
-    </details>
-
-    <details>
-      <summary>
-        <h2>Level Swap (61+ seconds)</h2>
-        <h3 class="status-yellow">Status: 🟡</h3>
-      </summary>
-      <p>Will potentially do a level swap, will primarily only be with friends that I know well though.</p>
-    </details>
-
-    <details>
-      <summary>
-        <h2>Verifications</h2>
-        <h3 class="status-yellow">Status: 🟡</h3>
-      </summary>
-      <p>Am currently taking up some verifications, but will primarily only be from friends that I know well.</p>
-    </details>
-  </div>
-
-  <script>
-    function toggleSidebar() {
-      document.getElementById('sidebar').classList.toggle('open');
-    }
-
-    fetch('../sidebar.html')
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById('sidebar').innerHTML = html;
-      })
-      .catch(() => {
-        document.getElementById('sidebar').innerHTML = 'Failed to load menu.';
-      });
+    // Auto color status based on emoji
+    document.querySelectorAll('.summary-text h3').forEach(status => {
+      const text = status.textContent;
+      if (text.includes('🟢')) status.classList.add('status-green');
+      if (text.includes('🟡')) status.classList.add('status-yellow');
+      if (text.includes('🔴')) status.classList.add('status-red');
+    });
   </script>
 
 </body>
