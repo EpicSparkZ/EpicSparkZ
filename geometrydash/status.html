@@ -41,18 +41,7 @@
       background-color: #444;
       color: #fff;
     }
-    .sidebar-separator {
-      padding: 8px 20px;
-      font-weight: 600;
-      color: #bbb;
-      text-transform: uppercase;
-      font-size: 0.75rem;
-      letter-spacing: 1.5px;
-      border-top: 1px solid #444;
-      border-bottom: 1px solid #444;
-      margin: 20px 0;
-      user-select: none;
-    }
+
     .hamburger {
       position: fixed;
       top: 20px;
@@ -67,12 +56,10 @@
       height: 4px;
       background-color: white;
       margin: 4px 0;
-      transition: all 0.3s ease;
     }
 
-    /* 👇 ONLY CHANGE IS HERE */
     .main-content {
-      margin-left: 40px; /* moves page text to the right */
+      margin-left: 40px;
       padding: 30px;
       transition: margin-left 0.3s ease;
       max-width: 800px;
@@ -92,6 +79,32 @@
       line-height: 1.6;
       margin-bottom: 20px;
     }
+
+    /* 👇 Dropdown styling */
+    details {
+      background-color: #2a2a2a;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+
+    summary {
+      cursor: pointer;
+      list-style: none;
+    }
+
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    summary h2 {
+      display: inline;
+    }
+
+    summary h3 {
+      display: inline;
+      margin-left: 10px;
+    }
   </style>
 </head>
 <body>
@@ -106,41 +119,58 @@
   <!-- Sidebar -->
   <div class="sidebar" id="sidebar">Loading...</div>
 
-  <!-- Title/info -->
+  <!-- Main Content -->
   <div class="main-content">
     <h1>GD Status Information</h1>
     <p>Below is a list of different Geometry Dash related things with a status to show if I am willing to, or not willing to participate in such at the moment.</p>
-    <br>
 
-    <h2>Collab (gameplay):</h2>
-    <h3>Status: 🟡</h3>
-    <p>Am currently taking up some verifications, but will primarily only be from friends that I know well.</p>
-    <br>
+    <details>
+      <summary>
+        <h2>Collab (gameplay)</h2>
+        <h3>Status: 🟡</h3>
+      </summary>
+      <p>Am currently taking up some verifications, but will primarily only be from friends that I know well.</p>
+    </details>
 
-    <h2>Collab (Deco):</h2>
-    <h3>Status: 🔴</h3>
-    <p>Currently not taking up any deco collabs as I have many of my own serious projects to work on.</p>
-    <br>
+    <details>
+      <summary>
+        <h2>Collab (Deco)</h2>
+        <h3>Status: 🔴</h3>
+      </summary>
+      <p>Currently not taking up any deco collabs as I have many of my own serious projects to work on.</p>
+    </details>
 
-    <h2>Level Swap (15-30 seconds):</h2>
-    <h3>Status: 🟢</h3>
-    <p>Willing to do level swaps atm, feel free to ask to do one.</p>
-    <br>
+    <details>
+      <summary>
+        <h2>Level Swap (15-30 seconds)</h2>
+        <h3>Status: 🟢</h3>
+      </summary>
+      <p>Willing to do level swaps atm, feel free to ask to do one.</p>
+    </details>
 
-    <h2>Level Swap (30-60 seconds):</h2>
-    <h3>Status: 🟢</h3>
-    <p>Willing to do level swaps atm, feel free to ask to do one.</p>
-    <br>
+    <details>
+      <summary>
+        <h2>Level Swap (30-60 seconds)</h2>
+        <h3>Status: 🟢</h3>
+      </summary>
+      <p>Willing to do level swaps atm, feel free to ask to do one.</p>
+    </details>
 
-    <h2>Level Swap (61+ seconds):</h2>
-    <h3>Status: 🟡</h3>
-    <p>Will potentially do a level swap, will primarily only be with friends that I know well though.</p>
-    <br>
+    <details>
+      <summary>
+        <h2>Level Swap (61+ seconds)</h2>
+        <h3>Status: 🟡</h3>
+      </summary>
+      <p>Will potentially do a level swap, will primarily only be with friends that I know well though.</p>
+    </details>
 
-    <h2>Verifications:</h2>
-    <h3>Status: 🟡</h3>
-    <p>Am currently taking up some verifications, but will primarily only be from friends that I know well.</p>
-    <br>
+    <details>
+      <summary>
+        <h2>Verifications</h2>
+        <h3>Status: 🟡</h3>
+      </summary>
+      <p>Am currently taking up some verifications, but will primarily only be from friends that I know well.</p>
+    </details>
   </div>
 
   <script>
@@ -149,15 +179,11 @@
     }
 
     fetch('../sidebar.html')
-      .then(res => {
-        if (!res.ok) throw new Error('404');
-        return res.text();
-      })
+      .then(res => res.text())
       .then(html => {
         document.getElementById('sidebar').innerHTML = html;
       })
-      .catch(err => {
-        console.error('Sidebar load failed:', err);
+      .catch(() => {
         document.getElementById('sidebar').innerHTML = 'Failed to load menu.';
       });
   </script>
