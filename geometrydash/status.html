@@ -127,9 +127,12 @@
 details[open] > p {
   max-height: 200px;
   opacity: 1;
-  margin-top: 10px; /* keeps a little gap from status */
-  padding-bottom: 2px; /* really small bottom space */
+  margin-top: 30px; /* keeps space from status line */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* pushes text down to bottom of dropdown */
 }
+
 
   </style>
 </head>
