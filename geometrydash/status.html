@@ -115,22 +115,21 @@
     .status-red { text-shadow: 0 0 6px rgba(244, 67, 54, 0.6); }
 
     /* Smooth open/close animation */
-    details > p {
-      overflow: hidden;
-      transition: max-height 0.35s ease, opacity 0.25s ease;
-      max-height: 0;
-      opacity: 0;
-      margin-top: 5px; /* closer to bottom when open */
-    }
+details > p {
+  overflow: hidden;
+  transition: max-height 0.35s ease, opacity 0.25s ease;
+  max-height: 0;
+  opacity: 0;
+  margin-top: 5px; /* space after status */
+  padding-bottom: 5px; /* add a little padding at bottom for spacing */
+}
 
-    details[open] > p {
-      max-height: 200px;
-      opacity: 1;
-      margin-top: 30px; /* keeps padding after status larger */
-    }
-  </style>
-</head>
-<body>
+details[open] > p {
+  max-height: 200px;
+  opacity: 1;
+  margin-top: 20px; /* slightly less than before to bring text closer to bottom */
+  padding-bottom: 5px; /* keeps bottom tight */
+}
 
   <!-- Hamburger Button -->
   <div class="hamburger" onclick="toggleSidebar()">
