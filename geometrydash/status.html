@@ -114,23 +114,25 @@
     .status-yellow { text-shadow: 0 0 6px rgba(255, 235, 59, 0.6); }
     .status-red { text-shadow: 0 0 6px rgba(244, 67, 54, 0.6); }
 
-    /* Smooth open/close animation */
-details > p {
-  overflow: hidden;
-  transition: max-height 0.35s ease, opacity 0.25s ease, margin-bottom 0.35s ease;
-  max-height: 0;
-  opacity: 0;
-  margin-top: 20px; /* space after status line */
-  margin-bottom: 0; /* reduce space below so text appears closer to bottom */
-}
+    /* Smooth open/close animation + closer-to-bottom spacing */
+    details > p {
+      overflow: hidden;
+      transition: max-height 0.35s ease, opacity 0.25s ease;
+      max-height: 0;
+      opacity: 0;
+      margin-top: 5px;
+      padding-bottom: 10px; /* added for closer bottom spacing */
+    }
 
-details[open] > p {
-  max-height: 500px; /* increase to accommodate longer text without clipping */
-  opacity: 1;
-  margin-top: 20px; /* same space after status */
-  margin-bottom: 5px; /* small space at bottom to hug edge nicely */
-}
-
+    details[open] > p {
+      max-height: 200px;
+      opacity: 1;
+      margin-top: 30px;
+      padding-bottom: 10px; /* added for closer bottom spacing */
+    }
+  </style>
+</head>
+<body>
 
   <!-- Hamburger Button -->
   <div class="hamburger" onclick="toggleSidebar()">
@@ -228,7 +230,6 @@ details[open] > p {
         document.getElementById('sidebar').innerHTML = 'Failed to load menu.';
       });
 
-    // ✅ Dynamically color status based on emoji
     document.querySelectorAll('.status').forEach(el => {
       const text = el.textContent;
       if (text.includes('🟢')) el.style.color = '#4caf50', el.style.textShadow = '0 0 6px rgba(76, 175, 80, 0.6)';
