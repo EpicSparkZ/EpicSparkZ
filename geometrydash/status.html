@@ -30,17 +30,6 @@
     .sidebar.open {
       left: 0;
     }
-    .sidebar a {
-      display: block;
-      color: #ccc;
-      padding: 12px 20px;
-      text-decoration: none;
-      transition: background 0.2s;
-    }
-    .sidebar a:hover {
-      background-color: #444;
-      color: #fff;
-    }
 
     .hamburger {
       position: fixed;
@@ -77,10 +66,10 @@
 
     p {
       line-height: 1.6;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
     }
 
-    /* 👇 Dropdown styling */
+    /* Dropdown styling */
     details {
       background-color: #2a2a2a;
       border-radius: 8px;
@@ -98,12 +87,13 @@
     }
 
     summary h2 {
-      display: inline;
+      margin: 0;
     }
 
     summary h3 {
-      display: inline;
-      margin-left: 10px;
+      margin: 5px 0 0 0; /* puts status on its own line */
+      font-weight: normal;
+      color: #ccc;
     }
   </style>
 </head>
@@ -142,7 +132,7 @@
 
     <details>
       <summary>
-        <h2>Level Swap (15-30 seconds)</h2>
+        <h2>Level Swap (15–30 seconds)</h2>
         <h3>Status: 🟢</h3>
       </summary>
       <p>Willing to do level swaps atm, feel free to ask to do one.</p>
@@ -150,7 +140,7 @@
 
     <details>
       <summary>
-        <h2>Level Swap (30-60 seconds)</h2>
+        <h2>Level Swap (30–60 seconds)</h2>
         <h3>Status: 🟢</h3>
       </summary>
       <p>Willing to do level swaps atm, feel free to ask to do one.</p>
