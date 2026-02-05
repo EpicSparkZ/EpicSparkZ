@@ -69,13 +69,16 @@
       margin: 4px 0;
       transition: all 0.3s ease;
     }
+
+    /* 👇 ONLY CHANGE IS HERE */
     .main-content {
-      margin-left: 0;
+      margin-left: 40px; /* moves page text to the right */
       padding: 30px;
       transition: margin-left 0.3s ease;
       max-width: 800px;
       box-sizing: border-box;
     }
+
     .sidebar.open ~ .main-content {
       margin-left: 250px;
     }
@@ -108,10 +111,7 @@
     <h1>GD Status Information</h1>
     <p>Below is a list of different Geometry Dash related things with a status to show if I am willing to, or not willing to participate in such at the moment.</p>
     <br>
-    
-    <!-- Statuses -->
-    <!-- 🔴🟡🟢 -->
-    
+
     <h2>Collab (gameplay):</h2>
     <h3>Status: 🟡</h3>
     <p>Am currently taking up some verifications, but will primarily only be from friends that I know well.</p>
@@ -141,9 +141,6 @@
     <h3>Status: 🟡</h3>
     <p>Am currently taking up some verifications, but will primarily only be from friends that I know well.</p>
     <br>
-
-
-    
   </div>
 
   <script>
@@ -151,7 +148,6 @@
       document.getElementById('sidebar').classList.toggle('open');
     }
 
-    // Correct fetch path: loads sidebar.html from root of repo
     fetch('../sidebar.html')
       .then(res => {
         if (!res.ok) throw new Error('404');
