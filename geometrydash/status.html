@@ -70,12 +70,19 @@
     }
 
     /* Dropdown styling */
-    details {
-      background-color: #2a2a2a;
-      border-radius: 8px;
-      padding: 15px;
-      margin-bottom: 20px;
-    }
+details {
+  background-color: #2a2a2a;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
+
+  display: flex;          /* make the dropdown a vertical flex container */
+  flex-direction: column; /* stack content top-to-bottom */
+}
+
+details > p {
+  margin-top: auto; /* pushes the dropdown text down to the bottom */
+}
 
     summary {
       cursor: pointer;
