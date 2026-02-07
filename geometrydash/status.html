@@ -14,7 +14,7 @@
       overflow-x: hidden;
     }
 
-      .sidebar {
+    .sidebar {
       position: fixed;
       top: 0;
       left: -250px;
@@ -96,19 +96,18 @@
     }
 
     /* Dropdown styling */
-details {
-  background-color: #2a2a2a;
-  border-radius: 8px;
-  padding: 15px;
-  margin-bottom: 20px;
+    details {
+      background-color: #2a2a2a;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+    }
 
-  display: flex;          /* make the dropdown a vertical flex container */
-  flex-direction: column; /* stack content top-to-bottom */
-}
-
-details > p {
-  margin-top: auto; /* pushes the dropdown text down to the bottom */
-}
+    details > p {
+      margin-top: auto;
+    }
 
     summary {
       cursor: pointer;
@@ -122,7 +121,6 @@ details > p {
       display: none;
     }
 
-    /* Arrow */
     .arrow {
       font-size: 1.2rem;
       transition: transform 0.3s ease;
@@ -138,54 +136,77 @@ details > p {
     }
 
     .summary-text h3 {
-      margin: 10px 0 0 0; /* more padding between status and dropdown text */
+      margin: 10px 0 0 0;
       font-weight: normal;
     }
 
-    /* Status colors + glow (will be dynamically set via JS) */
     .status-green { text-shadow: 0 0 6px rgba(76, 175, 80, 0.6); }
     .status-yellow { text-shadow: 0 0 6px rgba(255, 235, 59, 0.6); }
     .status-red { text-shadow: 0 0 6px rgba(244, 67, 54, 0.6); }
 
-    /* Smooth open/close animation + closer-to-bottom spacing */
     details > p {
-  overflow: hidden;
-  transition: max-height 0.35s ease, opacity 0.25s ease;
-  max-height: 0;
-  opacity: 0;
-  margin-top: 5px; /* space from status line */
-  padding-bottom: 2px; /* tiny space so text hugs bottom */
-}
+      overflow: hidden;
+      transition: max-height 0.35s ease, opacity 0.25s ease;
+      max-height: 0;
+      opacity: 0;
+      margin-top: 5px;
+      padding-bottom: 2px;
+    }
 
-details[open] > p {
-  max-height: 200px;
-  opacity: 1;
-  margin-top: 30px; /* keeps space from status line */
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end; /* pushes text down to bottom of dropdown */
-}
+    details[open] > p {
+      max-height: 200px;
+      opacity: 1;
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
 
+    /* Submit request styles */
+    .submit-request {
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
 
+    .submit-request input {
+      padding: 5px;
+      border-radius: 4px;
+      border: none;
+    }
+
+    .submit-request button {
+      padding: 5px 8px;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      background-color: #4caf50;
+      color: black;
+      font-weight: bold;
+    }
+
+    .submit-request span {
+      font-size: 0.9rem;
+      margin-top: 2px;
+    }
   </style>
 </head>
 <body>
 
-  <!-- Hamburger Button -->
   <div class="hamburger" onclick="toggleSidebar()">
     <div></div>
     <div></div>
     <div></div>
   </div>
 
-  <!-- Sidebar -->
   <div class="sidebar" id="sidebar">Loading...</div>
 
-  <!-- Main Content -->
   <div class="main-content">
     <h1>GD Status Information</h1>
     <p>Below is a list of different Geometry Dash related things with a status to show if I am willing to, or not willing to participate in such at the moment.</p>
 
+    <!-- Playtesting -->
     <details>
       <summary>
         <div class="summary-text">
@@ -194,8 +215,14 @@ details[open] > p {
         </div>
       </summary>
       <p>Will playtest any serious, decorated levels atm.</p>
+      <div class="submit-request">
+        <input type="text" placeholder="Your message..." class="request-msg">
+        <button class="submit-btn">Submit Request</button>
+        <span class="submit-feedback"></span>
+      </div>
     </details>
-    
+
+    <!-- Verifications -->
     <details>
       <summary>
         <div class="summary-text">
@@ -204,8 +231,14 @@ details[open] > p {
         </div>
       </summary>
       <p>Am currently taking up some verifications, but will primarily only be from friends that I know well.</p>
+      <div class="submit-request">
+        <input type="text" placeholder="Your message..." class="request-msg">
+        <button class="submit-btn">Submit Request</button>
+        <span class="submit-feedback"></span>
+      </div>
     </details>
 
+    <!-- Collab (gameplay) -->
     <details>
       <summary>
         <div class="summary-text">
@@ -214,8 +247,14 @@ details[open] > p {
         </div>
       </summary>
       <p>Am currently taking up some verifications, but will primarily only be from friends that I know well.</p>
+      <div class="submit-request">
+        <input type="text" placeholder="Your message..." class="request-msg">
+        <button class="submit-btn">Submit Request</button>
+        <span class="submit-feedback"></span>
+      </div>
     </details>
 
+    <!-- Collab (Deco) -->
     <details>
       <summary>
         <div class="summary-text">
@@ -226,6 +265,7 @@ details[open] > p {
       <p>Currently not taking up any deco collabs as I have many of my own serious projects to work on.</p>
     </details>
 
+    <!-- Level Swap (15–30 seconds) -->
     <details>
       <summary>
         <div class="summary-text">
@@ -234,8 +274,14 @@ details[open] > p {
         </div>
       </summary>
       <p>Willing to do level swaps atm, feel free to ask to do one.</p>
+      <div class="submit-request">
+        <input type="text" placeholder="Your message..." class="request-msg">
+        <button class="submit-btn">Submit Request</button>
+        <span class="submit-feedback"></span>
+      </div>
     </details>
 
+    <!-- Level Swap (30–60 seconds) -->
     <details>
       <summary>
         <div class="summary-text">
@@ -246,6 +292,7 @@ details[open] > p {
       <p>Not willing to do level swaps atm.</p>
     </details>
 
+    <!-- Level Swap (61+ seconds) -->
     <details>
       <summary>
         <div class="summary-text">
@@ -255,6 +302,7 @@ details[open] > p {
       </summary>
       <p>Not willing to do level swaps atm.</p>
     </details>
+
   </div>
 
   <script>
@@ -276,6 +324,31 @@ details[open] > p {
       if (text.includes('🟢')) el.style.color = '#4caf50', el.style.textShadow = '0 0 6px rgba(76, 175, 80, 0.6)';
       if (text.includes('🟡')) el.style.color = '#ffeb3b', el.style.textShadow = '0 0 6px rgba(255, 235, 59, 0.6)';
       if (text.includes('🔴')) el.style.color = '#f44336', el.style.textShadow = '0 0 6px rgba(244, 67, 54, 0.6)';
+    });
+
+    // Submit request functionality
+    document.querySelectorAll('.submit-btn').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const details = btn.closest('details');
+        const type = details.querySelector('h2').textContent;
+        const username = prompt("Enter your name:") || "Anonymous";
+        const message = details.querySelector('.request-msg').value;
+
+        if (!message) return alert("Please type a message!");
+
+        try {
+          await fetch("http://localhost:3000/apply", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ type, username, message })
+          });
+
+          details.querySelector('.submit-feedback').textContent = "✅ Request sent!";
+          details.querySelector('.request-msg').value = "";
+        } catch {
+          details.querySelector('.submit-feedback').textContent = "❌ Failed to send.";
+        }
+      });
     });
   </script>
 
