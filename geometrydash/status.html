@@ -27,91 +27,42 @@
       z-index: 1000;
     }
 
-    .sidebar.open {
-      left: 0;
-    }
-
-    .sidebar a {
-      display: block;
-      color: #ccc;
-      padding: 12px 20px;
-      text-decoration: none;
-      transition: background 0.2s;
-    }
-
-    .sidebar a:hover {
-      background-color: #444;
-      color: #fff;
-    }
-
+    .sidebar.open { left: 0; }
+    .sidebar a { display: block; color: #ccc; padding: 12px 20px; text-decoration: none; transition: background 0.2s; }
+    .sidebar a:hover { background-color: #444; color: #fff; }
     .sidebar-separator {
-      padding: 8px 20px;
-      font-weight: 600;
-      color: #bbb;
-      text-transform: uppercase;
-      font-size: 0.75rem;
-      letter-spacing: 1.5px;
-      border-top: 1px solid #444;
-      border-bottom: 1px solid #444;
-      margin: 20px 0;
+      padding: 8px 20px; font-weight: 600; color: #bbb;
+      text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1.5px;
+      border-top: 1px solid #444; border-bottom: 1px solid #444; margin: 20px 0;
       user-select: none;
     }
 
     .hamburger {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      width: 30px;
-      height: 24px;
-      cursor: pointer;
-      z-index: 1001;
+      position: fixed; top: 20px; left: 20px;
+      width: 30px; height: 24px; cursor: pointer; z-index: 1001;
     }
-    .hamburger div {
-      width: 100%;
-      height: 4px;
-      background-color: white;
-      margin: 4px 0;
-    }
+    .hamburger div { width: 100%; height: 4px; background-color: white; margin: 4px 0; }
 
     .main-content {
-      margin-left: 40px;
-      padding: 30px;
-      transition: margin-left 0.3s ease;
-      max-width: 800px;
-      box-sizing: border-box;
+      margin-left: 40px; padding: 30px; transition: margin-left 0.3s ease; max-width: 800px; box-sizing: border-box;
     }
-
-    .sidebar.open ~ .main-content {
-      margin-left: 250px;
-    }
+    .sidebar.open ~ .main-content { margin-left: 250px; }
 
     h1 { font-size: 2rem; margin-bottom: 20px; }
     p { line-height: 1.6; margin-bottom: 10px; }
 
     /* Dropdown styling */
     details {
-      background-color: #2a2a2a;
-      border-radius: 8px;
-      padding: 15px;
-      margin-bottom: 20px;
-      display: flex;
-      flex-direction: column;
+      background-color: #2a2a2a; border-radius: 8px;
+      padding: 15px; margin-bottom: 20px; display: flex; flex-direction: column;
     }
-
     details > p { margin-top: auto; }
-
     summary {
-      cursor: pointer;
-      list-style: none;
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
+      cursor: pointer; list-style: none; display: flex; align-items: flex-start; gap: 12px;
     }
-
     summary::-webkit-details-marker { display: none; }
     .arrow { font-size: 1.2rem; transition: transform 0.3s ease; user-select: none; }
     details[open] .arrow { transform: rotate(90deg); }
-
     .summary-text h2 { margin: 0; }
     .summary-text h3 { margin: 10px 0 0 0; font-weight: normal; }
 
@@ -121,45 +72,12 @@
     .status-red { text-shadow: 0 0 6px rgba(244, 67, 54, 0.6); }
 
     details > p {
-      overflow: hidden;
-      transition: max-height 0.35s ease, opacity 0.25s ease;
-      max-height: 0;
-      opacity: 0;
-      margin-top: 5px;
-      padding-bottom: 2px;
+      overflow: hidden; transition: max-height 0.35s ease, opacity 0.25s ease;
+      max-height: 0; opacity: 0; margin-top: 5px; padding-bottom: 2px;
     }
-
     details[open] > p {
-      max-height: 400px;
-      opacity: 1;
-      margin-top: 30px;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-    }
-
-    /* Submit request styling */
-    .submit-request {
-      display: flex;
-      gap: 10px;
-      margin-top: 15px;
-      flex-direction: column;
-    }
-
-    .submit-request input {
-      padding: 5px;
-      border-radius: 4px;
-      border: none;
-      width: 100%;
-    }
-
-    .submit-request button {
-      padding: 6px;
-      border: none;
-      border-radius: 4px;
-      background-color: #4caf50;
-      color: black;
-      cursor: pointer;
+      max-height: 400px; opacity: 1; margin-top: 30px;
+      display: flex; flex-direction: column; justify-content: flex-end;
     }
   </style>
 </head>
@@ -175,18 +93,11 @@
   <h1>GD Status Information</h1>
   <p>Below is a list of different Geometry Dash related things with a status to show if I am willing to, or not willing to participate in such at the moment.</p>
 
-  <!-- Dropdowns with multiple questions -->
   <details>
     <summary><span class="arrow">▶</span>
       <div class="summary-text"><h2>Playtesting</h2><h3 class="status">Status: 🟢</h3></div>
     </summary>
     <p>Will playtest any serious, decorated levels atm.</p>
-    <div class="submit-request">
-      <input placeholder="Question 1...">
-      <input placeholder="Question 2...">
-      <input placeholder="Question 3...">
-      <button>Submit</button>
-    </div>
   </details>
 
   <details>
@@ -194,12 +105,6 @@
       <div class="summary-text"><h2>Verifications</h2><h3 class="status">Status: 🟡</h3></div>
     </summary>
     <p>Am currently taking up some verifications, but will primarily only be from friends that I know well.</p>
-    <div class="submit-request">
-      <input placeholder="Question 1...">
-      <input placeholder="Question 2...">
-      <input placeholder="Question 3...">
-      <button>Submit</button>
-    </div>
   </details>
 
   <details>
@@ -207,12 +112,6 @@
       <div class="summary-text"><h2>Collab (gameplay)</h2><h3 class="status">Status: 🟡</h3></div>
     </summary>
     <p>Am currently taking up some verifications, but will primarily only be from friends that I know well.</p>
-    <div class="submit-request">
-      <input placeholder="Question 1...">
-      <input placeholder="Question 2...">
-      <input placeholder="Question 3...">
-      <button>Submit</button>
-    </div>
   </details>
 
   <details>
@@ -220,12 +119,6 @@
       <div class="summary-text"><h2>Collab (Deco)</h2><h3 class="status">Status: 🔴</h3></div>
     </summary>
     <p>Currently not taking up any deco collabs as I have many of my own serious projects to work on.</p>
-    <div class="submit-request">
-      <input placeholder="Question 1...">
-      <input placeholder="Question 2...">
-      <input placeholder="Question 3...">
-      <button>Submit</button>
-    </div>
   </details>
 
   <details>
@@ -233,12 +126,6 @@
       <div class="summary-text"><h2>Level Swap (15–30 seconds)</h2><h3 class="status">Status: 🟢</h3></div>
     </summary>
     <p>Willing to do level swaps atm, feel free to ask to do one.</p>
-    <div class="submit-request">
-      <input placeholder="Question 1...">
-      <input placeholder="Question 2...">
-      <input placeholder="Question 3...">
-      <button>Submit</button>
-    </div>
   </details>
 
   <details>
@@ -246,12 +133,6 @@
       <div class="summary-text"><h2>Level Swap (30–60 seconds)</h2><h3 class="status">Status: 🔴</h3></div>
     </summary>
     <p>Not willing to do level swaps atm.</p>
-    <div class="submit-request">
-      <input placeholder="Question 1...">
-      <input placeholder="Question 2...">
-      <input placeholder="Question 3...">
-      <button>Submit</button>
-    </div>
   </details>
 
   <details>
@@ -259,12 +140,6 @@
       <div class="summary-text"><h2>Level Swap (61+ seconds)</h2><h3 class="status">Status: 🔴</h3></div>
     </summary>
     <p>Not willing to do level swaps atm.</p>
-    <div class="submit-request">
-      <input placeholder="Question 1...">
-      <input placeholder="Question 2...">
-      <input placeholder="Question 3...">
-      <button>Submit</button>
-    </div>
   </details>
 
 </div>
@@ -284,49 +159,6 @@ document.querySelectorAll('.status').forEach(el => {
   if (text.includes('🟢')) el.style.color = '#4caf50', el.style.textShadow = '0 0 6px rgba(76, 175, 80, 0.6)';
   if (text.includes('🟡')) el.style.color = '#ffeb3b', el.style.textShadow = '0 0 6px rgba(255, 235, 59, 0.6)';
   if (text.includes('🔴')) el.style.color = '#f44336', el.style.textShadow = '0 0 6px rgba(244, 67, 54, 0.6)';
-});
-
-// Submit request functionality for multiple inputs
-document.querySelectorAll('details').forEach(detail => {
-  const statusText = detail.querySelector('.status').textContent;
-  const submitDiv = detail.querySelector('.submit-request');
-  if (!submitDiv) return;
-
-  if (!statusText.includes('🟢') && !statusText.includes('🟡')) {
-    submitDiv.style.display = 'none';
-    return;
-  }
-
-  submitDiv.style.display = 'none';
-
-  detail.addEventListener('toggle', () => {
-    submitDiv.style.display = detail.open ? 'flex' : 'none';
-  });
-
-  const inputs = submitDiv.querySelectorAll('input');
-  const button = submitDiv.querySelector('button');
-
-  button.addEventListener('click', () => {
-    const answers = Array.from(inputs).map(i => i.value.trim());
-    if (answers.some(a => !a)) return alert('Please answer all questions!');
-
-    fetch('http://localhost:3000/apply', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        dropdown: detail.querySelector('h2').textContent,
-        answers
-      })
-    })
-    .then(res => res.json())
-    .then(data => {
-      if (data.success) {
-        alert('Request sent!');
-        inputs.forEach(i => i.value = '');
-      } else alert('Failed to send request.');
-    })
-    .catch(() => alert('Failed to send request.'));
-  });
 });
 </script>
 
