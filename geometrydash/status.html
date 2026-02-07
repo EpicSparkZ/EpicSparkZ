@@ -27,286 +27,125 @@
       z-index: 1000;
     }
 
-    .sidebar.open {
-      left: 0;
-    }
+    .sidebar.open { left: 0; }
 
-    .sidebar a {
-      display: block;
-      color: #ccc;
-      padding: 12px 20px;
-      text-decoration: none;
-      transition: background 0.2s;
-    }
+    .sidebar a { display: block; color: #ccc; padding: 12px 20px; text-decoration: none; transition: background 0.2s; }
+    .sidebar a:hover { background-color: #444; color: #fff; }
 
-    .sidebar a:hover {
-      background-color: #444;
-      color: #fff;
-    }
+    .hamburger { position: fixed; top: 20px; left: 20px; width: 30px; height: 24px; cursor: pointer; z-index: 1001; }
+    .hamburger div { width: 100%; height: 4px; background-color: white; margin: 4px 0; }
 
-    .sidebar-separator {
-      padding: 8px 20px;
-      font-weight: 600;
-      color: #bbb;
-      text-transform: uppercase;
-      font-size: 0.75rem;
-      letter-spacing: 1.5px;
-      border-top: 1px solid #444;
-      border-bottom: 1px solid #444;
-      margin: 20px 0;
-      user-select: none;
-    }
+    .main-content { margin-left: 40px; padding: 30px; transition: margin-left 0.3s ease; max-width: 800px; box-sizing: border-box; }
+    .sidebar.open ~ .main-content { margin-left: 250px; }
 
-    .hamburger {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      width: 30px;
-      height: 24px;
-      cursor: pointer;
-      z-index: 1001;
-    }
-    .hamburger div {
-      width: 100%;
-      height: 4px;
-      background-color: white;
-      margin: 4px 0;
-    }
-
-    .main-content {
-      margin-left: 40px;
-      padding: 30px;
-      transition: margin-left 0.3s ease;
-      max-width: 800px;
-      box-sizing: border-box;
-    }
-
-    .sidebar.open ~ .main-content {
-      margin-left: 250px;
-    }
-
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 20px;
-    }
-
-    p {
-      line-height: 1.6;
-      margin-bottom: 10px;
-    }
+    h1 { font-size: 2rem; margin-bottom: 20px; }
+    p { line-height: 1.6; margin-bottom: 10px; }
 
     /* Dropdown styling */
-    details {
-      background-color: #2a2a2a;
-      border-radius: 8px;
-      padding: 15px;
-      margin-bottom: 20px;
-      display: flex;
-      flex-direction: column;
-    }
+    details { background-color: #2a2a2a; border-radius: 8px; padding: 15px; margin-bottom: 20px; display: flex; flex-direction: column; }
+    details > p { margin-top: auto; }
+    summary { cursor: pointer; list-style: none; display: flex; align-items: flex-start; gap: 12px; }
+    summary::-webkit-details-marker { display: none; }
+    .arrow { font-size: 1.2rem; transition: transform 0.3s ease; user-select: none; }
+    details[open] .arrow { transform: rotate(90deg); }
+    .summary-text h2 { margin: 0; }
+    .summary-text h3 { margin: 10px 0 0 0; font-weight: normal; }
 
-    details > p {
-      margin-top: auto;
-    }
-
-    summary {
-      cursor: pointer;
-      list-style: none;
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-    }
-
-    summary::-webkit-details-marker {
-      display: none;
-    }
-
-    .arrow {
-      font-size: 1.2rem;
-      transition: transform 0.3s ease;
-      user-select: none;
-    }
-
-    details[open] .arrow {
-      transform: rotate(90deg);
-    }
-
-    .summary-text h2 {
-      margin: 0;
-    }
-
-    .summary-text h3 {
-      margin: 10px 0 0 0;
-      font-weight: normal;
-    }
-
-    /* Status colors + glow (JS will handle dynamic color) */
+    /* Status colors + glow */
     .status-green { text-shadow: 0 0 6px rgba(76, 175, 80, 0.6); }
     .status-yellow { text-shadow: 0 0 6px rgba(255, 235, 59, 0.6); }
     .status-red { text-shadow: 0 0 6px rgba(244, 67, 54, 0.6); }
 
-    details > p {
-      overflow: hidden;
-      transition: max-height 0.35s ease, opacity 0.25s ease;
-      max-height: 0;
-      opacity: 0;
-      margin-top: 5px;
-      padding-bottom: 2px;
-    }
+    /* Smooth open/close animation + closer-to-bottom spacing */
+    details > p { overflow: hidden; transition: max-height 0.35s ease, opacity 0.25s ease; max-height: 0; opacity: 0; margin-top: 5px; padding-bottom: 2px; }
+    details[open] > p { max-height: 200px; opacity: 1; margin-top: 30px; display: flex; flex-direction: column; justify-content: flex-end; }
 
-    details[open] > p {
-      max-height: 400px;
-      opacity: 1;
-      margin-top: 30px;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-    }
-
-    /* Submit request styling */
-    .submit-request {
-      display: flex;
-      gap: 10px;
-      margin-top: 15px;
-      flex-direction: column;
-    }
-
-    .submit-request input {
-      padding: 5px;
-      border-radius: 4px;
-      border: none;
-      width: 100%;
-    }
-
-    .submit-request button {
-      padding: 6px;
-      border: none;
-      border-radius: 4px;
-      background-color: #4caf50;
-      color: black;
-      cursor: pointer;
-    }
-
+    /* Form styling */
+    .request-form { margin-top: 15px; display: flex; flex-direction: column; gap: 8px; }
+    .request-form input, .request-form textarea { width: 100%; padding: 6px; border-radius: 4px; border: none; }
+    .request-form button { width: 120px; padding: 6px; border: none; border-radius: 4px; background-color: #4caf50; color: white; cursor: pointer; }
   </style>
 </head>
 <body>
 
   <div class="hamburger" onclick="toggleSidebar()">
-    <div></div>
-    <div></div>
-    <div></div>
+    <div></div><div></div><div></div>
   </div>
-
   <div class="sidebar" id="sidebar">Loading...</div>
 
   <div class="main-content">
     <h1>GD Status Information</h1>
     <p>Below is a list of different Geometry Dash related things with a status to show if I am willing to, or not willing to participate in such at the moment.</p>
 
-    <!-- Example Dropdowns, all preserved -->
+    <!-- Dropdowns -->
     <details>
       <summary>
-        <span class="arrow">▶</span>
         <div class="summary-text">
           <h2>Playtesting</h2>
           <h3 class="status">Status: 🟢</h3>
         </div>
       </summary>
       <p>Will playtest any serious, decorated levels atm.</p>
-      <div class="submit-request">
-        <input placeholder="Enter your request...">
-        <button>Submit</button>
-      </div>
     </details>
 
     <details>
       <summary>
-        <span class="arrow">▶</span>
         <div class="summary-text">
           <h2>Verifications</h2>
           <h3 class="status">Status: 🟡</h3>
         </div>
       </summary>
       <p>Am currently taking up some verifications, but will primarily only be from friends that I know well.</p>
-      <div class="submit-request">
-        <input placeholder="Enter your request...">
-        <button>Submit</button>
-      </div>
     </details>
 
     <details>
       <summary>
-        <span class="arrow">▶</span>
         <div class="summary-text">
           <h2>Collab (gameplay)</h2>
           <h3 class="status">Status: 🟡</h3>
         </div>
       </summary>
       <p>Am currently taking up some verifications, but will primarily only be from friends that I know well.</p>
-      <div class="submit-request">
-        <input placeholder="Enter your request...">
-        <button>Submit</button>
-      </div>
     </details>
 
     <details>
       <summary>
-        <span class="arrow">▶</span>
         <div class="summary-text">
           <h2>Collab (Deco)</h2>
           <h3 class="status">Status: 🔴</h3>
         </div>
       </summary>
       <p>Currently not taking up any deco collabs as I have many of my own serious projects to work on.</p>
-      <div class="submit-request">
-        <input placeholder="Enter your request...">
-        <button>Submit</button>
-      </div>
     </details>
 
     <details>
       <summary>
-        <span class="arrow">▶</span>
         <div class="summary-text">
           <h2>Level Swap (15–30 seconds)</h2>
           <h3 class="status">Status: 🟢</h3>
         </div>
       </summary>
       <p>Willing to do level swaps atm, feel free to ask to do one.</p>
-      <div class="submit-request">
-        <input placeholder="Enter your request...">
-        <button>Submit</button>
-      </div>
     </details>
 
     <details>
       <summary>
-        <span class="arrow">▶</span>
         <div class="summary-text">
           <h2>Level Swap (30–60 seconds)</h2>
           <h3 class="status">Status: 🔴</h3>
         </div>
       </summary>
       <p>Not willing to do level swaps atm.</p>
-      <div class="submit-request">
-        <input placeholder="Enter your request...">
-        <button>Submit</button>
-      </div>
     </details>
 
     <details>
       <summary>
-        <span class="arrow">▶</span>
         <div class="summary-text">
           <h2>Level Swap (61+ seconds)</h2>
           <h3 class="status">Status: 🔴</h3>
         </div>
       </summary>
       <p>Not willing to do level swaps atm.</p>
-      <div class="submit-request">
-        <input placeholder="Enter your request...">
-        <button>Submit</button>
-      </div>
     </details>
   </div>
 
@@ -320,6 +159,7 @@
       .then(html => { document.getElementById('sidebar').innerHTML = html; })
       .catch(() => { document.getElementById('sidebar').innerHTML = 'Failed to load menu.'; });
 
+    // Status colors
     document.querySelectorAll('.status').forEach(el => {
       const text = el.textContent;
       if (text.includes('🟢')) el.style.color = '#4caf50', el.style.textShadow = '0 0 6px rgba(76, 175, 80, 0.6)';
@@ -327,50 +167,36 @@
       if (text.includes('🔴')) el.style.color = '#f44336', el.style.textShadow = '0 0 6px rgba(244, 67, 54, 0.6)';
     });
 
-    // ✅ Submit request functionality
+    // Dynamically add multi-question forms to green/yellow dropdowns
     document.querySelectorAll('details').forEach(detail => {
-      const statusText = detail.querySelector('.status').textContent;
-      const submitDiv = detail.querySelector('.submit-request');
-      if (!submitDiv) return;
+      const statusEl = detail.querySelector('.status');
+      const statusText = statusEl.textContent;
 
-      // Only allow submission for 🟢 or 🟡
-      if (!statusText.includes('🟢') && !statusText.includes('🟡')) {
-        submitDiv.style.display = 'none';
-        return;
-      }
-
-      // Hide initially
-      submitDiv.style.display = 'none';
-
-      // Show/hide on dropdown toggle
-      detail.addEventListener('toggle', () => {
-        submitDiv.style.display = detail.open ? 'flex' : 'none';
-      });
-
-      const input = submitDiv.querySelector('input');
-      const button = submitDiv.querySelector('button');
-
-      button.addEventListener('click', () => {
-        const message = input.value.trim();
-        if (!message) return alert('Please enter a request!');
-        // Replace with your server endpoint to handle the message
-        fetch('http://localhost:3000/apply', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
+      // Only add form for green/yellow
+      if (statusText.includes('🟢') || statusText.includes('🟡')) {
+        const form = document.createElement('form');
+        form.className = 'request-form';
+        form.innerHTML = `
+          <input type="text" name="name" placeholder="Your name">
+          <input type="text" name="level" placeholder="Level name or info">
+          <textarea name="notes" placeholder="Additional notes"></textarea>
+          <button type="submit">Submit Request</button>
+        `;
+        form.addEventListener('submit', e => {
+          e.preventDefault();
+          const data = {
             dropdown: detail.querySelector('h2').textContent,
-            message
-          })
-        })
-        .then(res => res.json())
-        .then(data => {
-          if (data.success) {
-            alert('Request sent!');
-            input.value = '';
-          } else alert('Failed to send request.');
-        })
-        .catch(() => alert('Failed to send request.'));
-      });
+            name: form.name.value,
+            level: form.level.value,
+            notes: form.notes.value
+          };
+          console.log('Request submitted:', data);
+          alert('Request submitted!');
+          form.reset();
+          // ✅ Here you can call your backend endpoint (Node bot.js) to send the request to Discord
+        });
+        detail.appendChild(form);
+      }
     });
   </script>
 
